@@ -1,0 +1,19 @@
+# Secrets
+.env
+
+# Claude Code local config
+.claude/
+
+# User-generated prompts (cached locally, not committed)
+prompts/*/
+!prompts/index.json
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Python cache
+__pycache__/
+
+# Temp files
+*.tmp
