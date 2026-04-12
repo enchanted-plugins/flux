@@ -1,6 +1,6 @@
 {
   "last_updated": "2026-04-09",
-  "model_count": 39,
+  "model_count": 40,
   "update_instructions": "When model specs change (new context windows, new models, deprecated models), update this file and bump last_updated. The plugin reads this file as the single source of truth for all model data.",
   "models": {
     "claude-opus-4-6": {
@@ -383,6 +383,16 @@
       "cot_approach": "Not applicable.",
       "few_shot": "Not applicable",
       "key_constraint": "Text/image-to-video. Industry leader for creative video. API available."
+    },
+    "seedance-2": {
+      "family": "ByteDance (Seed)",
+      "display_name": "Seedance 2.0",
+      "context_window": 500,
+      "format": "natural-language",
+      "reasoning": "not-applicable",
+      "cot_approach": "Not applicable.",
+      "few_shot": "Not applicable",
+      "key_constraint": "Text/image-to-video. Up to 2 min at 1080p. Multi-shot storytelling with subject consistency. Synced audio/dialogue/lip-sync in 8+ languages."
     },
 
     "elevenlabs": {
