@@ -1,6 +1,6 @@
 {
   "last_updated": "2026-04-09",
-  "model_count": 47,
+  "model_count": 64,
   "update_instructions": "When model specs change (new context windows, new models, deprecated models), update this file and bump last_updated. The plugin reads this file as the single source of truth for all model data.",
   "models": {
     "claude-opus-4-6": {
@@ -484,6 +484,177 @@
       "cot_approach": "Not applicable.",
       "few_shot": "Not applicable",
       "key_constraint": "Text-to-music. Full songs with vocals. Prompt: lyrics + genre/style description."
+    },
+
+    "gpt-image-1.5": {
+      "family": "OpenAI (Image Gen)",
+      "display_name": "GPT Image 1.5",
+      "context_window": 4000,
+      "format": "natural-language",
+      "reasoning": "not-applicable",
+      "cot_approach": "Not applicable.",
+      "few_shot": "Not applicable",
+      "key_constraint": "Built into GPT-5. 4x faster than GPT Image 1. Top-ranked on Artificial Analysis. Natural language prompts."
+    },
+    "gpt-image-1": {
+      "family": "OpenAI (Image Gen)",
+      "display_name": "GPT Image 1",
+      "context_window": 4000,
+      "format": "natural-language",
+      "reasoning": "not-applicable",
+      "cot_approach": "Not applicable.",
+      "few_shot": "Not applicable",
+      "key_constraint": "Built into GPT-4o architecture. Multi-platform availability. Natural language prompts."
+    },
+    "midjourney-v7": {
+      "family": "Midjourney",
+      "display_name": "Midjourney v7",
+      "context_window": 60,
+      "format": "descriptors",
+      "reasoning": "not-applicable",
+      "cot_approach": "Not applicable.",
+      "few_shot": "Not applicable",
+      "key_constraint": "Complete architecture rebuild from v6. Default since Jun 2025. Params: --ar, --style raw, --chaos, --no."
+    },
+    "midjourney-v8-alpha": {
+      "family": "Midjourney",
+      "display_name": "Midjourney v8 Alpha",
+      "context_window": 60,
+      "format": "descriptors",
+      "reasoning": "not-applicable",
+      "cot_approach": "Not applicable.",
+      "few_shot": "Not applicable",
+      "key_constraint": "5x faster than v7. Native 2K with --hd. Preview/alpha — specs may change."
+    },
+    "niji-7": {
+      "family": "Midjourney",
+      "display_name": "Niji 7",
+      "context_window": 60,
+      "format": "descriptors",
+      "reasoning": "not-applicable",
+      "cot_approach": "Not applicable.",
+      "few_shot": "Not applicable",
+      "key_constraint": "Anime-specialized. Midjourney x Spellbrush collab. Best for anime/manga/illustration styles."
+    },
+    "imagen-4": {
+      "family": "Google (Imagen)",
+      "display_name": "Imagen 4",
+      "context_window": 1000,
+      "format": "natural-language",
+      "reasoning": "not-applicable",
+      "cot_approach": "Not applicable.",
+      "few_shot": "Not applicable",
+      "key_constraint": "Google's latest. Fast/Standard/Ultra tiers. Up to 2K resolution. Vertex AI + Gemini API."
+    },
+    "ideogram-3": {
+      "family": "Ideogram",
+      "display_name": "Ideogram 3.0",
+      "context_window": 1000,
+      "format": "natural-language",
+      "reasoning": "not-applicable",
+      "cot_approach": "Not applicable.",
+      "few_shot": "Not applicable",
+      "key_constraint": "Turbo/Balanced/Quality variants. Best-in-class typography. Major upgrade from v2."
+    },
+    "recraft-v4": {
+      "family": "Recraft",
+      "display_name": "Recraft V4",
+      "context_window": 1000,
+      "format": "natural-language",
+      "reasoning": "not-applicable",
+      "cot_approach": "Not applicable.",
+      "few_shot": "Not applicable",
+      "key_constraint": "Raster + native SVG vector output. 4 sub-variants (Standard, Vector, Pro, Pro Vector). Best long text rendering."
+    },
+    "reve-image-1": {
+      "family": "Reve AI",
+      "display_name": "Reve Image 1.0",
+      "context_window": 1000,
+      "format": "natural-language",
+      "reasoning": "not-applicable",
+      "cot_approach": "Not applicable.",
+      "few_shot": "Not applicable",
+      "key_constraint": "#1 on Artificial Analysis leaderboard at launch. Strong typography + prompt adherence."
+    },
+    "firefly-image-5": {
+      "family": "Adobe",
+      "display_name": "Firefly Image 5",
+      "context_window": 1000,
+      "format": "natural-language",
+      "reasoning": "not-applicable",
+      "cot_approach": "Not applicable.",
+      "few_shot": "Not applicable",
+      "key_constraint": "Native 4MP, layered output, custom model training. Commercially safe (licensed content only)."
+    },
+    "seedream-5": {
+      "family": "ByteDance (Seed)",
+      "display_name": "Seedream 5.0",
+      "context_window": 1000,
+      "format": "natural-language",
+      "reasoning": "not-applicable",
+      "cot_approach": "Not applicable.",
+      "few_shot": "Not applicable",
+      "key_constraint": "Web-connected search, multi-image input, 2K/3K output. Successor to Seedream 4.5."
+    },
+    "luma-photon": {
+      "family": "Luma Labs",
+      "display_name": "Luma Photon",
+      "context_window": 1000,
+      "format": "natural-language",
+      "reasoning": "not-applicable",
+      "cot_approach": "Not applicable.",
+      "few_shot": "Not applicable",
+      "key_constraint": "$0.015/image. Character consistency from single reference. Flash variant at $0.002/image."
+    },
+    "flux-kontext-max": {
+      "family": "Black Forest Labs",
+      "display_name": "FLUX Kontext Max",
+      "context_window": 1000,
+      "format": "natural-language",
+      "reasoning": "not-applicable",
+      "cot_approach": "Not applicable.",
+      "few_shot": "Not applicable",
+      "key_constraint": "Context-aware editing. Up to 10 input images. Typography support. Web grounding."
+    },
+    "flux-1-schnell": {
+      "family": "Black Forest Labs",
+      "display_name": "FLUX.1 Schnell",
+      "context_window": 77,
+      "format": "natural-language",
+      "reasoning": "not-applicable",
+      "cot_approach": "Not applicable.",
+      "few_shot": "Not applicable",
+      "key_constraint": "Apache 2.0, fully commercial. 4-step generation. Speed-optimized. Open-weight."
+    },
+    "hunyuan-image-3": {
+      "family": "Tencent",
+      "display_name": "HunyuanImage 3.0",
+      "context_window": 1000,
+      "format": "natural-language",
+      "reasoning": "not-applicable",
+      "cot_approach": "Not applicable.",
+      "few_shot": "Not applicable",
+      "key_constraint": "80B MoE (13B active). Largest open-source image gen. Apache 2.0."
+    },
+    "kling-image-03": {
+      "family": "Kuaishou",
+      "display_name": "Kling Image 03",
+      "context_window": 1000,
+      "format": "natural-language",
+      "reasoning": "not-applicable",
+      "cot_approach": "Not applicable.",
+      "few_shot": "Not applicable",
+      "key_constraint": "Reasoning-based generation. 2K/4K native. Up to 10 reference images."
+    },
+    "wan-2.7": {
+      "family": "Alibaba (Tongyi Lab)",
+      "display_name": "Wan 2.7",
+      "context_window": 1000,
+      "format": "natural-language",
+      "reasoning": "not-applicable",
+      "cot_approach": "Not applicable.",
+      "few_shot": "Not applicable",
+      "key_constraint": "Thinking Mode for reasoning-based generation. Long-text rendering. Precise color control."
     }
   }
 }
