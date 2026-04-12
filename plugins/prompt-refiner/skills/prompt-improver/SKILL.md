@@ -57,6 +57,22 @@ If the script is unavailable, score manually using the same 5 axes:
 4. If ambiguous, ask the user which model this prompt targets.
 5. Detect task domain: `coding` | `data-extraction` | `creative-writing` | `analysis` | `agent` | `conversational` | `image-gen` | `decision-making` | `other`
 
+### 1B.5: Model Fit Check
+
+After detecting the model and domain, read [models-registry.json](${CLAUDE_PLUGIN_ROOT}/../../shared/models-registry.json) and validate the model fits the task:
+
+| Task Domain | Poor Fit Models |
+|---|---|
+| coding | Image/video/audio models, Haiku for complex code |
+| data-extraction | Reasoning-native models (o-series waste budget) |
+| analysis | Small models (Haiku, Phi), image/video models |
+| creative-writing | Reasoning-native models (dry output), code-specialized |
+| agent | Models without tool-use support |
+| image-gen | Any text LLM |
+| conversational | Heavy reasoning models (slow, expensive) |
+
+If the model is a poor fit, present a warning with 2 recommended alternatives and ask the user to confirm or switch before proceeding.
+
 ### 1C: Identify Weaknesses
 
 Based on the scores, list specific problems:
@@ -195,3 +211,29 @@ prompts/<prompt-name>/
 ```
 
 **If the user says "just give me the prompt":** Output refined prompt only, no folder.
+
+---
+
+## Phase 4: Repeat Until Perfection
+
+After delivery steps complete, check the report verdict. If the prompt isn't production-ready, loop automatically.
+
+### Loop:
+
+**A. Check verdict** from report-gen output:
+- Verdict is **DEPLOY**? (overall ≥ 9, all axes ≥ 7, zero criticals)
+- If YES → deliver to user. Done.
+- If NO → continue to B.
+
+**B. Fix automatically:**
+1. Read the CRITICAL and WARNING findings from the report.
+2. Apply each fix to the prompt (format, techniques, clarity, completeness, resilience).
+3. Overwrite `prompt.<format>` with the improved version.
+4. Re-run delivery steps 3-7 (token count, self-eval, metadata, tests, report).
+5. Go back to A.
+
+### Rules:
+- **Max 5 iterations.** If still not DEPLOY after 5, deliver what you have with explanation.
+- **Show progress:** "Iteration 2/5 — fixed Clarity (6→8), working on Failure Resilience..."
+- **Never loop silently.** Brief update each round.
+- **User can exit anytime** with "stop", "good enough", or "deliver it".

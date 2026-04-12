@@ -90,6 +90,43 @@ Do NOT reuse the same questions across different tasks. Each question must be wr
 
 ---
 
+## Phase 2.5: Model Fit Check (Do Not Skip)
+
+After Phase 2, before generating the prompt, validate that the user's chosen model actually fits the task. Read [models-registry.json](${CLAUDE_PLUGIN_ROOT}/../../shared/models-registry.json) and cross-reference:
+
+| Task Domain | Best Model Types | Poor Fit |
+|---|---|---|
+| coding | Claude Opus/Sonnet, GPT-4.1, DeepSeek V3, Codestral, Qwen-Coder | Image/video/audio models, Haiku for complex code |
+| data-extraction | Claude Sonnet, GPT-4.1, GPT-4o | Reasoning-native models (o-series waste budget on simple extraction) |
+| analysis | DeepSeek R1, Claude Opus, o3, GPT-5 | Small models (Haiku, Phi), image/video models |
+| creative-writing | Claude Sonnet/Opus, GPT-4o, GPT-5 | Reasoning-native models (dry output), code models |
+| agent | Claude Opus, GPT-4.1, o3 | Models without tool-use support |
+| image-gen | DALL-E 3, Midjourney, Stable Diffusion, Flux, Ideogram, Imagen | Any text LLM |
+| conversational | Claude Sonnet, GPT-4o, Gemini Flash | Heavy reasoning models (slow, expensive) |
+| decision-making | DeepSeek R1, o3, Claude Opus | Small/fast models |
+
+**If the model is a poor fit for the domain:**
+
+Present this to the user:
+```
+⚠️ Model Fit Warning
+
+You selected [model] for a [domain] task.
+[model] is [reason it's a poor fit].
+
+Recommended alternatives:
+1. [better model 1] — [why it's better for this task]
+2. [better model 2] — [why it's better for this task]
+
+Continue with [model] anyway? Or switch to one of the above?
+```
+
+Wait for the user's response. If they confirm the original model, proceed. If they switch, update the target model for Phase 3.
+
+**If the model is a good fit:** Proceed silently. Do not narrate this check.
+
+---
+
 ## Phase 3: Enchanting
 
 Three sub-steps, executed in order.
@@ -222,21 +259,53 @@ prompts/<prompt-name>/
 
 ---
 
-## Phase 4: Self-Evaluation
+## Phase 4: Repeat Until Perfection
 
-Run `${CLAUDE_PLUGIN_ROOT}/../../shared/scripts/self-eval.py` on the generated prompt. The script scores 5 axes (1–10 each):
+This phase loops automatically. Do NOT deliver a prompt that isn't production-ready.
 
-1. **Clarity**: Are instructions unambiguous? No conflicting directives?
-2. **Completeness**: Does it cover the full task? Missing constraints?
-3. **Efficiency**: Minimal tokens for maximum effect? No redundancy?
-4. **Model Fit**: Does the format match the target model's preferences?
-5. **Failure Resilience**: Does it handle edge cases? Unclear inputs?
+### Loop steps:
 
-**If any axis scores below 6**: State the weakness, suggest a specific fix, and ask "Want me to apply this fix?"
+**Step A — Score the prompt:**
+```bash
+python ${CLAUDE_PLUGIN_ROOT}/../../shared/scripts/self-eval.py <prompt-file>
+```
 
-**If all axes ≥ 6**: Include scores in the Enchantment Report and deliver.
+**Step B — Save all artifacts** (delivery steps 1-8 above). This generates report.pdf.
 
-**If the script is unavailable or fails**: Perform the evaluation manually using the same 5 axes. Be honest about scores.
+**Step C — Read the verdict from report.pdf output.** The report-gen script prints findings and verdict to stdout. Check:
+- Is the verdict **DEPLOY** (overall ≥ 9, zero critical warnings)?
+- Are ALL axes ≥ 7?
+- Are there zero CRITICAL findings in the audit?
+
+**Step D — If YES to all of Step C:** The prompt is production-ready. Deliver to the user. Exit the loop.
+
+**Step E — If NO to any of Step C:** Fix the prompt automatically:
+
+1. Read the findings from the report. Each CRITICAL and WARNING tells you exactly what's wrong.
+2. For each finding, apply the fix:
+   - **Format mismatch** → restructure the prompt for the target model
+   - **Missing few-shot** → add 2-3 examples
+   - **CoT conflict** → remove or add CoT based on model type
+   - **Low Clarity** → rewrite with imperative verbs, shorten long sentences
+   - **Low Completeness** → add missing role, format, constraints, or examples
+   - **Low Efficiency** → remove filler phrases, deduplicate instructions
+   - **Low Model Fit** → switch format to match model preference
+   - **Low Failure Resilience** → add edge case handling, fallbacks, validation
+   - **No output format** → add explicit format instructions
+   - **Conflicting instructions** → remove the contradiction
+   - **Vague role** → replace with specific domain expert
+3. Save the improved prompt. Overwrite `prompt.<format>`.
+4. **Go back to Step A.** Re-score, re-generate report, re-check verdict.
+
+### Loop limits:
+- **Maximum 5 iterations.** If the prompt still isn't DEPLOY after 5 rounds, deliver what you have and tell the user which axes remain below threshold and why.
+- **Show iteration count** to the user: "Iteration 2/5 — Clarity improved from 6 to 8, still fixing Failure Resilience..."
+- **Never silently loop.** Each iteration, briefly tell the user what you fixed and what's left.
+
+### Exit conditions (any one triggers delivery):
+- Verdict is DEPLOY (all axes ≥ 7, overall ≥ 9, zero criticals)
+- User says "stop", "good enough", or "deliver it"
+- Maximum 5 iterations reached
 
 ---
 
