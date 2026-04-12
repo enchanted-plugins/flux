@@ -93,6 +93,11 @@ def score_model_fit(text):
     if gpt:
         if md_h: score += 2.0
         if cot: score += 1.0
+        if fs: score += 0.5
+        # Sandwich method: key instructions repeated near the end
+        lines = text.strip().split('\n')
+        last_20pct = '\n'.join(lines[max(0, len(lines) - len(lines)//5):]).lower()
+        if any(w in last_20pct for w in ['do not', 'must', 'critical', 'important', 'remember']): score += 0.5
     if oseries:
         if cot: score -= 3.0
         score += 1.5 if len(text.split()) < 200 else (-1.5 if len(text.split()) > 500 else 0)
