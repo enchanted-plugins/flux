@@ -7,6 +7,7 @@ description: >
   Auto-triggers on: "make this prompt better", "improve this prompt",
   "refine this prompt", "fix this prompt", "optimize this prompt",
   "what's wrong with this prompt", "/refine".
+allowed-tools: Bash(python *) Bash(mkdir *) Read Write Edit Agent
 ---
 
 # Flux — Prompt Refiner
@@ -214,37 +215,21 @@ prompts/<prompt-name>/
 
 ---
 
-## Phase 4: Repeat Until Perfection
+## Phase 4: Multi-Agent Pipeline (No Permission Asks)
 
-Two modes based on domain. Check and execute the matching one.
+Same pipeline as prompt-crafter. Run autonomously.
 
-### Mode A: Text Prompts (all domains except image-gen)
+### Mode A: Text Prompts
 
-**Fully autonomous.** Run the Convergence Engine on the refined prompt:
+1. Run convergence: `python ${CLAUDE_PLUGIN_ROOT}/../../shared/scripts/convergence.py <prompt-file>`
+2. Save all artifacts (delivery steps 3-8).
+3. Review: check self-eval output for criticals. If any, fix and re-converge (max 3 review cycles).
+4. Deliver with convergence history.
 
-```bash
-python ${CLAUDE_PLUGIN_ROOT}/../../shared/scripts/convergence.py <prompt-file>
-```
+### Mode B: Image Prompts
 
-Loops up to 100 iterations. Fixes weakest axis each round. Exits on DEPLOY or plateau.
-After convergence, save all artifacts (delivery steps 3-8) and generate report.pdf.
-
-### Mode B: Image Prompts (image-gen)
-
-**Collaborative.** You cannot see images. Force the user through a feedback loop.
-
-1. Present the refined prompt in a code block. Ask the user to:
-   - Generate the image with their chosen model/platform
-   - Report what looks wrong, what looks right, and rate 1-10
-2. Wait for feedback. Do NOT proceed without it.
-3. Rating ≥ 9 → Save final prompt. **Exit.**
-4. Rating < 9 → Adjust based on feedback:
-   - Colors off → adjust color descriptors, add hex codes
-   - Style wrong → strengthen/shift style keywords
-   - Missing elements → add with explicit placement
-   - Composition bad → add layout instructions
-   - Elements merged wrong → separate descriptions, clarify spatial relationships
-5. Present revised prompt. Go to 1.
-6. No iteration limit. Keep going until user rates ≥ 9 or says "done."
-7. Show what changed each round.
-8. After 5+ iterations, summarize patterns and suggest trying a different model if issues persist.
+1. Save initial prompt + artifacts.
+2. Present prompt in code block. Ask user: what's wrong, what's right, rate 1-10.
+3. Wait for feedback.
+4. Rating ≥ 9 → done. Rating < 9 → adjust and loop.
+5. No iteration limit. Show changes each round. After 5+ rounds, suggest model switch.

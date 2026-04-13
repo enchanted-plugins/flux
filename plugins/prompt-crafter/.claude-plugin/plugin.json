@@ -1,7 +1,7 @@
 {
   "name": "prompt-crafter",
-  "description": "Reforges raw prompts into technique-optimized, model-fitted enchantments. 16 techniques, 10+ model profiles, automatic scoring.",
-  "version": "1.0.0",
+  "description": "Creates production-ready prompts with 16 techniques, 64 models, convergence engine, and multi-agent review pipeline.",
+  "version": "2.0.0",
   "author": { "name": "enchanted-plugins" },
   "license": "MIT",
   "keywords": [
@@ -9,7 +9,12 @@
     "prompting",
     "model-fitting",
     "technique-selection",
-    "self-evaluation"
+    "convergence",
+    "multi-agent"
   ],
-  "skills": ["./skills/prompt-enchanter/"]
+  "skills": [
+    "./skills/prompt-enchanter/",
+    "./skills/prompt-reviewer/"
+  ],
+  "agents": "./agents/"
 }

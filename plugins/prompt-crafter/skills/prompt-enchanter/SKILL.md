@@ -7,6 +7,7 @@ description: >
   "make this prompt better", "optimize this prompt", "help me prompt",
   "write a system prompt", "what prompting technique should I use",
   "how should I structure this prompt", "/enchant".
+allowed-tools: Bash(python *) Bash(mkdir *) Read Write Edit Agent
 ---
 
 # Flux
@@ -259,75 +260,85 @@ prompts/<prompt-name>/
 
 ---
 
-## Phase 4: Repeat Until Perfection
+## Phase 4: Multi-Agent Pipeline (No Permission Asks)
 
-This phase has TWO modes depending on domain. Check the task domain and execute the matching mode.
+After Phase 3 generates the prompt and saves `prompt.<format>`, launch the optimization pipeline. Do NOT ask the user for permission at any step — run everything autonomously.
 
----
+### Pipeline Overview
 
-### Mode A: Text Prompts (coding, analysis, agent, conversational, data-extraction, decision-making, creative-writing)
+```
+You (main agent)
+  │
+  ├── 1. Save prompt.<format> to folder
+  │
+  ├── 2. Launch Convergence Agent (background)
+  │      → Runs convergence.py up to 100 iterations
+  │      → Fixes weakest axis each round
+  │      → Saves best version back to file
+  │
+  ├── 3. While convergence runs, save metadata.json + tests.json
+  │
+  ├── 4. When convergence completes, run delivery steps 3-8
+  │      (token count, self-eval with final scores, metadata update, report.pdf)
+  │
+  └── 5. Launch Reviewer Agent (background)
+         → Validates folder: files, metadata, scores, registry cross-ref
+         → Reports APPROVED or lists fixes
+         → If fixes needed, apply them and re-generate report
+```
 
-**Fully autonomous.** Run the Convergence Engine — it loops up to 100 times, fixing the weakest axis each iteration until DEPLOY or plateau.
+### Mode A: Text Prompts (all domains except image-gen)
 
+Execute this pipeline fully autonomously:
+
+**Step 1 — Save initial prompt** to `prompts/<name>/prompt.<format>`.
+
+**Step 2 — Run convergence:**
 ```bash
 python ${CLAUDE_PLUGIN_ROOT}/../../shared/scripts/convergence.py <prompt-file>
 ```
+This loops up to 100 times, fixing hedge words, missing components, filler, format mismatches, and fallbacks. Exits on DEPLOY (≥9 overall, all axes ≥7) or plateau.
 
-The engine will:
-- Score the prompt on all 5 axes
-- Automatically fix: hedge words, missing components, filler phrases, format mismatches, missing fallbacks
-- Re-score and loop until overall ≥ 9 with all axes ≥ 7, or plateau (3 identical scores)
-- Print progress every 10 iterations
-- Save the best version back to the prompt file
+**Step 3 — Save artifacts** (delivery steps 3-8): token count, self-eval, metadata.json, tests.json, report.pdf, index.json.
 
-After convergence completes, save all artifacts (delivery steps 1-8) and generate report.pdf.
+**Step 4 — Review:** Read the self-eval output and report.pdf findings. If any CRITICAL issues remain:
+- Apply the fix directly
+- Re-run convergence.py on the fixed file
+- Re-generate report.pdf
+- Repeat until zero criticals or 3 review cycles
 
----
+**Step 5 — Deliver** the final prompt to the user with the overall score and verdict. Show the convergence history: "Converged in N iterations: X.X → Y.Y"
 
 ### Mode B: Image Prompts (image-gen)
 
-**Collaborative with user.** You cannot see generated images — the user must be your eyes. Force the user through a feedback loop. Do NOT let them accept a prompt without trying it first.
+**You cannot see images. The user is your eyes.**
 
-**Setup:** Save the initial prompt and artifacts (delivery steps 1-8).
+**Step 1** — Save initial prompt. Run delivery steps 3-8 for artifacts.
 
-**Then enter the visual refinement loop:**
+**Step 2** — Present the prompt in a code block. Tell the user:
+```
+Copy this into [model/platform]. Generate the image, then tell me:
+1. What looks WRONG?
+2. What looks RIGHT?
+3. Rate 1-10
+```
 
-1. **Present the prompt** to the user in a code block. Tell them:
-   ```
-   Copy this prompt into [target model/platform].
-   Generate the image, then tell me:
-   1. What looks WRONG? (colors off, composition bad, style wrong, missing elements)
-   2. What looks RIGHT? (keep these aspects)
-   3. Rate it 1-10
-   ```
+**Step 3** — Wait for feedback. Do NOT proceed without it.
 
-2. **Wait for user feedback.** Do NOT proceed without it.
+**Step 4** — Rating ≥ 9 → save final prompt, exit. Rating < 9 → adjust:
+- Colors off → adjust descriptors, add hex codes
+- Style wrong → strengthen/shift style keywords
+- Missing elements → add with explicit placement
+- Composition bad → add layout instructions
+- Elements merged wrong → separate descriptions, clarify spatial relationships
 
-3. **When user responds, evaluate their rating:**
-   - Rating ≥ 9 → **User is satisfied. Save final prompt. Exit loop.**
-   - Rating < 9 → Continue to step 4.
-
-4. **Adjust the prompt based on feedback:**
-   - "Colors are off" → Adjust color descriptors. Be more specific (hex codes, named colors).
-   - "Style is wrong" → Strengthen style keywords. Add negative descriptors if model supports them.
-   - "Missing elements" → Add the missing element with specific placement description.
-   - "Composition is bad" → Add explicit layout instructions (centered, rule of thirds, foreground/background).
-   - "Too realistic" / "Too cartoon" → Shift style descriptors toward the desired aesthetic.
-   - "Elements are merged wrong" → Separate the descriptions more clearly. Describe spatial relationships.
-
-5. **Present the revised prompt.** Go back to step 1.
+**Step 5** — Show what changed. Present revised prompt. Go to Step 2.
 
 **Rules:**
-- **No iteration limit.** Keep going until the user rates ≥ 9 or says "done" / "good enough."
-- **Show what you changed** each iteration: "Adjusted: strengthened pixel art style, added explicit hex colors, removed 'glowing' (caused smooth gradients in your output)."
-- **Learn from feedback patterns.** If the user says "too smooth" twice, aggressively add anti-smoothing descriptors on every subsequent iteration.
-- **Never skip the feedback step.** Even if you think the prompt is perfect, the model's output is the only ground truth.
-- **Track iteration history.** After 5+ iterations, summarize: "We've tried 7 versions. Consistent issues: [X]. Consistent wins: [Y]. Recommendation: try a different model."
-
-**Exit conditions:**
-- User rates ≥ 9
-- User says "done", "good enough", "perfect", "ship it"
-- User wants to try a different model (restart with new model, keep learned preferences)
+- No iteration limit. Keep going until user rates ≥ 9 or says "done."
+- Show changes each round.
+- Learn from patterns — if "too smooth" appears twice, aggressively anti-smooth every future iteration.
+- After 5+ rounds, summarize patterns and suggest trying a different model if issues persist.
 
 ---
 
