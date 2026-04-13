@@ -6,7 +6,7 @@ Open-source Claude Code plugin that engineers prompts — not templates.
 
 > Wrote a vague one-liner about stock analysis.
 > Flux ran 4 iterations autonomously. Fixed clarity, added fallbacks,
-> restructured for Claude Opus XML. Scored 9.1/10. Delivered a
+> restructured for Claude Opus XML. Scored 9.3/10. Delivered a
 > production-ready prompt I'd have spent an hour writing manually.
 
 ## The Problem
@@ -21,44 +21,83 @@ The prompting techniques that make one model sing make another one choke.
 
 ## What Flux Does
 
-Give it a vague idea or an underperforming prompt. Three agents take over:
-
-1. **Crafter** reads your intent, selects techniques, generates the prompt
-2. **Convergence Engine** iterates up to 100 times autonomously — fixing clarity, completeness, model fit — until DEPLOY
-3. **Reviewer** validates the result against the model registry and scores
-
-No permission prompts. No manual iteration. You describe the task, Flux delivers a production-ready prompt with a PDF audit report.
+Give it a vague idea or an underperforming prompt. A network of specialized agents takes over:
 
 ```
 You: "I need a prompt for Claude Opus to analyze stocks"
 
-Flux: [scans context → asks 3 questions → selects techniques]
-      [generates prompt → launches convergence agent]
-      [iteration 1: 7.9 → iteration 2: 8.9 → iteration 3: 9.1 → DEPLOY]
-      [reviewer validates → APPROVED]
-      [saves prompt.xml + metadata.json + tests.json + report.pdf]
+  ┌─────────────────────────────────────────────────────────────┐
+  │  ORCHESTRATOR (Opus)                                        │
+  │  Scans context → asks questions → selects techniques        │
+  │  → generates prompt → delegates to agent network            │
+  └──────────┬──────────────────────────────────┬───────────────┘
+             │                                  │
+             ▼                                  ▼
+  ┌──────────────────────┐           ┌──────────────────────┐
+  │  OPTIMIZER (Sonnet)  │           │  REVIEWER (Haiku)    │
+  │                      │           │                      │
+  │  Convergence Engine  │──────────▶│  9 validation checks │
+  │  Up to 100 iterations│  when     │  Score freshness     │
+  │  Hypothesis-driven   │  done     │  Format alignment    │
+  │  Binary assertions   │           │  Registry cross-ref  │
+  │  Auto-revert on      │           │  Domain coherence    │
+  │  regression          │           │  APPROVED / FAIL     │
+  └──────────────────────┘           └──────────────────────┘
 
-Done. 9.1/10. Production-ready. 4 iterations. Zero manual fixes.
+  Result: 9.3/10. DEPLOY. 1 iteration. Zero manual fixes.
+  Saved: prompt.xml + metadata.json + tests.json + report.pdf
 ```
+
+No permission prompts. No manual iteration. You describe the task, the agent network delivers a production-ready prompt with a PDF audit report.
 
 ## The Convergence Engine
 
 Other tools score your prompt and wish you luck. Flux fixes it.
 
+The engine runs up to **100 autonomous iterations**. Each cycle:
+1. **Scores** the prompt on 5 axes + 8 binary assertions
+2. **Forms a hypothesis** about which fix will improve the weakest axis
+3. **Applies the fix** — removes hedge words, adds missing components, restructures format
+4. **Re-scores** and checks for regression
+5. **Auto-reverts** if the fix made things worse
+6. **Logs learnings** to `learnings.md` for persistence across sessions
+
 ```
 FLUX CONVERGENCE ENGINE
 Target: DEPLOY (overall >= 9.0, all axes >= 7.0)
 
-Iteration 1:  4.4/10 — fixing: Clarity, Completeness, Resilience
-Iteration 2:  8.1/10 — fixing: Model Fit
-Iteration 3:  8.1/10 — PLATEAU
+Iteration 1:  4.4/10 — hypothesis: fix Completeness
+              failed assertions: has_role, has_task, has_format, has_constraints (7/8)
+Iteration 2:  8.3/10 — hypothesis: fix Model Fit
+              REVERTED — regression detected, kept previous version
+Iteration 3:  8.3/10 — PLATEAU
 
-VERDICT: BEST EFFORT (8.1/10)
+FINAL: 8.3/10 | ASSERTIONS: 7/8 pass | VERDICT: BEST EFFORT
 ```
 
-**For text prompts:** Fully autonomous. Up to 100 iterations. Fixes hedge words, adds missing components, removes filler, restructures for the target model, adds fallbacks. No user input needed.
+**For text prompts:** Fully autonomous. Up to 100 iterations. Zero user input.
 
-**For image prompts:** Collaborative loop. You generate the image, rate it 1-10, tell Flux what's wrong. It adjusts and you try again. Repeats until you're satisfied.
+**For image prompts:** Collaborative loop. You generate the image externally, rate it 1-10, tell Flux what's wrong. It adjusts, you try again. No iteration limit.
+
+## The Agent Network
+
+Three tiers. Each agent uses the optimal model for its role.
+
+| Role | Model | What it does | Cost |
+|------|-------|-------------|------|
+| **Orchestrator** | Opus | Designs the prompt. Understands intent, selects techniques, makes judgment calls. | Highest quality |
+| **Optimizer** | Sonnet | Runs convergence.py. Executes fixes, manages artifacts. Doesn't need heavy reasoning. | Balanced |
+| **Reviewer** | Haiku | Validates files, checks JSON, compares scores. Simple pass/fail checks. Fastest. | Cheapest |
+
+The orchestrator delegates convergence to the optimizer (background), then the reviewer validates the result. If the reviewer finds issues, the optimizer re-runs. This loop continues until APPROVED or 3 review cycles.
+
+### Plugin-Specific Review Checks
+
+| Plugin | Reviewer Checks | Total |
+|--------|----------------|-------|
+| **prompt-crafter** | Standard (5) + technique rationale, version=1, no stale placeholders, domain coherence | 9 checks |
+| **prompt-refiner** | Standard (5) + before/after scores, score improvement, version>1, refined timestamp, mode=refine | 10 checks |
+| **convergence-engine** | File completeness, metadata consistency, score freshness, format alignment, test coverage, learnings | 6 checks |
 
 ## Model Fit Check
 
@@ -97,13 +136,15 @@ Or manually:
 bash <(curl -s https://raw.githubusercontent.com/enchanted-plugins/flux/main/install.sh)
 ```
 
-## 3 Plugins, 5 Agents, 64 Models
+## 3 Plugins, 4 Agents, 64 Models
 
 | Plugin | What | Agents |
 |--------|------|--------|
-| prompt-crafter | Creates new prompts with full pipeline | convergence + reviewer |
-| prompt-refiner | Improves existing prompts, preserves intent | convergence + reviewer |
-| convergence-engine | Standalone optimizer — use on any prompt | optimizer + reviewer |
+| prompt-crafter | Creates new prompts with full pipeline | reviewer (Haiku) |
+| prompt-refiner | Improves existing prompts, preserves intent | reviewer (Haiku) |
+| convergence-engine | Standalone optimizer — use on any prompt | optimizer (Sonnet) + reviewer (Haiku) |
+
+All three plugins delegate convergence to the **convergence-engine** plugin. No duplication.
 
 ### Supported Models
 
@@ -119,38 +160,40 @@ bash <(curl -s https://raw.githubusercontent.com/enchanted-plugins/flux/main/ins
 | Llama | 4, 3 | Special tokens |
 | Mistral | Large, Codestral | Markdown |
 | Cohere | Command R+ | Markdown |
-| Image Gen | DALL-E 3, Midjourney v6-v8, SD 3.5, FLUX.1/2, Ideogram 2-3, Imagen 3-4, Recraft V4, Reve Image, Firefly 5, Nano Banana, Seedream, Luma Photon, HunyuanImage 3, Kling Image 03, Wan 2.7 | Descriptors / Natural language |
+| Image Gen | DALL-E 3, GPT Image 1.5, Midjourney v6-v8, Niji 7, SD 3.5, FLUX.1/2, Ideogram 2-3, Imagen 3-4, Recraft V4, Reve Image, Firefly 5, Nano Banana, Seedream 4.5/5, Luma Photon, HunyuanImage 3, Kling Image 03, Wan 2.7 | Descriptors / Natural language |
 | Video Gen | Runway Gen-3, Seedance 2.0 | Natural language |
 | Audio | ElevenLabs, Suno v4 | Natural language |
 
 ## What You Get Per Prompt
 
-Every prompt saves as a folder:
-
 ```
 prompts/stocks-analysis/
-├── prompt.xml          The prompt (XML, Markdown, JSON, or TXT)
+├── prompt.xml          Production-ready prompt
 ├── metadata.json       Model, tokens, cost, scores, config
-├── tests.json          Regression test cases
-└── report.pdf          Dark-themed single-page audit report
+├── tests.json          3-5 regression test cases
+├── report.pdf          Dark-themed single-page PDF audit report
+└── learnings.md        Convergence hypothesis/outcome log
 ```
 
-The PDF report includes: quality scores with visual bars, technique pills, model profile, prompt statistics, audit findings (critical/warning), cost estimate, and a verdict with next steps.
+The **PDF audit report** includes: quality score bars, binary assertion results, technique pills (applied/avoided), model profile from registry, prompt statistics (words, lines, sections), audit findings with CRITICAL/WARNING severity, cost estimate per call + monthly projection, and an honest verdict (DEPLOY / REVIEW / IMPROVE / REWORK / DO NOT DEPLOY) with specific next steps.
 
 ## vs Everything Else
 
-| | Flux | Generic Templates | PromptLayer | Manual |
-|---|---|---|---|---|
-| Model-specific formatting | automatic | - | manual | manual |
-| Technique selection | 16 techniques, auto-routed | - | - | trial and error |
-| Anti-pattern detection | warns before you waste time | - | post-hoc | - |
-| Convergence loop | 100 autonomous iterations | - | - | - |
-| Quality scoring | 5-axis heuristic + PDF report | - | basic metrics | gut feeling |
-| Model fit check | warns + suggests alternatives | - | - | - |
-| Image prompt collaboration | forced feedback loop | - | - | - |
-| Cost estimate | per-call + monthly projection | - | post-hoc | - |
-| Dependencies | Python stdlib only | varies | SaaS | - |
-| Price | Free (MIT) | Free-$$ | $$$ | Free |
+| | Flux | AutoResearch | Ralph Loop | PromptLayer | Manual |
+|---|---|---|---|---|---|
+| Multi-agent pipeline | Opus + Sonnet + Haiku | single agent | single loop | - | - |
+| Autonomous iterations | up to 100 | unbounded | session-based | - | - |
+| Binary assertions | 8 pass/fail checks | hypothesis-based | completion-promise | - | - |
+| Auto-revert on regression | yes | git-based | - | - | - |
+| Learnings persistence | learnings.md | learnings.md | - | - | - |
+| Model-specific formatting | 64 models, auto-adapted | - | - | manual | manual |
+| Technique selection | 16 techniques, auto-routed | - | - | - | trial and error |
+| Model fit check | warns + suggests alternatives | - | - | - | - |
+| PDF audit report | dark theme, single page | - | - | basic metrics | - |
+| Image prompt collaboration | forced feedback loop | - | - | - | - |
+| Cost estimate | per-call + monthly | - | - | post-hoc | - |
+| Dependencies | Python stdlib only | Python | Python | SaaS | - |
+| Price | Free (MIT) | Free | Free | $$$ | Free |
 
 ## Contributing
 
