@@ -1,29 +1,30 @@
 #!/usr/bin/env python3
-"""Flux Convergence Engine — iterates up to 100 times to converge on DEPLOY verdict.
+"""Flux Convergence Engine — autonomous prompt perfection with hypothesis-driven iteration.
 
-Like gradient descent for prompts. Each iteration reduces the deviation from
-perfection by fixing the weakest axis, re-scoring, and repeating.
+Like gradient descent for prompts. Each iteration:
+1. Scores the prompt (5 axes)
+2. Runs binary assertions (pass/fail checks)
+3. Forms a hypothesis about the weakest axis
+4. Applies a targeted fix
+5. Re-scores and checks for regression (auto-revert if worse)
+6. Logs learnings for persistence across sessions
 
 Usage:
     python convergence.py <prompt-file>
     python convergence.py <prompt-file> --max 50
     python convergence.py <prompt-file> --verbose
 
-Reads a prompt file, scores it, applies automatic fixes, re-scores,
-and loops until DEPLOY (overall >= 9, all axes >= 7) or plateau.
-
 Stdlib only. No pip installs.
 """
-import sys, os, re, json
+import sys, os, re, json, copy
+from datetime import datetime
 from collections import Counter
 
 SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
-sys.path.insert(0, SCRIPT_DIR)
 
 # ─── Import scoring functions from self-eval ───────────────────────────────────
 
 def _import_scorer():
-    """Import scoring functions from self-eval.py."""
     import importlib.util
     spec = importlib.util.spec_from_file_location("self_eval", os.path.join(SCRIPT_DIR, "self-eval.py"))
     mod = importlib.util.module_from_spec(spec)
@@ -36,166 +37,123 @@ SCORERS = _eval.SCORERS
 
 
 def score_prompt(text):
-    """Score a prompt and return dict of axis->score + overall."""
     scores = {a: round(fn(text), 1) for a, fn in zip(AXES, SCORERS)}
     scores["overall"] = round(sum(scores[a] for a in AXES) / len(AXES), 1)
     return scores
 
 
 def is_deploy(scores):
-    """Check if scores meet DEPLOY criteria."""
     return scores["overall"] >= 9.0 and all(scores[a] >= 7.0 for a in AXES)
+
+
+# ─── Binary Assertions ────────────────────────────────────────────────────────
+
+def run_assertions(text):
+    """Binary pass/fail checks. More stable than numeric scores for detecting issues."""
+    results = []
+    tl = text.lower()
+
+    results.append(("has_role", bool(re.search(r'\b(you are|act as|role:|your role|your job)\b', tl)),
+                     "Prompt defines a role or persona"))
+    results.append(("has_task", bool(re.search(r'\b(task:|objective:|goal:|your job|you will|you should|analyze|generate|create|build)\b', tl)),
+                     "Prompt defines a clear task"))
+    results.append(("has_format", bool(re.search(r'\b(output format|respond in|format:|json|xml|markdown)\b|<output|<format', tl)),
+                     "Prompt specifies output format"))
+    results.append(("has_constraints", bool(re.search(r"\b(do not|don't|never|avoid|constraint|must not)\b", tl)),
+                     "Prompt has constraints/guardrails"))
+    results.append(("has_edge_cases", bool(re.search(r'\b(if.{0,20}(empty|invalid|error|missing)|edge case|fallback|if unsure)\b', tl)),
+                     "Prompt handles edge cases"))
+    results.append(("no_hedge_words", not bool(re.search(r'\b(maybe|perhaps|possibly|somewhat|might want to)\b', tl)),
+                     "No hedge words (maybe, perhaps, possibly)"))
+    results.append(("no_filler", not bool(re.search(r"(it's worth noting|please note that|keep in mind|in order to)", tl)),
+                     "No filler phrases"))
+    results.append(("has_structure", bool(re.search(r'(^#{1,3}\s|\n#{1,3}\s|<\w+>)', text)),
+                     "Prompt has structural markup (headers or XML tags)"))
+
+    return results
 
 
 # ─── Fix functions ─────────────────────────────────────────────────────────────
 
 def fix_clarity(text):
-    """Improve clarity: remove hedge words, shorten long sentences."""
-    # Remove hedge words
-    hedges = [
-        (r'\bmaybe\s+', ''), (r'\bperhaps\s+', ''), (r'\bpossibly\s+', ''),
-        (r'\bsomewhat\s+', ''), (r'\btry to\s+', ''),
-        (r'\bif possible,?\s*', ''), (r'\bmight want to\s+', ''),
-    ]
-    for pattern, replacement in hedges:
-        text = re.sub(pattern, replacement, text, flags=re.I)
-
-    # Shorten very long sentences (>50 words) by splitting at commas or semicolons
+    hedges = [(r'\bmaybe\s+', ''), (r'\bperhaps\s+', ''), (r'\bpossibly\s+', ''),
+              (r'\bsomewhat\s+', ''), (r'\btry to\s+', ''), (r'\bif possible,?\s*', ''),
+              (r'\bmight want to\s+', '')]
+    for p, r in hedges:
+        text = re.sub(p, r, text, flags=re.I)
     lines = text.split('\n')
-    new_lines = []
+    new = []
     for line in lines:
-        words = line.split()
-        if len(words) > 50 and ('; ' in line or ', and ' in line or ', which ' in line):
+        if len(line.split()) > 50 and ('; ' in line or ', and ' in line):
             line = re.sub(r';\s+', '.\n', line, count=1)
-            line = re.sub(r',\s+which\s+', '. This ', line, count=1)
-        new_lines.append(line)
-    return '\n'.join(new_lines)
+        new.append(line)
+    return '\n'.join(new)
 
 
 def fix_completeness(text):
-    """Add missing completeness components."""
     tl = text.lower()
-
-    # Check for role
-    has_role = bool(re.search(r'\b(you are|act as|role:|persona:|as a|your role)\b', tl))
-    if not has_role:
-        # Find the first line of actual content and prepend role
+    if not re.search(r'\b(you are|act as|role:|your role)\b', tl):
         lines = text.split('\n')
         for i, line in enumerate(lines):
             if line.strip() and not line.strip().startswith(('<', '#', '---')):
                 lines.insert(i, "You are a domain expert.\n")
                 break
         text = '\n'.join(lines)
-
-    # Check for task definition
-    has_task = bool(re.search(r'\b(task:|objective:|goal:|your job|you will|you should|instructions:)\b', tl))
-    if not has_task:
+    if not re.search(r'\b(task:|objective:|goal:|your job|you will|you should)\b', tl):
         text = text.replace("You are a domain expert.\n", "You are a domain expert. Your job is to complete the following task.\n", 1)
-
-    # Check for output format
-    has_format = bool(re.search(r'\b(output format|respond in|return as|format:|response format|output:|json|xml|markdown)\b', tl))
-    if not has_format:
+    if not re.search(r'\b(output format|respond in|format:|json|xml|markdown|<output|<format)\b', tl):
         text += "\n\nOutput format: structure your response clearly with headers and sections.\n"
-
-    # Check for constraints
-    has_constraints = bool(re.search(r"\b(do not|don't|never|must not|avoid|constraint)\b", tl))
-    if not has_constraints:
+    if not re.search(r"\b(do not|don't|never|must not|avoid)\b", tl):
         text += "\nDo not include information you are unsure about.\n"
-
     return text
 
 
 def fix_efficiency(text):
-    """Remove filler phrases and redundant instructions."""
-    fillers = [
-        r"it's worth noting that\s*",
-        r"please note that\s*",
-        r"as an AI,?\s*",
-        r"I want you to\s*",
-        r"I need you to\s*",
-        r"please make sure\s*(to\s*)?",
-        r"it is important to note that\s*",
-        r"keep in mind that\s*",
-        r"I would like you to\s*",
-        r"please ensure that\s*",
-        r"in order to\s+",
-    ]
-    for filler in fillers:
-        text = re.sub(filler, '', text, flags=re.I)
-
-    # Remove double blank lines
+    fillers = [r"it's worth noting that\s*", r"please note that\s*", r"as an AI,?\s*",
+               r"I want you to\s*", r"I need you to\s*", r"please make sure\s*(to\s*)?",
+               r"it is important to note that\s*", r"keep in mind that\s*",
+               r"I would like you to\s*", r"please ensure that\s*", r"in order to\s+"]
+    for f in fillers:
+        text = re.sub(f, '', text, flags=re.I)
     text = re.sub(r'\n{3,}', '\n\n', text)
-
-    # Remove trailing whitespace
     text = '\n'.join(line.rstrip() for line in text.split('\n'))
-
     return text
 
 
 def fix_model_fit(text):
-    """Improve model fit based on detected model."""
     tl = text.lower()
     claude = bool(re.search(r'\b(claude|anthropic)\b|<(instructions|context|example)>', tl))
     gpt = bool(re.search(r'\b(gpt-4|gpt-5|openai|chatgpt)\b', tl))
     oseries = bool(re.search(r'\b(o1|o3|o4-mini|o-series)\b', tl))
-
-    if claude:
-        # Add "think thoroughly" if missing
-        if 'think thoroughly' not in tl:
-            text = re.sub(
-                r'(</instructions>)',
-                '\nThink thoroughly before responding.\n\\1',
-                text, count=1
-            )
-            if '</instructions>' not in text:
-                text += "\n\nThink thoroughly before responding.\n"
-        # Remove "step by step" — bad for Claude
+    if claude and 'think thoroughly' not in tl:
+        text = re.sub(r'(</instructions>)', '\nThink thoroughly before responding.\n\\1', text, count=1)
+        if '</instructions>' not in text:
+            text += "\n\nThink thoroughly before responding.\n"
         text = re.sub(r'\bthink step by step\b', 'think thoroughly', text, flags=re.I)
-
-    if gpt:
-        # Add "think step by step" if missing CoT
-        has_cot = bool(re.search(r'\b(step by step|think through|let\'s think)\b', tl))
-        if not has_cot:
-            text += "\n\nThink step by step through your analysis before providing the final answer.\n"
-
+    if gpt and not re.search(r'\b(step by step|think through)\b', tl):
+        text += "\n\nThink step by step through your analysis before providing the final answer.\n"
     if oseries:
-        # Remove CoT — harmful for o-series
         text = re.sub(r'\n.*think step by step.*\n', '\n', text, flags=re.I)
-        text = re.sub(r'\n.*let\'s think.*\n', '\n', text, flags=re.I)
-
     return text
 
 
 def fix_failure_resilience(text):
-    """Add fallback/edge case handling if missing."""
     tl = text.lower()
-    patterns_found = {
-        'if_error': bool(re.search(r'\bif\b.{0,30}\b(error|fail|cannot|unable|unclear|missing|invalid|empty)\b', tl)),
-        'edge_case': bool(re.search(r'\b(edge case|corner case|special case|exception|unexpected|otherwise)\b', tl)),
-        'fallback': bool(re.search(r'\b(fallback|default to|if unsure|if you cannot|if not provided|when in doubt)\b', tl)),
-        'validate': bool(re.search(r'\b(validate|verify|check that|ensure that|confirm|if unclear|ask for clarification)\b', tl)),
-    }
-
     additions = []
-    if not patterns_found['if_error']:
+    if not re.search(r'\bif\b.{0,30}\b(error|fail|cannot|unable|unclear|missing|invalid|empty)\b', tl):
         additions.append("If the input is empty or invalid, report the error clearly and explain what input is expected.")
-    if not patterns_found['edge_case']:
+    if not re.search(r'\b(edge case|corner case|special case|exception|unexpected)\b', tl):
         additions.append("Handle unexpected edge cases gracefully rather than failing silently.")
-    if not patterns_found['fallback']:
+    if not re.search(r'\b(fallback|default to|if unsure|if you cannot|when in doubt)\b', tl):
         additions.append("If unsure about any information, state your uncertainty explicitly rather than guessing.")
-    if not patterns_found['validate']:
+    if not re.search(r'\b(validate|verify|check that|ensure that|confirm|if unclear)\b', tl):
         additions.append("Verify your output against the requirements before delivering the final response.")
-
     if additions:
-        # Find or create edge_cases/fallback section
         if '<edge_cases>' in text:
-            insert_point = text.index('</edge_cases>')
-            text = text[:insert_point] + '\n' + '\n'.join(additions) + '\n' + text[insert_point:]
-        elif '# Edge' in text or '## Edge' in text:
-            text += '\n' + '\n'.join(f'- {a}' for a in additions)
+            idx = text.index('</edge_cases>')
+            text = text[:idx] + '\n' + '\n'.join(additions) + '\n' + text[idx:]
         else:
             text += '\n\n' + '\n'.join(additions) + '\n'
-
     return text
 
 
@@ -208,7 +166,30 @@ FIXERS = {
 }
 
 
-# ─── Main loop ─────────────────────────────────────────────────────────────────
+# ─── Learnings Persistence ─────────────────────────────────────────────────────
+
+def load_learnings(prompt_dir):
+    """Load learnings.md from the prompt folder if it exists."""
+    path = os.path.join(prompt_dir, "learnings.md") if prompt_dir else None
+    if path and os.path.isfile(path):
+        with open(path, "r", encoding="utf-8") as f:
+            return f.read()
+    return ""
+
+
+def save_learnings(prompt_dir, log_entries):
+    """Save accumulated learnings to the prompt folder."""
+    if not prompt_dir or not log_entries:
+        return
+    path = os.path.join(prompt_dir, "learnings.md")
+    content = f"# Convergence Learnings\n\nGenerated: {datetime.now().isoformat()}\n\n"
+    for entry in log_entries:
+        content += f"- **Iteration {entry['iteration']}** [{entry['result']}]: {entry['hypothesis']} → {entry['outcome']}\n"
+    with open(path, "w", encoding="utf-8") as f:
+        f.write(content)
+
+
+# ─── Main Loop ─────────────────────────────────────────────────────────────────
 
 def run(prompt_path, max_iterations=100, verbose=False):
     if not os.path.isfile(prompt_path):
@@ -222,10 +203,12 @@ def run(prompt_path, max_iterations=100, verbose=False):
         print("Error: Empty prompt file.", file=sys.stderr)
         sys.exit(2)
 
+    prompt_dir = os.path.dirname(os.path.abspath(prompt_path))
     history = []
     plateau_count = 0
     best_score = 0
     best_text = text
+    learnings = []
 
     print(f"\n{'=' * 60}")
     print(f"  FLUX CONVERGENCE ENGINE")
@@ -238,57 +221,97 @@ def run(prompt_path, max_iterations=100, verbose=False):
         overall = scores["overall"]
         history.append(overall)
 
+        # Binary assertions
+        assertions = run_assertions(text)
+        failed = [a for a in assertions if not a[1]]
+        passed = [a for a in assertions if a[1]]
+
         # Track best version
         if overall > best_score:
             best_score = overall
             best_text = text
 
-        # Check DEPLOY
-        if is_deploy(scores):
-            print(f"  Iteration {iteration}: {overall}/10 — DEPLOY")
-            print(f"\n  Prompt is production-ready.")
+        # Check DEPLOY (scores + all assertions pass)
+        if is_deploy(scores) and len(failed) == 0:
+            print(f"  Iteration {iteration}: {overall}/10 — DEPLOY ({len(passed)}/{len(assertions)} assertions pass)")
             _save(prompt_path, best_text)
-            _print_final(scores, iteration)
+            _print_final(scores, assertions, iteration)
+            save_learnings(prompt_dir, learnings)
             return scores
 
-        # Check plateau (3 consecutive same scores)
+        # Check DEPLOY by scores only (assertions are bonus)
+        if is_deploy(scores):
+            print(f"  Iteration {iteration}: {overall}/10 — DEPLOY (scores OK, {len(failed)} assertion(s) remaining)")
+            _save(prompt_path, best_text)
+            _print_final(scores, assertions, iteration)
+            save_learnings(prompt_dir, learnings)
+            return scores
+
+        # Plateau detection
         if len(history) >= 3 and history[-1] == history[-2] == history[-3]:
             plateau_count += 1
             if plateau_count >= 1:
-                print(f"  Iteration {iteration}: {overall}/10 — PLATEAU (score unchanged for 3 iterations)")
-                print(f"\n  Reached practical ceiling for this prompt structure.")
+                print(f"  Iteration {iteration}: {overall}/10 — PLATEAU")
                 _save(prompt_path, best_text)
-                _print_final(scores, iteration)
+                _print_final(scores, assertions, iteration)
+                save_learnings(prompt_dir, learnings)
                 return scores
 
-        # Progress update
-        weak = [a for a in AXES if scores[a] < 7]
-        if verbose or iteration <= 3 or iteration % 10 == 0:
-            weak_str = ", ".join(f"{a}={scores[a]}" for a in weak) if weak else "none"
-            print(f"  Iteration {iteration}: {overall}/10 — fixing: {weak_str}")
-
-        # Apply fixes for weak axes (lowest first)
+        # Form hypothesis — what's the weakest axis and what fix will help?
         axes_by_score = sorted(AXES, key=lambda a: scores[a])
+        weakest = axes_by_score[0]
+        hypothesis = f"Fixing {weakest} (currently {scores[weakest]}/10) will improve overall from {overall}"
+
+        # Progress update
+        if verbose or iteration <= 3 or iteration % 10 == 0:
+            fail_names = ", ".join(a[0] for a in failed) if failed else "none"
+            print(f"  Iteration {iteration}: {overall}/10 — hypothesis: fix {weakest} | failed assertions: {fail_names}")
+
+        # Save pre-fix state for auto-revert
+        pre_fix_text = text
+
+        # Apply fix
         for axis in axes_by_score:
             if scores[axis] < 9.0 and axis in FIXERS:
                 text = FIXERS[axis](text)
 
-    # Max iterations reached
-    print(f"\n  Max iterations ({max_iterations}) reached. Best score: {best_score}/10")
+        # Also fix failed binary assertions directly
+        for name, passed_flag, desc in failed:
+            if name == "has_role" and "Completeness" not in [axes_by_score[0]]:
+                text = fix_completeness(text)
+            elif name == "has_edge_cases":
+                text = fix_failure_resilience(text)
+            elif name == "no_hedge_words":
+                text = fix_clarity(text)
+            elif name == "no_filler":
+                text = fix_efficiency(text)
+
+        # Check for regression — auto-revert if worse
+        new_scores = score_prompt(text)
+        if new_scores["overall"] < overall - 0.5:
+            text = pre_fix_text
+            outcome = f"REVERTED — regression from {overall} to {new_scores['overall']}"
+            learnings.append({"iteration": iteration, "hypothesis": hypothesis, "result": "reverted", "outcome": outcome})
+        else:
+            delta = new_scores["overall"] - overall
+            outcome = f"{'improved' if delta > 0 else 'unchanged'} ({overall} → {new_scores['overall']})"
+            learnings.append({"iteration": iteration, "hypothesis": hypothesis, "result": "applied", "outcome": outcome})
+
+    # Max iterations
+    print(f"\n  Max iterations ({max_iterations}) reached. Best: {best_score}/10")
     _save(prompt_path, best_text)
     scores = score_prompt(best_text)
-    _print_final(scores, max_iterations)
+    _print_final(scores, run_assertions(best_text), max_iterations)
+    save_learnings(prompt_dir, learnings)
     return scores
 
 
 def _save(path, text):
-    """Save the improved prompt back to the file."""
     with open(path, "w", encoding="utf-8") as f:
         f.write(text)
 
 
-def _print_final(scores, iterations):
-    """Print final scorecard."""
+def _print_final(scores, assertions, iterations):
     print(f"\n{'=' * 60}")
     print(f"  FINAL SCORES (after {iterations} iteration{'s' if iterations != 1 else ''})")
     print(f"{'=' * 60}")
@@ -298,8 +321,16 @@ def _print_final(scores, iterations):
         bar = "#" * pct + "." * (20 - pct)
         print(f"  {(a + ':').ljust(22)}{val:4.0f}/10  {bar}")
     print(f"\n  {'OVERALL:'.ljust(22)}{scores['overall']:4.1f}/10")
+
+    # Assertions summary
+    passed = sum(1 for a in assertions if a[1])
+    total = len(assertions)
+    print(f"  {'ASSERTIONS:'.ljust(22)}{passed}/{total} pass")
+    for name, ok, desc in assertions:
+        print(f"    {'PASS' if ok else 'FAIL'}  {desc}")
+
     deploy = is_deploy(scores)
-    print(f"  VERDICT: {'DEPLOY' if deploy else 'BEST EFFORT'}")
+    print(f"\n  VERDICT: {'DEPLOY' if deploy else 'BEST EFFORT'}")
     print(f"{'=' * 60}\n")
 
 
@@ -321,7 +352,7 @@ def main():
         args.append(a)
 
     if not args:
-        print("Usage: python self-perfection.py <prompt-file> [--max N] [--verbose]", file=sys.stderr)
+        print("Usage: python convergence.py <prompt-file> [--max N] [--verbose]", file=sys.stderr)
         sys.exit(2)
 
     scores = run(args[0], max_iterations=max_iter, verbose=verbose)
