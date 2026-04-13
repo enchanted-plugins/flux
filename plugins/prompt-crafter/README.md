@@ -1,32 +1,43 @@
 # prompt-crafter
 
-**The prompt enchantment engine.**
+**Creates production-ready prompts. Zero manual iteration.**
 
-Reads your intent, picks the right techniques, formats for the target model, scores the result.
+Give it a task description. It scans your project context, asks targeted questions, selects from 16 techniques, adapts format to 64 models, then runs the Convergence Engine autonomously until the prompt hits DEPLOY quality.
 
-## Skills
+## Pipeline
 
-| Skill | Triggers on |
-|-------|-------------|
-| prompt-prompt-crafter | "I need a prompt for...", "make this prompt better", `/enchant` |
+```
+User describes task
+  → Phase 1: Context Scan (silent — reads CLAUDE.md, .cursorrules)
+  → Phase 2: Interactive Profiling (3-8 targeted questions)
+  → Phase 2.5: Model Fit Check (warns if wrong model for task)
+  → Phase 3: Enchanting (technique selection + prompt generation)
+  → Phase 4: Multi-Agent Pipeline
+      → Convergence Agent (Opus, background, up to 100 iterations)
+      → Reviewer Agent (Opus, validates against registry)
+      → Save: prompt + metadata + tests + report.pdf
+```
 
-## 4-Phase Workflow
+## Components
 
-| Phase | What happens |
-|---|---|
-| **1. Context Scan** | Silently reads CLAUDE.md, .cursorrules, detects domain and model |
-| **2. Interactive Profiling** | 3-8 targeted questions via GUI |
-| **3. Enchanting** | Selects techniques, adapts format, generates prompt |
-| **4. Self-Evaluation** | 5-axis scorer, flags weaknesses, offers fixes |
+| Type | Name | What it does |
+|------|------|-------------|
+| Skill | prompt-enchanter | Main workflow — phases 1-4 |
+| Skill | prompt-reviewer | Internal validator (not user-invocable) |
+| Agent | convergence | Runs convergence.py in background (Opus) |
+| Agent | reviewer | Validates folder against registry (Opus) |
+| Hook | PostToolUse | Auto-triggers on prompt file save |
 
-## Scripts
+## Triggers
 
-Both stdlib-only Python (zero pip installs):
+`/enchant`, "I need a prompt for...", "build me a prompt", "write a system prompt"
 
-- **self-eval.py** — Heuristic 5-axis prompt scorer
-- **token-count.py** — Token estimator with context window fit
+## Output
 
-## Performance
-
-Technique selection is O(1) — lookup table, not search.
-Token estimation is word-count heuristic. No API calls.
+```
+prompts/<name>/
+├── prompt.<format>     Production-ready prompt
+├── metadata.json       Model, tokens, cost, scores, config
+├── tests.json          3-5 regression test cases
+└── report.pdf          Dark-themed single-page audit report
+```

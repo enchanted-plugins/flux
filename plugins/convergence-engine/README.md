@@ -27,8 +27,8 @@ Output: optimized prompt (8.1/10) + updated metadata + fresh report.pdf
 
 | Agent | Role | Model |
 |-------|------|-------|
-| optimizer | Runs convergence.py, updates artifacts | Sonnet |
-| reviewer | Validates result, checks metadata/registry alignment | Haiku |
+| optimizer | Runs convergence.py, updates artifacts | Opus |
+| reviewer | Validates result, checks metadata/registry alignment | Opus |
 
 ## What It Fixes
 

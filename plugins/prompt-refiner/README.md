@@ -1,23 +1,37 @@
 # prompt-refiner
 
-**The prompt improvement engine.**
+**Improves existing prompts. Preserves your intent.**
 
-Takes an existing prompt, diagnoses weaknesses, re-selects techniques, adapts format to the target model, and delivers an improved version with a diff report showing what changed and why.
+Load a saved prompt or paste one in. It diagnoses weaknesses, checks model fit, re-selects techniques, and runs the Convergence Engine to push the score toward DEPLOY.
 
-## Skills
+## Pipeline
 
-| Skill | Triggers on |
-|-------|-------------|
-| prompt-improver | "make this prompt better", "improve this prompt", "refine this prompt", "fix this prompt", `/refine` |
+```
+User provides existing prompt
+  → Phase 0: Load prompt (browse saved prompts or paste directly)
+  → Phase 1: Diagnosis (score original, detect model, identify weaknesses)
+  → Phase 1.5: Model Fit Check (warns if wrong model)
+  → Phase 2: Refinement (re-select techniques, re-format, preserve intent)
+  → Phase 3: Comparison (before/after scores, diff report)
+  → Phase 4: Multi-Agent Pipeline (convergence + reviewer)
+```
 
-## 3-Phase Workflow
+## Components
 
-| Phase | What happens |
-|---|---|
-| **1. Diagnosis** | Scores the original prompt, identifies weaknesses, detects target model |
-| **2. Refinement** | Re-selects techniques, re-formats for model, preserves user's intent and domain knowledge |
-| **3. Comparison** | Side-by-side diff, before/after scores, explains every change |
+| Type | Name | What it does |
+|------|------|-------------|
+| Skill | prompt-improver | Main workflow — diagnosis through delivery |
+| Agent | convergence | Runs convergence.py in background (Opus) |
+| Agent | reviewer | Validates refined prompt (Opus) |
 
 ## Key Principle
 
-Preserve the user's intent and domain knowledge. Only restructure, re-technique, and re-format — never rewrite their content.
+**Preserve the user's intent and domain knowledge.** Only restructure, re-technique, and re-format — never rewrite their content.
+
+## Triggers
+
+`/refine`, "make this prompt better", "improve this prompt", "fix this prompt"
+
+## For Image Prompts
+
+Collaborative loop — you generate the image externally, rate it 1-10, tell the agent what's wrong. It adjusts and you try again. No iteration limit.
