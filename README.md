@@ -1,8 +1,10 @@
 # Flux
 
+**An @enchanted-plugins product — algorithm-driven, agent-managed, self-learning.**
+
 The first prompt engineering platform that learns from itself.
 
-**6 plugins. 7 agents. 64 models. One command.**
+**6 plugins. 7 agents. 64 models. Gauss Convergence Method. One command.**
 
 > "Build me a B2B ticket routing system like Zendesk."
 >
