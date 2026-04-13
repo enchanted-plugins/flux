@@ -1,0 +1,10 @@
+{
+  "name": "prompt-harden",
+  "description": "Tests prompts for injection/jailbreak vulnerabilities. Runs 12 attack patterns, reports exploits found, suggests defenses. OWASP LLM Top 10 coverage.",
+  "version": "1.0.0",
+  "author": { "name": "enchanted-plugins" },
+  "license": "MIT",
+  "keywords": ["security", "hardening", "injection", "jailbreak", "red-team", "owasp"],
+  "skills": ["./skills/harden/"],
+  "agents": "./agents/"
+}
