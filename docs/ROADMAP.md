@@ -21,9 +21,9 @@ The first 5 plugins answer the 5 fundamental questions of AI-assisted developmen
 |---|--------|----------|------------|--------|
 | 1 | **Flux** | What did I say? (prompt quality) | Gauss Convergence, Boolean SAT, Game Theory, Cross-Domain Adaptation | Shipped |
 | 2 | **Allay** | What did I spend? (token health) | Markov Drift, Shannon Compression, Linear Runway, Atomic Serialization | Shipped |
-| 3 | **Vigil** | What just happened? (change comprehension) | Bayesian Trust, Semantic Diff, Information-Gain, Session Continuity | Prompt ready |
-| 4 | **Sentinel** | Is it safe? (security) | Aho-Corasick Pattern, Entropy Analysis, OWASP Rule Engine | Next |
-| 5 | **Ledger** | What did it cost? (spend tracking) | Exponential Smoothing, Budget Forecasting | Next |
+| 3 | **Hornet** | What just happened? (change comprehension) | Bayesian Trust, Semantic Diff, Information-Gain, Session Continuity | Prompt ready |
+| 4 | **Warden** | Is it safe? (security) | Aho-Corasick Pattern, Entropy Analysis, Threat Surface Convergence | Next |
+| 5 | **Nook** | What did it cost? (spend tracking) | Exponential Smoothing, Budget Forecasting | Next |
 
 ### Milestone: 5 plugins shipped
 - Each plugin is a standalone Claude Code marketplace
@@ -89,9 +89,9 @@ Add 5 more plugins covering code quality, testing, DevOps, documentation, and AP
 
 | # | Plugin | Question | Algorithm | Category |
 |---|--------|----------|-----------|----------|
-| 6 | **Arbiter** | Is this code good? | AST Diff + Weighted Decision Trees | Code review |
-| 7 | **Cascade** | Do the tests catch bugs? | Genetic Mutation Testing | Testing/QA |
-| 8 | **Forge** | Can this deploy? | Critical Path DAG Optimization | DevOps/CI |
+| 6 | **Radiance** | Is this code good? | AST Diff + Weighted Decision Trees | Code review |
+| 7 | **Crucible** | Do the tests catch bugs? | Genetic Mutation Testing | Testing/QA |
+| 8 | **Golem** | Can this deploy? | Critical Path DAG Optimization | DevOps/CI |
 | 9 | **Scribe** | Is the docs up to date? | TF-IDF Extractive Summarization | Documentation |
 | 10 | **Schema** | Is the API contract valid? | Semantic Version Diffing | API design |
 
@@ -149,6 +149,21 @@ Add 5 more plugins covering code quality, testing, DevOps, documentation, and AP
 | 4 | Production | 20 + production MCP | Q1 2027 |
 
 ---
+
+## Naming Convention
+
+Every plugin is named after a game entity that metaphorically describes its function.
+
+| Plugin | Entity | Game | Why |
+|--------|--------|------|-----|
+| **Flux** | Enchantment Orbs | Minecraft | XP orbs that power the enchantment table — enchanting prompts |
+| **Allay** | Allay Mob | Minecraft | Flying creature that collects items and brings them to you — collecting tokens |
+| **Hornet** | Hornet | Hollow Knight | Vigilant protector who watches over the kingdom, tests and judges — watching changes |
+| **Warden** | Warden | Minecraft Deep Dark | Blind but detects threats by vibration (pattern matching), most powerful mob — security scanning |
+| **Nook** | Tom Nook | Animal Crossing | Merchant-banker who tracks every bell you owe — cost accounting |
+| **Radiance** | The Radiance | Hollow Knight | Ancient judge that evaluates all under its blinding light — code review |
+| **Crucible** | Crucible | Terraria/Destiny | Endgame proving ground where things are tested to destruction — mutation testing |
+| **Golem** | Iron Golem | Minecraft | Constructed creature built block-by-block from raw materials — CI/CD pipeline building |
 
 ## Brand Standard (All Plugins)
 
