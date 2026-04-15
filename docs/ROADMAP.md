@@ -45,8 +45,8 @@ enchanted-mcp
 ├── Unified dashboard: prompts + tokens + changes + security + costs
 ├── Cross-plugin intelligence:
 │   ├── Flux detects bad prompt → Allay shows token waste from it
-│   ├── Vigil flags risky change → Sentinel scans it for vulnerabilities
-│   ├── Ledger shows cost spike → traces to which plugin/session caused it
+│   ├── Hornet flags risky change → Reaper scans it for vulnerabilities
+│   ├── Nook shows cost spike → traces to which plugin/session caused it
 │   └── All learnings shared across plugins (Gauss Accumulation network)
 └── Single install: `npx enchanted-mcp` or Docker container
 ```
@@ -58,7 +58,7 @@ enchanted-mcp
 │              enchanted-mcp (client)           │
 │                                              │
 │  ┌─────────┐ ┌─────────┐ ┌─────────┐       │
-│  │  Flux   │ │  Allay  │ │  Vigil  │  ...  │
+│  │  Flux   │ │  Allay  │ │  Hornet  │  ...  │
 │  │  (MCP)  │ │  (MCP)  │ │  (MCP)  │       │
 │  └────┬────┘ └────┬────┘ └────┬────┘       │
 │       │           │           │              │
@@ -76,7 +76,7 @@ enchanted-mcp
 ```
 
 ### Milestone: POC MCP client
-- Connects to Flux + Allay + Vigil + Sentinel + Ledger
+- Connects to Flux + Allay + Hornet + Reaper + Nook
 - Shared event bus for cross-plugin signals
 - Basic web dashboard showing unified session view
 - Cross-plugin learnings (Gauss Accumulation network)
@@ -99,7 +99,7 @@ Add 5 more plugins covering code quality, testing, DevOps, documentation, and AP
 - All 10 plugins connected to enchanted-mcp
 - Dashboard shows full development lifecycle
 - Cross-plugin intelligence covers: prompt → code → test → security → deploy → docs
-- Plugin-to-plugin event triggers (Vigil flags change → Arbiter auto-reviews → Cascade tests)
+- Plugin-to-plugin event triggers (Hornet flags change → Athena auto-reviews → Crucible tests)
 
 ---
 
@@ -143,7 +143,7 @@ Add 5 more plugins covering code quality, testing, DevOps, documentation, and AP
 
 | Phase | Milestone | Plugins | Target |
 |-------|-----------|---------|--------|
-| 1 | Foundation | 5 (Flux, Allay, Vigil, Sentinel, Ledger) | Q2 2026 |
+| 1 | Foundation | 5 (Flux, Allay, Hornet, Reaper, Nook) | Q2 2026 |
 | 2 | MCP POC | 5 + MCP client | Q3 2026 |
 | 3 | Full Coverage | 10 + enhanced MCP | Q4 2026 |
 | 4 | Production | 20 + production MCP | Q1 2027 |
@@ -158,7 +158,7 @@ Every plugin is named after a game entity that metaphorically describes its func
 |--------|--------|------|-----|
 | **Flux** | Enchantment Orbs | Minecraft | XP orbs that power the enchantment table — enchanting prompts |
 | **Allay** | Allay Mob | Minecraft | Flying creature that collects items and brings them to you — collecting tokens |
-| **Hornet** | Hornet | Hollow Knight | Vigilant protector who watches, tests, and judges from the shadows — watching changes |
+| **Hornet** | Hornet | Hollow Knight | Hornetant protector who watches, tests, and judges from the shadows — watching changes |
 | **Reaper** | Reaper Leviathan | Subnautica | You hear it before you see it. Hunts in the dark. Relentless. Nothing gets past it — security scanning |
 | **Nook** | Tom Nook | Animal Crossing | Merchant-banker who tracks every bell you owe — cost accounting |
 | **Athena** | Athena | Hades | Goddess of wisdom who judges your combat quality and grants boons for excellence — code review |
@@ -197,15 +197,15 @@ Every named algorithm across the ecosystem:
 | A3 | Shannon Compression | Allay | Information-theoretic output reduction |
 | A4 | Atomic State Serialization | Allay | Bounded checkpoint persistence |
 | A5 | Content-Addressable Dedup | Allay | Hash-based read deduplication |
-| V1 | Semantic Diff Compression | Vigil | Multi-file change clustering |
-| V2 | Bayesian Trust Scoring | Vigil | Prior-posterior change risk assessment |
-| V3 | Information-Gain Decision | Vigil | Review prioritization by uncertainty reduction |
-| V4 | Session Continuity Graph | Vigil | Decision-causal relationship persistence |
-| V5 | Adversarial Self-Review | Vigil | Specific concern generation for risky changes |
-| V6 | Gauss Learning (Vigil) | Vigil | Developer preference accumulation |
-| S1 | Aho-Corasick Pattern | Sentinel | Multi-pattern secret scanning |
-| S2 | Shannon Entropy Analysis | Sentinel | High-entropy string detection |
-| L1 | Exponential Smoothing | Ledger | Cost forecasting |
-| L2 | Budget Boundary Detection | Ledger | Spend threshold alerting |
+| V1 | Semantic Diff Compression | Hornet | Multi-file change clustering |
+| V2 | Bayesian Trust Scoring | Hornet | Prior-posterior change risk assessment |
+| V3 | Information-Gain Decision | Hornet | Review prioritization by uncertainty reduction |
+| V4 | Session Continuity Graph | Hornet | Decision-causal relationship persistence |
+| V5 | Adversarial Self-Review | Hornet | Specific concern generation for risky changes |
+| V6 | Gauss Learning (Hornet) | Hornet | Developer preference accumulation |
+| S1 | Aho-Corasick Pattern | Reaper | Multi-pattern secret scanning |
+| S2 | Shannon Entropy Analysis | Reaper | High-entropy string detection |
+| L1 | Exponential Smoothing | Nook | Cost forecasting |
+| L2 | Budget Boundary Detection | Nook | Spend threshold alerting |
 
 *This is a living document. Update as plugins ship and algorithms evolve.*
