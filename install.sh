@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
-# Flux installer. The 6 plugins are a coordinated pipeline — they install
-# together or not at all (see .claude-plugin/plugin.json → dependencies).
+# Flux installer. The 6 plugins are a coordinated pipeline; the `full`
+# meta-plugin pulls them all in via one dependency-resolution pass.
 set -euo pipefail
 
 REPO="https://github.com/enchanted-plugins/flux"
@@ -33,23 +33,21 @@ fi
 cat <<'EOF'
 
 ─────────────────────────────────────────────────────────────────────────
-  Flux is a bundle. The 6 plugins call each other at runtime —
-  prompt-crafter spawns convergence-engine, which emits tests.json that
-  prompt-tester executes, and so on. Installing only one leaves the
-  pipeline broken, so every plugin.json lists the other five as
-  dependencies and Claude Code will pull them in together.
+  Flux ships as a 6-plugin pipeline — crafter hands off to convergence,
+  which emits tests.json that tester executes, and so on. The `full`
+  meta-plugin lists all six as dependencies so one install pulls in
+  the whole chain.
 ─────────────────────────────────────────────────────────────────────────
 
   Finish in Claude Code with TWO commands:
 
     /plugin marketplace add enchanted-plugins/flux
-    /plugin install prompt-crafter@flux
+    /plugin install full@flux
 
-  The second command installs all 6 plugins via dependency resolution.
-  (Any of the 6 names works — they're peers. prompt-crafter is just the
-  natural entry point since it generates prompts from scratch.)
+  That installs all 6 plugins via dependency resolution. To cherry-pick
+  a single plugin instead, use e.g. `/plugin install prompt-harden@flux`.
 
   Verify with:   /plugin list
-  Expected:      6 plugins installed under the flux marketplace.
+  Expected:      full + 6 plugins installed under the flux marketplace.
 
 EOF

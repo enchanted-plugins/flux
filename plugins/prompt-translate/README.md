@@ -6,14 +6,14 @@ Converts a prompt optimized for one model into the optimal format for another. X
 
 ## Install
 
-Part of the [Flux](../..) bundle — **all 6 plugins install together**. `prompt-translate` consumes prompts built by `prompt-crafter` / `prompt-refiner` / `convergence-engine` and re-runs `prompt-tester` + `prompt-harden` on the ported prompt to confirm semantics and safety carry over; installing it alone leaves it without prompts to port and no verification loop, so the manifest lists the other five as dependencies.
+Part of the [Flux](../..) bundle. The simplest install is the `full` meta-plugin, which pulls in all 6 Flux plugins via dependency resolution:
 
 ```
 /plugin marketplace add enchanted-plugins/flux
-/plugin install prompt-translate@flux
+/plugin install full@flux
 ```
 
-Claude Code resolves the dependency chain and installs all 6.
+To install this plugin on its own: `/plugin install prompt-translate@flux`. `prompt-translate` consumes prompts built by `prompt-crafter` / `prompt-refiner` / `convergence-engine` and re-runs `prompt-tester` + `prompt-harden` on the ported prompt to confirm semantics and safety carry over — so on its own it has no prompts to port and no verification loop.
 
 ## Why
 

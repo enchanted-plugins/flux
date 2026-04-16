@@ -6,14 +6,14 @@ Give it a task description. It scans your project context, asks targeted questio
 
 ## Install
 
-Part of the [Flux](../..) bundle — **all 6 plugins install together**. `prompt-crafter` hands off to `convergence-engine`, emits `tests.json` for `prompt-tester`, and pairs with `prompt-harden` and `prompt-translate` downstream; installing it alone leaves those handoffs broken, so the manifest lists the other five as dependencies.
+Part of the [Flux](../..) bundle. The simplest install is the `full` meta-plugin, which pulls in all 6 Flux plugins via dependency resolution:
 
 ```
 /plugin marketplace add enchanted-plugins/flux
-/plugin install prompt-crafter@flux
+/plugin install full@flux
 ```
 
-Claude Code resolves the dependency chain and installs all 6.
+To install this plugin on its own: `/plugin install prompt-crafter@flux`. `prompt-crafter` hands off to `convergence-engine`, emits `tests.json` for `prompt-tester`, and pairs with `prompt-harden` / `prompt-translate` downstream — so without the others you'll hit broken handoffs on the first run.
 
 ## Pipeline
 

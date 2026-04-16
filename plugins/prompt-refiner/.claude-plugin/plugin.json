@@ -2,7 +2,9 @@
   "name": "prompt-refiner",
   "description": "Improves existing prompts with diagnosis, convergence engine, and multi-agent review pipeline.",
   "version": "2.0.0",
-  "author": { "name": "enchanted-plugins" },
+  "author": {
+    "name": "enchanted-plugins"
+  },
   "license": "MIT",
   "keywords": [
     "prompt-engineering",
@@ -12,13 +14,8 @@
     "convergence",
     "multi-agent"
   ],
-  "skills": ["./skills/prompt-improver/"],
-  "agents": "./agents/",
-  "dependencies": [
-    "convergence-engine",
-    "prompt-crafter",
-    "prompt-harden",
-    "prompt-tester",
-    "prompt-translate"
-  ]
+  "skills": [
+    "./skills/prompt-improver/"
+  ],
+  "agents": "./agents/"
 }

@@ -181,24 +181,24 @@ Refine anytime with `/refine`. Every step is autonomous.
 
 ## Install
 
-Flux is a **bundle** — all 6 plugins install together. They call each other at runtime (crafter spawns convergence, convergence emits `tests.json` for tester, etc.), so every plugin lists the other five as dependencies. Claude Code pulls the whole pipeline in one resolution pass.
+Flux ships as a 6-plugin pipeline. One meta-plugin — `full` — lists all six as dependencies, so a single install pulls in the whole chain.
 
 **In Claude Code** (recommended):
 
 ```
 /plugin marketplace add enchanted-plugins/flux
-/plugin install prompt-crafter@flux
+/plugin install full@flux
 ```
 
-The second command installs all 6 via auto-resolved dependencies. Any of the 6 names works (`convergence-engine@flux`, `prompt-harden@flux`, …) — they're peers. Verify with `/plugin list` — you should see all 6.
+Claude Code resolves the dependency list and installs all 6 plugins. Verify with `/plugin list`.
+
+**Want to cherry-pick?** Individual plugins are still installable by name — e.g. `/plugin install prompt-harden@flux` if you only need the hardener. The pipeline is designed to work end-to-end, though, so `full@flux` is the path we recommend.
 
 **Via shell** (also installs `shared/scripts/*.py` locally for `output-test` / `output-eval`):
 
 ```bash
 bash <(curl -s https://raw.githubusercontent.com/enchanted-plugins/flux/main/install.sh)
 ```
-
-> **Why no à la carte?** Installing only `prompt-crafter` would leave it unable to hand off to `convergence-engine`; installing only `prompt-tester` would leave it with no `tests.json` to run. The pipeline is the product.
 
 ## 6 Plugins, 7 Agents, 64 Models
 
