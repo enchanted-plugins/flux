@@ -511,7 +511,7 @@ td{{padding:5px 8px;border-bottom:1px solid var(--bd);}}
     <div>
       <h1>{name}</h1>
       <div class="meta">
-        <span class="badge {'b-ok' if status == 'pass' else 'b-no'}">{'PASS' if status == 'pass' else 'NEEDS WORK'}</span>
+        <span class="badge {'b-ok' if status in ('pass','deploy') else 'b-no'}">{'DEPLOY' if status == 'deploy' else 'PASS' if status == 'pass' else 'NEEDS WORK'}</span>
         &nbsp;v{version} &middot; {model} &middot; {domain} &middot; {created}{f' &rarr; {refined}' if refined else ''}
       </div>
     </div>
