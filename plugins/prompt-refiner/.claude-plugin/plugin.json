@@ -13,5 +13,12 @@
     "multi-agent"
   ],
   "skills": ["./skills/prompt-improver/"],
-  "agents": "./agents/"
+  "agents": "./agents/",
+  "dependencies": [
+    "convergence-engine",
+    "prompt-crafter",
+    "prompt-harden",
+    "prompt-tester",
+    "prompt-translate"
+  ]
 }

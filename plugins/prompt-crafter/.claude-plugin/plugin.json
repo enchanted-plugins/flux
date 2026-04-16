@@ -16,5 +16,12 @@
     "./skills/prompt-creator/",
     "./skills/prompt-reviewer/"
   ],
-  "agents": "./agents/"
+  "agents": "./agents/",
+  "dependencies": [
+    "convergence-engine",
+    "prompt-harden",
+    "prompt-refiner",
+    "prompt-tester",
+    "prompt-translate"
+  ]
 }

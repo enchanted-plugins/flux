@@ -4,6 +4,17 @@
 
 Give it a task description. It scans your project context, asks targeted questions, selects from 16 techniques, adapts format to 64 models, then runs the Convergence Engine autonomously until the prompt hits DEPLOY quality.
 
+## Install
+
+Part of the [Flux](../..) bundle — **all 6 plugins install together**. `prompt-crafter` hands off to `convergence-engine`, emits `tests.json` for `prompt-tester`, and pairs with `prompt-harden` and `prompt-translate` downstream; installing it alone leaves those handoffs broken, so the manifest lists the other five as dependencies.
+
+```
+/plugin marketplace add enchanted-plugins/flux
+/plugin install prompt-crafter@flux
+```
+
+Claude Code resolves the dependency chain and installs all 6.
+
 ## Pipeline
 
 ```

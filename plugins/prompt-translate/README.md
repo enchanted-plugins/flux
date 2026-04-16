@@ -4,6 +4,17 @@
 
 Converts a prompt optimized for one model into the optimal format for another. XML → Markdown, CoT → no-CoT, verbose → minimal. Preserves your intent and domain content — only changes the engineering.
 
+## Install
+
+Part of the [Flux](../..) bundle — **all 6 plugins install together**. `prompt-translate` consumes prompts built by `prompt-crafter` / `prompt-refiner` / `convergence-engine` and re-runs `prompt-tester` + `prompt-harden` on the ported prompt to confirm semantics and safety carry over; installing it alone leaves it without prompts to port and no verification loop, so the manifest lists the other five as dependencies.
+
+```
+/plugin marketplace add enchanted-plugins/flux
+/plugin install prompt-translate@flux
+```
+
+Claude Code resolves the dependency chain and installs all 6.
+
 ## Why
 
 You wrote a perfect Claude Opus prompt. Now the team wants to use GPT-4.1. Without translation, you're rewriting from scratch — restructuring XML to Markdown, replacing "think thoroughly" with "think step by step", adding the sandwich method. Prompt-translate does this automatically using the 64-model registry.

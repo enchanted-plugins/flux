@@ -12,5 +12,12 @@
     "prompt-quality"
   ],
   "skills": ["./skills/converge/"],
-  "agents": "./agents/"
+  "agents": "./agents/",
+  "dependencies": [
+    "prompt-crafter",
+    "prompt-harden",
+    "prompt-refiner",
+    "prompt-tester",
+    "prompt-translate"
+  ]
 }

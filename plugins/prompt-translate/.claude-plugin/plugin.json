@@ -6,5 +6,12 @@
   "license": "MIT",
   "keywords": ["translation", "adaptation", "cross-model", "model-conversion", "portability"],
   "skills": ["./skills/translate/"],
-  "agents": "./agents/"
+  "agents": "./agents/",
+  "dependencies": [
+    "convergence-engine",
+    "prompt-crafter",
+    "prompt-harden",
+    "prompt-refiner",
+    "prompt-tester"
+  ]
 }

@@ -4,6 +4,17 @@
 
 Load a saved prompt or paste one in. It diagnoses weaknesses, checks model fit, re-selects techniques, and runs the Convergence Engine to push the score toward DEPLOY.
 
+## Install
+
+Part of the [Flux](../..) bundle — **all 6 plugins install together**. `prompt-refiner` operates on artifacts produced by `prompt-crafter`, spawns `convergence-engine`, and leans on `prompt-tester` / `prompt-harden` / `prompt-translate` for the handoffs after refinement; installing it alone leaves it with nothing to refine and nowhere to hand off to, so the manifest lists the other five as dependencies.
+
+```
+/plugin marketplace add enchanted-plugins/flux
+/plugin install prompt-refiner@flux
+```
+
+Claude Code resolves the dependency chain and installs all 6.
+
 ## Pipeline
 
 ```

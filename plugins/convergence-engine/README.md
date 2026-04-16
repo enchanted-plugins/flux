@@ -4,6 +4,17 @@
 
 Like gradient descent for prompts. Each iteration scores the prompt, identifies the weakest axis, applies a targeted fix, and re-scores. Repeats up to 100 times until the prompt reaches DEPLOY quality.
 
+## Install
+
+Part of the [Flux](../..) bundle — **all 6 plugins install together**. `convergence-engine` is called by `prompt-crafter` and `prompt-refiner`, and its output feeds `prompt-tester` and `prompt-harden`; installing it alone leaves the engine with no callers and no consumers, so the manifest lists the other five as dependencies.
+
+```
+/plugin marketplace add enchanted-plugins/flux
+/plugin install convergence-engine@flux
+```
+
+Claude Code resolves the dependency chain and installs all 6.
+
 ## How It Works
 
 ```

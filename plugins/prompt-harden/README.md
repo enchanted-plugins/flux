@@ -4,6 +4,17 @@
 
 Tests your prompt against 12 adversarial attack patterns — injection, jailbreak, data extraction, encoding bypass, and more. Reports which attacks succeed and suggests specific defenses. Optionally applies the fixes and re-tests.
 
+## Install
+
+Part of the [Flux](../..) bundle — **all 6 plugins install together**. `prompt-harden` audits prompts produced upstream by `prompt-crafter` / `prompt-refiner` / `convergence-engine` and re-runs `prompt-tester` after applying defenses; installing it alone leaves it without prompts to audit and without a regression check, so the manifest lists the other five as dependencies.
+
+```
+/plugin marketplace add enchanted-plugins/flux
+/plugin install prompt-harden@flux
+```
+
+Claude Code resolves the dependency chain and installs all 6.
+
 ## Why
 
 Every production prompt that touches user input is a potential attack surface. Prompt injection is #1 on the OWASP LLM Top 10. This plugin tests your defenses before deployment.

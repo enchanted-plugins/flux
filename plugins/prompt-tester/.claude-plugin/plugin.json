@@ -6,5 +6,12 @@
   "license": "MIT",
   "keywords": ["testing", "assertions", "evaluation", "regression", "ci-cd"],
   "skills": ["./skills/test-runner/"],
-  "agents": "./agents/"
+  "agents": "./agents/",
+  "dependencies": [
+    "convergence-engine",
+    "prompt-crafter",
+    "prompt-harden",
+    "prompt-refiner",
+    "prompt-translate"
+  ]
 }

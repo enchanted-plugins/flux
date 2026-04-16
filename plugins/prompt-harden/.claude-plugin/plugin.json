@@ -6,5 +6,12 @@
   "license": "MIT",
   "keywords": ["security", "hardening", "injection", "jailbreak", "red-team", "owasp"],
   "skills": ["./skills/harden/"],
-  "agents": "./agents/"
+  "agents": "./agents/",
+  "dependencies": [
+    "convergence-engine",
+    "prompt-crafter",
+    "prompt-refiner",
+    "prompt-tester",
+    "prompt-translate"
+  ]
 }
