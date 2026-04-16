@@ -15,11 +15,28 @@ The first prompt engineering platform that learns from itself.
 >
 > Time: under 2 minutes. Manual effort: zero.
 
+## Contents
+
+- [How It Works](#how-it-works)
+- [What Makes Flux Different](#what-makes-flux-different)
+- [The Full Lifecycle](#the-full-lifecycle)
+- [Install](#install)
+- [6 Plugins, 7 Agents, 64 Models](#6-plugins-7-agents-64-models)
+- [What You Get Per Prompt](#what-you-get-per-prompt)
+- [The Science Behind Flux](#the-science-behind-flux)
+- [Output Test Engine](#output-test-engine)
+- [vs Everything Else](#vs-everything-else)
+- [Architecture](#architecture)
+- [Contributing](#contributing)
+- [License](#license)
+
 ## How It Works
 
 Flux doesn't generate prompts. It **engineers** them — then stress-tests, hardens, and translates them across 64 models.
 
 The core innovation is the **Convergence Engine** powered by the **Gauss Convergence Method**: like gradient descent for prompts, each iteration measures the standard deviation from perfection, forms a hypothesis about which fix will reduce it, applies the fix, checks for regression, and auto-reverts if things got worse. It learns from every iteration and persists those learnings across sessions.
+
+The diagram below shows the four-agent pipeline: a user request flows into the **Opus orchestrator** (scan → ask → technique select → generate), which hands off to the **Sonnet optimizer** (convergence, hypothesis-driven fixes, binary assertions, auto-revert) and the **Haiku reviewer** (validation, freshness, format, registry). An approved prompt then enters the **hybrid output tester** (pre-flight → generate → evaluate → fix).
 
 ```mermaid
 graph TD
@@ -134,6 +151,8 @@ Reports VULNERABLE or RESISTANT per attack. Suggests specific defenses. Auto-app
 Wrote the perfect Claude prompt. Now the team needs GPT-4.1. One command: `/translate-prompt --to gpt-4.1`. XML becomes Markdown. "Think thoroughly" becomes "Think step by step." Sandwich method added. Few-shot adjusted. Intent preserved. Score comparison delivered.
 
 ## The Full Lifecycle
+
+A prompt moves left to right through five stages: **Crafter** (Opus, `/create`) produces `prompt.xml` + metadata; **Convergence** (Sonnet, `/converge`) drives it to 9.0+/DEPLOY and appends `learnings.md`; **Tester** (Sonnet, `/test-prompt`) runs assertions; the **Output Test** hybrid pipeline generates and evaluates real model output; **Hardener** (Sonnet, `/harden`) runs 12 attack patterns and emits `audit.json`; **Translator** (Sonnet, `/translate-prompt`) rewrites for a target model with a score comparison attached. Each stage produces a named artifact consumed by the next.
 
 ```mermaid
 graph LR
