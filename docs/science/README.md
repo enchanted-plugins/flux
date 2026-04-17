@@ -10,27 +10,27 @@ These aren't abstractions. Every formula maps to running code.
 
 ### F1. Gauss Convergence Method
 
-**Problem:** Given a prompt $P$, minimize its deviation from ideal quality across 5 dimensions.
+**Problem:** Given a prompt P, minimize its deviation from ideal quality across 5 dimensions.
 
-$$\sigma(P) = \sqrt{\frac{\sum_{i=1}^{5}(S_i(P) - 10)^2}{5}}$$
+<p align="center"><img src="../assets/math/gauss-sigma.svg" alt="sigma(P) = sqrt( sum_{i=1..5} (S_i(P) - 10)^2 / 5 )"></p>
 
-At each iteration $n$, select transformation targeting the weakest axis:
+At each iteration n, select transformation targeting the weakest axis:
 
-$$k^\ast = \arg\min_i S_i(P_n)$$
+<p align="center"><img src="../assets/math/sci-argmin-only.svg" alt="k* = argmin_i S_i(P_n)"></p>
 
-$$P_{n+1} = T_{k^\ast}(P_n)$$
+<p align="center"><img src="../assets/math/sci-transform-only.svg" alt="P_{n+1} = T_{k*}(P_n)"></p>
 
 **Regression protection:**
 
-$$\text{Accept } P_{n+1} \iff \sigma(P_{n+1}) < \sigma(P_n)$$
+<p align="center"><img src="../assets/math/sci-accept.svg" alt="Accept P_{n+1} iff sigma(P_{n+1}) < sigma(P_n)"></p>
 
 **Convergence:**
 
-$$\text{DEPLOY: } \sigma(P) < 0.45 \quad \text{PLATEAU: } \sigma(P_n) = \sigma(P_{n-1}) = \sigma(P_{n-2}) \quad \text{MAX: } n \geq 100$$
+<p align="center"><img src="../assets/math/sci-convergence.svg" alt="DEPLOY: sigma < 0.45 | PLATEAU: three equal sigma | MAX: n >= 100"></p>
 
 **Knowledge accumulation:**
 
-$$K_n = K_{n-1} \cup \lbrace(k^\ast, \Delta\sigma, \text{outcome})\rbrace$$
+<p align="center"><img src="../assets/math/accumulation.svg" alt="K_n = K_{n-1} ∪ { (k*, Δσ, outcome) }"></p>
 
 **Implementation:** `shared/scripts/convergence.py`
 
@@ -40,11 +40,11 @@ $$K_n = K_{n-1} \cup \lbrace(k^\ast, \Delta\sigma, \text{outcome})\rbrace$$
 
 **Problem:** Continuous scoring can miss categorical failures.
 
-Define 8 boolean predicates $A_j: P \to$ TRUE, FALSE:
+Define 8 boolean predicates A_j mapping a prompt to TRUE or FALSE:
 
-$$\text{DEPLOY}(P) \iff \sigma(P) < \tau \ \wedge \ \bigwedge_{j=1}^{8} A_j(P)$$
+<p align="center"><img src="../assets/math/sat-deploy.svg" alt="DEPLOY(P) iff sigma(P) < tau AND all 8 A_j(P) hold"></p>
 
-| $j$ | Predicate | Check |
+| j | Predicate | Check |
 |-----|-----------|-------|
 | 1 | has role | Prompt defines persona |
 | 2 | has task | Prompt defines objective |
@@ -61,15 +61,15 @@ $$\text{DEPLOY}(P) \iff \sigma(P) < \tau \ \wedge \ \bigwedge_{j=1}^{8} A_j(P)$$
 
 ### F3. Cross-Domain Adaptation
 
-**Problem:** Transform a prompt for model $M_s$ into equivalent quality for $M_t$.
+**Problem:** Transform a prompt for model M_s into equivalent quality for M_t.
 
-$$T: (P, M_s) \to (P', M_t)$$
+<p align="center"><img src="../assets/math/adapt-signature.svg" alt="T : (P, M_s) -> (P', M_t)"></p>
 
-$$\text{Semantic}(P') = \text{Semantic}(P) \quad \wedge \quad \text{Techniques}(P') \cap \text{AntiPatterns}(M_t) = \emptyset$$
+<p align="center"><img src="../assets/math/adapt-constraints.svg" alt="Semantic(P') = Semantic(P) AND Techniques(P') ∩ AntiPatterns(M_t) = empty"></p>
 
 Translation applies a composition:
 
-$$P' = A_{M_t} \circ T_{M_t} \circ F_{M_s \to M_t}(P)$$
+<p align="center"><img src="../assets/math/sci-adapt-composition.svg" alt="P' = A_{M_t} ∘ T_{M_t} ∘ F_{M_s -> M_t}(P)"></p>
 
 The 64-model registry provides per-model constraints: format, reasoning type, CoT approach, few-shot requirement, key constraint.
 
@@ -81,11 +81,11 @@ The 64-model registry provides per-model constraints: format, reasoning type, Co
 
 **Problem:** Determine if a prompt resists adversarial inputs.
 
-$$\Omega(P) = \frac{|\lbrace k : \delta(P, \alpha(c_k)) = \text{RESIST}\rbrace|}{|C|}$$
+<p align="center"><img src="../assets/math/robust-omega.svg" alt="Omega(P) = | { k : delta(P, alpha(c_k)) = RESIST } | / |C|"></p>
 
 Hardening maximizes security without degrading quality:
 
-$$P_{\text{hardened}} = \arg\max_{P'} \Omega(P') \quad \text{s.t.} \quad S(P') \geq S(P) - \varepsilon$$
+<p align="center"><img src="../assets/math/robust-hardened.svg" alt="P_hardened = argmax_{P'} Omega(P') subject to S(P') >= S(P) - epsilon"></p>
 
 12 attack classes cover OWASP LLM Top 10 vectors.
 
@@ -97,9 +97,9 @@ $$P_{\text{hardened}} = \arg\max_{P'} \Omega(P') \quad \text{s.t.} \quad S(P') \
 
 **Problem:** Static analysis and dynamic behavior can diverge.
 
-$$\text{VERIFIED}(P) \iff \sigma(P) < \tau \ \wedge \ \text{PassRate}(P, T) = 1.0$$
+<p align="center"><img src="../assets/math/verified.svg" alt="VERIFIED(P) iff sigma(P) < tau AND PassRate(P, T) = 1.0"></p>
 
-$$\text{PassRate}(P, T) = \frac{|\lbrace i : \forall s \in E_i,\ s \subseteq \text{Output}(P, x_i)\rbrace|}{|T|}$$
+<p align="center"><img src="../assets/math/sci-passrate.svg" alt="PassRate(P, T) = | { i : for all s in E_i, s ⊆ Output(P, x_i) } | / |T|"></p>
 
 **Implementation:** `plugins/prompt-tester/skills/test-runner/SKILL.md`
 
@@ -113,13 +113,15 @@ $$\text{PassRate}(P, T) = \frac{|\lbrace i : \forall s \in E_i,\ s \subseteq \te
 
 Hidden states: PRODUCTIVE, READ LOOP, EDIT REVERT, TEST FAIL
 
-$$P(\text{read loop}) = 1 \quad \text{if} \quad \text{count}(\text{read}(f, h)) \geq 3 \ \wedge \ \nexists\ \text{write}(f)$$
+<p align="center"><img src="../assets/math/allay-readloop.svg" alt="P(read loop) = 1 if count(read(f, h)) >= 3 AND no write(f)"></p>
 
-$$P(\text{edit revert}) = 1 \quad \text{if} \quad h(\text{write}_n(f)) = h(\text{write}_{n-2}(f))$$
+<p align="center"><img src="../assets/math/allay-editrevert.svg" alt="P(edit revert) = 1 if hash of write_n(f) equals hash of write_{n-2}(f)"></p>
 
-$$P(\text{test fail}) = 1 \quad \text{if} \quad \text{count}(\text{bash}(\text{cmd}, \text{exit} \neq 0)) \geq 3$$
+<p align="center"><img src="../assets/math/allay-testfail.svg" alt="P(test fail) = 1 if count of bash commands with non-zero exit >= 3"></p>
 
-Cooldown: $\text{Alert}(t) = 1 \iff P(\text{drift}) = 1 \ \wedge \ t - t_{\text{last}} > \tau$
+Cooldown:
+
+<p align="center"><img src="../assets/math/allay-alert.svg" alt="Alert(t) = 1 iff P(drift) = 1 AND t - t_last > tau"></p>
 
 **Implementation:** `plugins/context-guard/hooks/post-tool-use/detect-drift.sh`
 
@@ -129,16 +131,16 @@ Cooldown: $\text{Alert}(t) = 1 \iff P(\text{drift}) = 1 \ \wedge \ t - t_{\text{
 
 **Problem:** Predict turns remaining before compaction.
 
-$$\hat{\mu} = \frac{1}{N}\sum_{i=1}^{N} \text{tokens}_i \qquad \text{runway} = \left\lfloor\frac{\text{remaining}}{\hat{\mu}}\right\rfloor$$
+<p align="center"><img src="../assets/math/allay-forecast.svg" alt="mu_hat = mean of tokens; runway = floor(remaining / mu_hat)"></p>
 
-$$\text{CI} = t_{\alpha/2} \cdot \frac{s}{\sqrt{N}}$$
+<p align="center"><img src="../assets/math/allay-ci.svg" alt="CI = t_{alpha/2} · s / sqrt(N)"></p>
 
 | Runway | Action |
 |--------|--------|
-| $> 20$ | Silent |
-| $10$-$20$ | Suggest checkpoint |
-| $\leq 10$ | Warning |
-| $\leq 3$ | Critical |
+| &gt; 20 | Silent |
+| 10–20 | Suggest checkpoint |
+| ≤ 10 | Warning |
+| ≤ 3 | Critical |
 
 **Implementation:** `plugins/context-guard/skills/token-awareness/SKILL.md`
 
@@ -148,15 +150,15 @@ $$\text{CI} = t_{\alpha/2} \cdot \frac{s}{\sqrt{N}}$$
 
 **Problem:** Reduce token consumption while preserving semantic content.
 
-$$O \to O' \quad \text{s.t.} \quad H(O') \geq \theta \cdot H(O) \ \wedge \ |O'| < |O|$$
+<p align="center"><img src="../assets/math/allay-compression.svg" alt="O -> O' subject to H(O') >= theta · H(O) AND |O'| < |O|"></p>
 
-| Content | $\theta$ | Compression |
-|---------|----------|-------------|
-| Code | $1.0$ | Lossless |
-| Tests | $0.7$ | Pass/fail + first error |
-| Logs | $0.3$ | Summary only |
+| Content | θ | Compression |
+|---------|-----|-------------|
+| Code | 1.0 | Lossless |
+| Tests | 0.7 | Pass/fail + first error |
+| Logs | 0.3 | Summary only |
 
-$$CR(O) = 1 - \frac{|O'|}{|O|}$$
+<p align="center"><img src="../assets/math/allay-cr.svg" alt="CR(O) = 1 - |O'| / |O|"></p>
 
 **Implementation:** `plugins/token-saver/hooks/pre-tool-use/compress-bash.sh`
 
@@ -166,11 +168,11 @@ $$CR(O) = 1 - \frac{|O'|}{|O|}$$
 
 **Problem:** Persist session state to survive compaction.
 
-$$|\text{Checkpoint}(t)| \leq 50\text{KB}$$
+<p align="center"><img src="../assets/math/allay-checkpoint-size.svg" alt="|Checkpoint(t)| <= 50 KB"></p>
 
-$$\text{write}(f.\text{tmp}) \to \text{validate}(f.\text{tmp}) \to \text{rename}(f.\text{tmp}, f)$$
+<p align="center"><img src="../assets/math/allay-atomic.svg" alt="write(f.tmp) -> validate(f.tmp) -> rename(f.tmp, f)"></p>
 
-Locking: $\text{acquire} = \text{mkdir}(\text{lock})$ (atomic on all filesystems)
+Locking: `acquire = mkdir(lock)` (atomic on all filesystems)
 
 **Implementation:** `plugins/state-keeper/hooks/pre-compact/save-checkpoint.sh`
 
@@ -180,9 +182,9 @@ Locking: $\text{acquire} = \text{mkdir}(\text{lock})$ (atomic on all filesystems
 
 **Problem:** Prevent re-reading unchanged files.
 
-$$h_t = \text{SHA256}(\text{content}(f, t))$$
+<p align="center"><img src="../assets/math/allay-sha.svg" alt="h_t = SHA256(content(f, t))"></p>
 
-$$\text{Decision}(f, t) = \begin{cases} \text{BLOCK} & \text{if cache}[f].h = h_t \\\\ \text{ALLOW} & \text{if cache}[f].h \neq h_t \\\\ \text{ALLOW} & \text{if } t - \text{cache}[f].t > \text{TTL} \end{cases}$$
+<p align="center"><img src="../assets/math/allay-decision.svg" alt="Decision(f, t) = BLOCK if cache hash matches; ALLOW if hash differs; ALLOW if cache entry older than TTL"></p>
 
 **Implementation:** `plugins/token-saver/hooks/pre-tool-use/block-duplicates.sh`
 

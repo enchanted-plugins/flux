@@ -16,3 +16,8 @@ __pycache__/
 
 # Temp files
 *.tmp
+
+# Asset toolchain (mermaid-cli + mathjax-full are dev-only; generated SVGs are committed)
+docs/assets/node_modules/
+docs/assets/package-lock.json
+docs/assets/package.json

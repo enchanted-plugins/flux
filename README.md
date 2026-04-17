@@ -46,56 +46,24 @@ The core innovation is the **Convergence Engine** powered by the **Gauss Converg
 
 The diagram below shows the four-agent pipeline: a user request flows into the **Opus orchestrator** (scan → ask → technique select → generate), which hands off to the **Sonnet optimizer** (convergence, hypothesis-driven fixes, binary assertions, auto-revert) and the **Haiku reviewer** (validation, freshness, format, registry). An approved prompt then enters the **hybrid output tester** (pre-flight → generate → evaluate → fix).
 
-```mermaid
-graph TD
-    User(["You: 'I need a prompt for Claude Opus to analyze stocks'"])
+<p align="center">
+  <img src="docs/assets/pipeline.svg"
+       alt="Flux four-agent pipeline: Developer request → Orchestrator (Opus) → Optimizer (Sonnet) → Reviewer (Haiku) → Output Tester (Hybrid)"
+       width="100%" style="max-width: 900px;">
+</p>
 
-    User --> Orch
+<details>
+<summary>View diagram source &amp; regenerate</summary>
 
-    subgraph Orch["ORCHESTRATOR (Opus)"]
-        direction LR
-        scan["Scan context"] --> ask["Ask questions"]
-        ask --> tech["Select techniques"]
-        tech --> gen["Generate prompt"]
-    end
+Source: [docs/assets/pipeline.mmd](docs/assets/pipeline.mmd). Mobile-safe pre-rendered SVG. Regenerate:
 
-    Orch --> Opt
-    Orch --> Rev
-
-    subgraph Opt["OPTIMIZER (Sonnet)"]
-        conv["Convergence Engine<br/><small>Up to 100 iterations</small>"]
-        hypo["Hypothesis-driven fixes"]
-        assert["Binary assertions"]
-        revert["Auto-revert on regression"]
-        conv --> hypo --> assert --> revert
-    end
-
-    subgraph Rev["REVIEWER (Haiku)"]
-        val["Validation checks"]
-        score["Score freshness"]
-        fmt["Format alignment"]
-        reg["Registry cross-ref"]
-        verdict["APPROVED / FAIL"]
-        val --> score --> fmt --> reg --> verdict
-    end
-
-    Opt -->|"when done"| Rev
-    Rev -->|"APPROVED"| OT
-
-    subgraph OT["OUTPUT TESTER (Hybrid)"]
-        direction LR
-        pre["Pre-flight<br/><small>free</small>"]
-        gen2["Generate output"]
-        eval["Evaluate<br/><small>5-axis heuristic</small>"]
-        fix["Fix & loop"]
-        pre --> gen2 --> eval --> fix
-    end
-
-    style Orch fill:#161b22,stroke:#bc8cff,color:#e6edf3
-    style Opt fill:#161b22,stroke:#58a6ff,color:#e6edf3
-    style Rev fill:#161b22,stroke:#3fb950,color:#e6edf3
-    style OT fill:#161b22,stroke:#f0883e,color:#e6edf3
+```bash
+npx @mermaid-js/mermaid-cli \
+  -i docs/assets/pipeline.mmd -o docs/assets/pipeline.svg \
+  -c docs/assets/mermaid.config.json -b "#0d1117" -w 1400
 ```
+
+</details>
 
 No permission prompts. No manual iteration. You describe what you need, the agent network delivers.
 
@@ -162,28 +130,24 @@ Wrote the perfect Claude prompt. Now the team needs GPT-4.1. One command: `/tran
 
 A prompt moves left to right through five stages: **Crafter** (Opus, `/create`) produces `prompt.xml` + metadata; **Convergence** (Sonnet, `/converge`) drives it to 9.0+/DEPLOY and appends `learnings.md`; **Tester** (Sonnet, `/test-prompt`) runs assertions; the **Output Test** hybrid pipeline generates and evaluates real model output; **Hardener** (Sonnet, `/harden`) runs 12 attack patterns and emits `audit.json`; **Translator** (Sonnet, `/translate-prompt`) rewrites for a target model with a score comparison attached. Each stage produces a named artifact consumed by the next.
 
-```mermaid
-graph LR
-    A["🎨 Crafter<br/><small>Opus</small><br/>/create"] -->|prompt.xml| B["⚡ Convergence<br/><small>Sonnet</small><br/>/converge"]
-    B -->|"9.0/10 DEPLOY"| C["🧪 Tester<br/><small>Sonnet</small><br/>/test-prompt"]
-    C -->|"7/7 PASS"| F["📊 Output Test<br/><small>Hybrid</small><br/>output-test.py"]
-    F -->|"9.9/10 PASS"| D["🛡️ Hardener<br/><small>Sonnet</small><br/>/harden"]
-    D -->|"10/12 RESIST"| E["🌐 Translator<br/><small>Sonnet</small><br/>/translate-prompt"]
+<p align="center">
+  <img src="docs/assets/lifecycle.svg"
+       alt="Flux prompt lifecycle: Crafter → Convergence → Tester → Output Test → Hardener → Translator"
+       width="100%" style="max-width: 560px;">
+</p>
 
-    A2(["prompt.xml<br/>+ metadata"]) ~~~ A
-    B2(["learnings.md"]) ~~~ B
-    C2(["results.json"]) ~~~ C
-    F2(["output-reference.md<br/>+ schema + scores"]) ~~~ F
-    D2(["audit.json"]) ~~~ D
-    E2(["prompt-gpt.md<br/>+ comparison"]) ~~~ E
+<details>
+<summary>View diagram source &amp; regenerate</summary>
 
-    style A fill:#161b22,stroke:#bc8cff,color:#e6edf3
-    style B fill:#161b22,stroke:#58a6ff,color:#e6edf3
-    style C fill:#161b22,stroke:#3fb950,color:#e6edf3
-    style F fill:#161b22,stroke:#f0883e,color:#e6edf3
-    style D fill:#161b22,stroke:#f85149,color:#e6edf3
-    style E fill:#161b22,stroke:#d29922,color:#e6edf3
+Source: [docs/assets/lifecycle.mmd](docs/assets/lifecycle.mmd). Mobile-safe pre-rendered SVG. Regenerate:
+
+```bash
+npx @mermaid-js/mermaid-cli \
+  -i docs/assets/lifecycle.mmd -o docs/assets/lifecycle.svg \
+  -c docs/assets/mermaid.config.json -b "#0d1117" -w 1400
 ```
+
+</details>
 
 Refine anytime with `/refine`. Every step is autonomous.
 
@@ -238,45 +202,45 @@ Every Flux engine is built on a formal mathematical model. Full derivations in [
 
 ### Engine 1: Gauss Convergence Method
 
-$$\sigma(P) = \sqrt{\frac{\sum_{i=1}^{5}(S_i(P) - 10)^2}{5}}$$
+<p align="center"><img src="docs/assets/math/gauss-sigma.svg" alt="sigma(P) = sqrt( sum_{i=1..5} (S_i(P) - 10)^2 / 5 )"></p>
 
-$$P_{n+1} = T_{k^\ast}(P_n) \quad \text{where} \quad k^\ast = \arg\min_i S_i(P_n)$$
+<p align="center"><img src="docs/assets/math/gauss-transform.svg" alt="P_{n+1} = T_{k*}(P_n) where k* = argmin_i S_i(P_n)"></p>
 
-Accept $P_{n+1}$ only if $\sigma(P_{n+1}) < \sigma(P_n)$. Auto-revert on regression. Converge when $\sigma < 0.45$. Knowledge accumulates across sessions — skip strategies that historically revert.
+Accept the next iteration only if sigma drops. Auto-revert on regression. Converge when sigma &lt; 0.45. Knowledge accumulates across sessions — skip strategies that historically revert.
 
 ### Engine 2: Boolean Satisfiability Overlay
 
-$$\text{DEPLOY}(P) \iff \sigma(P) < \tau \ \wedge \ \bigwedge_{j=1}^{8} A_j(P)$$
+<p align="center"><img src="docs/assets/math/sat-deploy.svg" alt="DEPLOY(P) iff sigma(P) < tau AND all 8 A_j(P) hold"></p>
 
 8 binary predicates (has\_role, has\_task, has\_format, has\_constraints, has\_edge\_cases, no\_hedges, no\_filler, has\_structure) overlaid on continuous scoring. SAT-first, then optimize.
 
 ### Engine 3: Cross-Domain Adaptation
 
-$$T: (P, M_s) \to (P', M_t)$$
+<p align="center"><img src="docs/assets/math/adapt-signature.svg" alt="T : (P, M_s) -> (P', M_t)"></p>
 
-$$\text{subject to: } \text{Semantic}(P') = \text{Semantic}(P) \ \wedge \ \text{Techniques}(P') \cap \text{AntiPatterns}(M_t) = \emptyset$$
+<p align="center"><img src="docs/assets/math/adapt-constraints.svg" alt="Semantic(P') = Semantic(P) AND Techniques(P') ∩ AntiPatterns(M_t) = empty"></p>
 
 Constraint-preserving prompt transformation across 64 models. Composition of format converter, technique selector, and model adapter.
 
 ### Engine 4: Adversarial Robustness
 
-$$\Omega(P) = \frac{|\lbrace k : \delta(P, \alpha(c_k)) = \text{RESIST}\rbrace|}{|C|}$$
+<p align="center"><img src="docs/assets/math/robust-omega.svg" alt="Omega(P) = | { k : delta(P, alpha(c_k)) = RESIST } | / |C|"></p>
 
-$$P_{\text{hardened}} = \arg\max_{P'} \Omega(P') \quad \text{s.t.} \quad S(P') \geq S(P) - \varepsilon$$
+<p align="center"><img src="docs/assets/math/robust-hardened.svg" alt="P_hardened = argmax_{P'} Omega(P') subject to S(P') >= S(P) - epsilon"></p>
 
 Zero-sum game across 12 attack classes. OWASP LLM Top 10 coverage. Quality-preserving defense injection.
 
 ### Engine 5: Static-Dynamic Dual Verification
 
-$$\text{VERIFIED}(P) \iff \sigma(P) < \tau \ \wedge \ \text{PassRate}(P, T) = 1.0$$
+<p align="center"><img src="docs/assets/math/verified.svg" alt="VERIFIED(P) iff sigma(P) < tau AND PassRate(P, T) = 1.0"></p>
 
 Bridges structure analysis (scoring) with behavioral testing (assertions against real output).
 
 ### Engine 6: Gauss Accumulation (Self-Learning)
 
-$$K_n = K_{n-1} \cup \lbrace(k^\ast, \Delta\sigma, \text{outcome})\rbrace$$
+<p align="center"><img src="docs/assets/math/accumulation.svg" alt="K_n = K_{n-1} ∪ { (k*, Δσ, outcome) }"></p>
 
-Cross-session learning in `learnings.json`. Strategy success rates, pattern detection, persistent plateau identification. Skip $k$ if $\text{revert rate}(k) > 0.5$. The engine gets smarter with every session.
+Cross-session learning in `learnings.json`. Strategy success rates, pattern detection, persistent plateau identification. Skip a strategy k if its historical revert rate exceeds 0.5. The engine gets smarter with every session.
 
 ---
 
@@ -333,6 +297,23 @@ Five scoring axes (offline, zero cost): Structural Completeness, Specificity, Pr
 | PDF audit report | dark theme, single page | - | - | dashboard | - |
 | Dependencies | Python stdlib only | Node.js | Python | SaaS | - |
 | Price | Free (MIT) | Free / Pro | Free | $$$ | Free |
+
+## Behavioral modules
+
+Every skill inherits a set of reusable behavioral contracts from [shared/](shared/) — loaded once into [CLAUDE.md](CLAUDE.md), applied across all plugins.
+
+| Module | What it governs |
+|--------|-----------------|
+| [discipline.md](shared/discipline.md) | Coding conduct: think-first, simplicity, surgical edits, goal-driven loops |
+| [context.md](shared/context.md) | Attention-budget hygiene, U-curve placement, checkpoint protocol |
+| [verification.md](shared/verification.md) | Independent checks, baseline snapshots, dry-run for destructive ops |
+| [delegation.md](shared/delegation.md) | Subagent contracts, tool whitelisting, parallel vs. serial rules |
+| [failure-modes.md](shared/failure-modes.md) | 14-code taxonomy for `learnings.md` so E6 Gauss Accumulation compounds |
+| [tool-use.md](shared/tool-use.md) | Tool-choice hygiene, error payload contract, parallel-dispatch rules |
+| [formatting.md](shared/formatting.md) | Per-target format (XML / Markdown sandwich / minimal / few-shot), prefill + stop sequences |
+| [skill-authoring.md](shared/skill-authoring.md) | SKILL.md frontmatter discipline, discovery test |
+| [hooks.md](shared/hooks.md) | Advisory-only hooks, injection over denial, fail-open |
+| [precedent.md](shared/precedent.md) | Log self-observed failures to `state/precedent-log.md`; consult before risky steps |
 
 ## Architecture
 
