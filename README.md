@@ -53,7 +53,7 @@ The diagram below shows the four-agent pipeline: a user request flows into the *
 </p>
 
 <details>
-<summary><img src="https://img.shields.io/badge/DIAGRAM-Source%20%26%20regenerate-58a6ff?style=for-the-badge&labelColor=0a1628" alt="View diagram source and regenerate"></summary>
+<summary>&nbsp;<img src="https://img.shields.io/badge/%E2%96%B8%20Diagram-Source%20%26%20regenerate-58a6ff?style=flat-square&labelColor=0a1628" alt="Click to view diagram source and regenerate" valign="middle"></summary>
 
 <br/>
 
@@ -136,11 +136,11 @@ A prompt moves left to right through five stages: **Crafter** (Opus, `/create`) 
 <p align="center">
   <img src="docs/assets/lifecycle.svg"
        alt="Flux prompt lifecycle: stages 01 Crafter → 02 Convergence → 03 Tester → 04 Output Test → 05 Hardener → 06 Translator"
-       width="100%" style="max-width: 460px;">
+       width="100%" style="max-width: 320px;">
 </p>
 
 <details>
-<summary><img src="https://img.shields.io/badge/DIAGRAM-Source%20%26%20regenerate-58a6ff?style=for-the-badge&labelColor=0a1628" alt="View diagram source and regenerate"></summary>
+<summary>&nbsp;<img src="https://img.shields.io/badge/%E2%96%B8%20Diagram-Source%20%26%20regenerate-58a6ff?style=flat-square&labelColor=0a1628" alt="Click to view diagram source and regenerate" valign="middle"></summary>
 
 <br/>
 
