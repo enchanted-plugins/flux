@@ -111,3 +111,13 @@ PreCompact    ──▶  Allay (state-keeper: checkpoint before compaction)
 | Hades | Athena | A game where gods judge your performance and reward excellence with boons — quality is earned |
 | Terraria | Crucible | A game where you forge items in increasingly extreme conditions to prove their worth |
 | Factorio | Assembler | A game that IS automation — every machine connects to the next in an optimized pipeline |
+
+## Infrastructure
+
+Beyond the plugins themselves, the ecosystem has one meta-artifact:
+
+| Repo | Role |
+|------|------|
+| [`enchanted-plugins/schematic`](https://github.com/enchanted-plugins/schematic) | Canonical repo template. Every new sibling is cloned from here. Ships the invariant tree: `.claude-plugin/`, `CLAUDE.md` (8-section canonical shape), 10 `shared/conduct/*.md` behavioral modules, `docs/architecture/` auto-generation pipeline, `plugins/example-subplugin/` skeleton, renderer toolchain, tests scaffold. The template itself is never installed — it exists to be cloned. |
+
+The architectural contract for the template is defined in [brand-guide.md § Plugin Structure Standard](brand-guide.md#plugin-structure-standard).
