@@ -19,6 +19,8 @@
 
 ## Plugin Structure Standard
 
+Every @enchanted-plugins product is cloned from [`enchanted-plugins/schematic`](https://github.com/enchanted-plugins/schematic) — the canonical repo template. The tree below is the shape `schematic` ships. New siblings clone it, fill placeholders, and rename `plugins/example-subplugin/` before first commit.
+
 Every @enchanted-plugins product follows this exact structure:
 
 ```
