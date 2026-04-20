@@ -211,6 +211,22 @@ Expected: `prompts/b2b-ticket-router/` with `prompt.xml` + `metadata.json`, and 
 
 ## What You Get Per Prompt
 
+Five slash commands converge on five color-coded artifacts in `prompts/<name>/`, producing a final DEPLOY / HOLD / FAIL verdict from the 5-axis scores + 8 SAT assertions. Color maps lifecycle stages to artifacts: blue = genesis (prompt.xml + metadata.json) · green = verification (tests.json) · red = adversarial (audit.json) · purple = accumulation (learnings.md) · yellow = audit (report.pdf).
+
+<p align="center">
+  <a href="docs/assets/state-flow.mmd" title="View state-flow diagram source (Mermaid)">
+    <img src="docs/assets/state-flow.svg"
+         alt="Flux per-prompt state flow: five slash commands (/create, /converge, /test-prompt, /harden, /translate-prompt) feed five color-coded artifact groups (genesis prompt.xml + metadata.json, verification tests.json, adversarial audit.json, accumulation learnings.md, audit report.pdf) converging on the DEPLOY / HOLD / FAIL verdict"
+         width="100%" style="max-width:1100px;">
+  </a>
+</p>
+
+<sub align="center">
+
+Source: [docs/assets/state-flow.mmd](docs/assets/state-flow.mmd) · Regeneration command in [docs/assets/README.md](docs/assets/README.md).
+
+</sub>
+
 ```
 prompts/b2b-ticket-router/
 ├── prompt.xml          Production-ready prompt

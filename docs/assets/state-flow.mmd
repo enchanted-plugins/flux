@@ -1,0 +1,86 @@
+---
+title: Flux per-prompt state flow
+config:
+  look: neo
+  theme: dark
+  flowchart:
+    curve: basis
+    padding: 18
+    nodeSpacing: 44
+    rankSpacing: 54
+    htmlLabels: true
+    subGraphTitleMargin:
+      top: 14
+      bottom: 18
+---
+flowchart TB
+    TitleBlock["<div style='font-family:ui-monospace,SFMono-Regular,Consolas,monospace;text-align:center;min-width:940px;padding:6px 10px;line-height:1.8'><div style='color:#58a6ff;font-size:15px;letter-spacing:6px;border-bottom:1px solid #1e3a5f;padding-bottom:10px;margin-bottom:10px'>FLUX &nbsp;·&nbsp; STATE&nbsp;FLOW &nbsp;·&nbsp; PER-PROMPT&nbsp;ARTIFACTS</div><div style='display:flex;gap:40px;justify-content:center;font-size:11px;color:#8b949e;letter-spacing:2px'><span>DWG&nbsp;&nbsp;<b style='color:#e6edf3'>FLX-003</b></span><span>REV&nbsp;&nbsp;<b style='color:#e6edf3'>A.1</b></span><span>SCALE&nbsp;&nbsp;<b style='color:#e6edf3'>1:1</b></span><span>ARTIFACTS&nbsp;&nbsp;<b style='color:#e6edf3'>n&nbsp;=&nbsp;5</b></span><span>SHEET&nbsp;&nbsp;<b style='color:#e6edf3'>01&nbsp;/&nbsp;01</b></span></div></div>"]
+
+    subgraph sources["<div style='text-align:center;min-width:940px;font-family:ui-monospace,monospace;color:#8b949e;font-size:11px;letter-spacing:3px'>SKILL&nbsp;INVOCATIONS&nbsp;&nbsp;·&nbsp;&nbsp;COMMAND&nbsp;SOURCES</div>"]
+        direction LR
+        Create["<b>/create</b><br/><small style='color:#6e7681'>prompt-crafter</small>"]
+        Converge["<b>/converge</b><br/><small style='color:#6e7681'>convergence-engine</small>"]
+        Test["<b>/test-prompt</b><br/><small style='color:#6e7681'>prompt-tester</small>"]
+        Harden["<b>/harden</b><br/><small style='color:#6e7681'>prompt-harden</small>"]
+        Translate["<b>/translate-prompt</b><br/><small style='color:#6e7681'>prompt-translate</small>"]
+    end
+
+    subgraph genesis["<div style='text-align:center;min-width:940px;line-height:2'><span style='font-family:ui-monospace,monospace;color:#8b949e;font-size:11px;letter-spacing:3px'>ARTIFACT&nbsp;01&nbsp;·&nbsp;GENESIS</span>&nbsp;&nbsp;·&nbsp;&nbsp;<b style='letter-spacing:2px'>prompts / &lt;name&gt; /</b></div>"]
+        direction LR
+        prompt["<div style='text-align:center;line-height:1.7'><code>prompt.xml</code><br/><small style='color:#6e7681'>Production-ready prompt · format matches target model</small></div>"]
+        meta["<div style='text-align:center;line-height:1.7'><code>metadata.json</code><br/><small style='color:#6e7681'>model · tokens · cost · 5-axis scores · 8 assertions</small></div>"]
+    end
+
+    subgraph validation["<div style='text-align:center;min-width:940px;line-height:2'><span style='font-family:ui-monospace,monospace;color:#8b949e;font-size:11px;letter-spacing:3px'>ARTIFACT&nbsp;02&nbsp;·&nbsp;VERIFICATION</span>&nbsp;&nbsp;·&nbsp;&nbsp;<b style='letter-spacing:2px'>prompts / &lt;name&gt; /</b></div>"]
+        tests["<div style='text-align:center;line-height:1.7'><code>tests.json</code><br/><small style='color:#6e7681'>Regression test cases · ≥ 3 · ≥ 1 edge-case</small></div>"]
+    end
+
+    subgraph hardening["<div style='text-align:center;min-width:940px;line-height:2'><span style='font-family:ui-monospace,monospace;color:#8b949e;font-size:11px;letter-spacing:3px'>ARTIFACT&nbsp;03&nbsp;·&nbsp;ADVERSARIAL</span>&nbsp;&nbsp;·&nbsp;&nbsp;<b style='letter-spacing:2px'>prompts / &lt;name&gt; /</b></div>"]
+        audit["<div style='text-align:center;line-height:1.7'><code>audit.json</code><br/><small style='color:#6e7681'>12 attack patterns · VULNERABLE / RESISTANT verdict</small></div>"]
+    end
+
+    subgraph learning["<div style='text-align:center;min-width:940px;line-height:2'><span style='font-family:ui-monospace,monospace;color:#8b949e;font-size:11px;letter-spacing:3px'>ARTIFACT&nbsp;04&nbsp;·&nbsp;ACCUMULATION</span>&nbsp;&nbsp;·&nbsp;&nbsp;<b style='letter-spacing:2px'>prompts / &lt;name&gt; /</b></div>"]
+        learnings["<div style='text-align:center;line-height:1.7'><code>learnings.md</code><br/><small style='color:#6e7681'>F6 Gauss Accumulation · hypothesis · outcome · persists across sessions</small></div>"]
+    end
+
+    subgraph report["<div style='text-align:center;min-width:940px;line-height:2'><span style='font-family:ui-monospace,monospace;color:#8b949e;font-size:11px;letter-spacing:3px'>ARTIFACT&nbsp;05&nbsp;·&nbsp;AUDIT</span>&nbsp;&nbsp;·&nbsp;&nbsp;<b style='letter-spacing:2px'>prompts / &lt;name&gt; /</b></div>"]
+        pdf["<div style='text-align:center;line-height:1.7'><code>report.pdf</code><br/><small style='color:#6e7681'>Dark-themed single-page · scores · assertions · technique pills · verdict</small></div>"]
+    end
+
+    Deploy(["<b>DEPLOY / HOLD / FAIL</b><br/><small style='color:#8b949e'>verdict from 5-axis + 8 SAT assertions</small>"])
+
+    TitleBlock ~~~ sources
+    Create --> prompt
+    Create --> meta
+    Converge --> prompt
+    Converge --> meta
+    Converge --> learnings
+    meta --> tests
+    Test --> tests
+    Harden --> audit
+    Translate --> prompt
+    prompt --> pdf
+    meta --> pdf
+    tests --> pdf
+    audit --> pdf
+    learnings --> pdf
+    pdf --> Deploy
+    meta --> Deploy
+
+    classDef titleBlock fill:#06111f,stroke:#1e3a5f,stroke-width:1px,color:#e6edf3,rx:4,ry:4
+    classDef sourceNode fill:#0a1628,stroke:#1e3a5f,stroke-width:1.5px,color:#e6edf3,rx:8,ry:8
+    classDef artifactLine fill:#0a1628,stroke:#1e3a5f,stroke-width:1px,color:#c9d1d9,rx:6,ry:6
+    classDef deployNode fill:#0f1d33,stroke:#3fb950,stroke-width:2px,color:#3fb950,rx:14,ry:14
+
+    class TitleBlock titleBlock
+    class Create,Converge,Test,Harden,Translate sourceNode
+    class prompt,meta,tests,audit,learnings,pdf artifactLine
+    class Deploy deployNode
+
+    style genesis fill:#0f1d33,stroke:#58a6ff,stroke-width:2px,color:#e6edf3,rx:12,ry:12
+    style validation fill:#0f1d33,stroke:#3fb950,stroke-width:2px,color:#e6edf3,rx:12,ry:12
+    style hardening fill:#0f1d33,stroke:#d75952,stroke-width:2px,color:#e6edf3,rx:12,ry:12
+    style learning fill:#0f1d33,stroke:#bc8cff,stroke-width:2px,color:#e6edf3,rx:12,ry:12
+    style report fill:#0f1d33,stroke:#d29922,stroke-width:2px,color:#e6edf3,rx:12,ry:12
+
+    linkStyle default stroke:#8b949e,stroke-width:1.5px
