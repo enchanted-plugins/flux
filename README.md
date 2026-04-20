@@ -6,6 +6,7 @@
   <img alt="64 models" src="https://img.shields.io/badge/Models-64-58a6ff?style=for-the-badge">
   <img alt="7 agents" src="https://img.shields.io/badge/Agents-7-d29922?style=for-the-badge">
   <img alt="Gauss Convergence Method" src="https://img.shields.io/badge/Gauss-Convergence-f0883e?style=for-the-badge">
+  <a href="https://www.repostatus.org/#active"><img alt="Project Status: Active" src="https://www.repostatus.org/badges/latest/active.svg"></a>
 </p>
 
 > **An @enchanted-plugins product — algorithm-driven, agent-managed, self-learning.**
@@ -29,20 +30,36 @@ Flux takes its name from the **enchanting mechanic in Minecraft** — the ritual
 
 The question this plugin answers: *What did I say?*
 
+## Who this is for
+
+- Prompt engineers who want a scored, auto-hardened artifact per prompt — not "it looked good in the playground."
+- Teams shipping across multiple LLM families and tired of hand-porting prompts between XML / Markdown-sandwich / o-series-minimal / Gemini-few-shot shapes.
+- Developers who value an honest verdict (DEPLOY / HOLD / FAIL) over a confident one.
+
+Not for:
+
+- Single-model, single-session quick prototyping — `/create` is overkill; write the prompt inline.
+- Teams that want hosted LLM orchestration — Flux is local-only by design, no SaaS layer.
+
 ## Contents
 
 - [How It Works](#how-it-works)
 - [What Makes Flux Different](#what-makes-flux-different)
 - [The Full Lifecycle](#the-full-lifecycle)
 - [Install](#install)
+- [Quickstart](#quickstart)
 - [6 Plugins, 7 Agents, 64 Models](#6-plugins-7-agents-64-models)
 - [What You Get Per Prompt](#what-you-get-per-prompt)
+- [Roadmap](#roadmap)
 - [The Science Behind Flux](#the-science-behind-flux)
 - [Output Test Engine](#output-test-engine)
 - [vs Everything Else](#vs-everything-else)
 - [Agent Conduct (10 Modules)](#agent-conduct-10-modules)
 - [Architecture](#architecture)
+- [Acknowledgments](#acknowledgments)
+- [Versioning & release cadence](#versioning--release-cadence)
 - [Contributing](#contributing)
+- [Citation](#citation)
 - [License](#license)
 
 ## How It Works
@@ -169,6 +186,18 @@ Claude Code resolves the dependency list and installs all 6 plugins. Verify with
 bash <(curl -s https://raw.githubusercontent.com/enchanted-plugins/flux/main/install.sh)
 ```
 
+## Quickstart
+
+Install, craft, converge, ship. Sixty seconds:
+
+```
+/plugin install full@flux
+/create B2B ticket routing system like Zendesk, for Claude Opus
+/converge prompts/b2b-ticket-router
+```
+
+Expected: `prompts/b2b-ticket-router/` with `prompt.xml` + `metadata.json`, and a DEPLOY verdict (σ < 0.45, overall ≥ 9.0, 8/8 SAT assertions) within 2-4 convergence iterations. See [docs/getting-started.md](docs/getting-started.md) for the full guided first run.
+
 ## 6 Plugins, 7 Agents, 64 Models
 
 | Plugin | Command | What | Agent |
@@ -192,6 +221,10 @@ prompts/b2b-ticket-router/
 ```
 
 The **PDF audit report** includes: quality score bars, 8 binary assertion results, technique pills, model profile from the 64-model registry, prompt statistics, audit findings (CRITICAL/WARNING), cost estimate, and an honest verdict with next steps.
+
+## Roadmap
+
+Tracked in [docs/ROADMAP.md](docs/ROADMAP.md) and the shared [ecosystem map](https://github.com/enchanted-plugins/flux/blob/main/docs/ecosystem.md). For upcoming work specific to Flux, see issues tagged [roadmap](https://github.com/enchanted-plugins/flux/labels/roadmap).
 
 ## The Science Behind Flux
 
@@ -318,9 +351,40 @@ Interactive architecture explorer with plugin diagrams, agent cards, and data fl
 
 **[docs/architecture/](docs/architecture/)** — auto-generated from the codebase. Run `python docs/architecture/generate.py` to regenerate.
 
+## Acknowledgments
+
+Flux builds on foundations laid by others:
+
+- **[Claude Code](https://github.com/anthropics/claude-code)** (Anthropic) — the plugin surface this work extends.
+- **[Keep a Changelog](https://keepachangelog.com/)** — CHANGELOG convention.
+- **[Semantic Versioning](https://semver.org/)** — versioning contract.
+- **[Contributor Covenant](https://www.contributor-covenant.org/)** — Code of Conduct.
+- **[repostatus.org](https://www.repostatus.org/)** — status badge.
+- **[Citation File Format](https://citation-file-format.github.io/)** — citation metadata.
+- **[Conventional Commits](https://www.conventionalcommits.org/)** — commit convention.
+
+## Versioning & release cadence
+
+Flux follows [Semantic Versioning](https://semver.org/spec/v2.0.0.html). Breaking changes land on major bumps only; the [CHANGELOG](CHANGELOG.md) flags them explicitly. Release cadence is opportunistic — tags land when accumulated fixes or features justify a cut, not on a fixed schedule. Migration notes between majors live in [docs/upgrading.md](docs/upgrading.md).
+
 ## Contributing
 
 See [CONTRIBUTING.md](CONTRIBUTING.md)
+
+## Citation
+
+If you use this project in research or derivative work, please cite it:
+
+```bibtex
+@software{flux_2026,
+  title = {Flux},
+  author = {{Klaiderman}},
+  year = {2026},
+  url = {https://github.com/enchanted-plugins/flux}
+}
+```
+
+See [CITATION.cff](CITATION.cff) for additional formats (APA, MLA, EndNote).
 
 ## License
 

@@ -1,0 +1,19 @@
+cff-version: 1.2.0
+title: "Flux"
+message: "If you use this software, please cite it as below."
+type: software
+authors:
+  - alias: klaiderman
+    affiliation: "enchanted-plugins"
+repository-code: "https://github.com/enchanted-plugins/flux"
+url: "https://github.com/enchanted-plugins/flux"
+license: MIT
+version: "3.0.0"
+date-released: "2026-04-20"
+abstract: "The first prompt engineering platform that learns from itself — convergence-driven crafting, testing, hardening, and translation across 64 target models."
+keywords:
+  - claude-code
+  - enchanted-plugins
+  - prompt-engineering
+  - llm
+  - convergence
