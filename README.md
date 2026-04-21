@@ -405,3 +405,13 @@ See [CITATION.cff](CITATION.cff) for additional formats (APA, MLA, EndNote).
 ## License
 
 MIT
+
+---
+
+## Role in the ecosystem
+
+Flux is the **prompt-engineering layer** of the @enchanted-plugins stack — it crafts what gets said to a model. Its upstream dependency is Reaper's `config-shield`, which scans the repo at SessionStart so Flux operates on a trusted config surface. Its downstream neighbors observe what Flux produces: Allay measures the tokens Flux's dispatches consume, Hornet scores the changes Flux's prompts induce, and Nook attributes the dollar cost per engine (E1–E6).
+
+Flux does not track tokens (Allay's lane), score change trust (Hornet's lane), review code correctness (Mantis's lane), orchestrate git (Weaver's lane), scan security surfaces (Reaper's lane), or price dispatches (Nook's lane). It engineers the prompt — nothing more.
+
+See [docs/ecosystem.md § Data Flow Between Plugins](docs/ecosystem.md#data-flow-between-plugins) for the full map.
