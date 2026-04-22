@@ -22,13 +22,8 @@ docs/assets/node_modules/
 docs/assets/package-lock.json
 docs/assets/package.json
 
-# Guard against rogue agent scratch in the top-level state/ dir.
-# state/precedent.jsonl is the only tracked artifact here; everything
-# else is scratch (see OP06). Stray .py / .sh / simulation files never
-# commit by accident, even if an agent forgets to clean up.
-state/*.py
-state/*.sh
-state/sim_*
-state/debug_*
-state/*.tmp
-state/scratch/
+# state/ is runtime + scratch. A concurrent session owns this dir.
+# Precedent seed now lives inside the inference-engine plugin
+# (plugins/inference-engine/state/artifacts.jsonl via backfill — see OP06).
+# Nothing here ships.
+state/
