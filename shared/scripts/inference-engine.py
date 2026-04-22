@@ -4,7 +4,7 @@
 Stdlib only. No external runtime deps.
 
 Subcommands:
-    emit <record.json|->            Append an artifact record to state/artifacts-YYYY-MM.jsonl
+    emit <record.json|->            Append an artifact record to state/artifacts.jsonl
     reconcile                       Fingerprint artifacts (U1), run Wald SPRT (U2), update Beta-Binomial (U3), apply EMA decay (U5). Atomic catalog write.
     render-briefing <plugin>        Render state/briefings/<plugin>.md from catalog
     query <term>                    Search catalog by code, tag, or pattern_id. JSON to stdout.

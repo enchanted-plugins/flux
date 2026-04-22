@@ -28,7 +28,7 @@ python ${CLAUDE_PLUGIN_ROOT}/../../shared/scripts/inference-engine.py reconcile
 
 The engine:
 
-- Loads every `state/artifacts-YYYY-MM.jsonl` under the plugin's state dir.
+- Loads `state/artifacts.jsonl` (the master append-only log; legacy date-rotated files still honoured if present).
 - Fingerprints each record via SHA-1 over `(code, sorted(tags))`.
 - For each pattern, accumulates recurrence count (one per artifact, plus any `evidence.iterations` / `evidence.user_rounds_of_pushback` / `evidence.occurrences` / `evidence.times_hit > 1`).
 - Updates Wald SPRT log-likelihood with `LLR_POS = ln(0.30/0.05) ≈ 1.79` per recurrence.

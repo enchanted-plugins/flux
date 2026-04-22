@@ -13,7 +13,7 @@ allowed-tools: Bash(python *) Read Write
 
 # Inference Emit
 
-Append one artifact to `flux/plugins/inference-engine/state/artifacts-YYYY-MM.jsonl`.
+Append one artifact to `flux/plugins/inference-engine/state/artifacts.jsonl`.
 
 ## Usage
 
@@ -68,7 +68,7 @@ EOF
 )
 ```
 
-Confirm the stdout line `emitted <CODE> -> artifacts-YYYY-MM.jsonl`.
+Confirm the stdout line `emitted <CODE> -> artifacts.jsonl`.
 
 ### Step 3: Optional reconcile
 
@@ -79,7 +79,7 @@ If the artifact is high-confidence (existing pattern with fresh evidence), sugge
 Tell the caller:
 
 ```
-Emitted <code> to artifacts-YYYY-MM.jsonl
+Emitted <code> to artifacts.jsonl
 Fingerprint: <first 16 chars of SHA-1>
 Next: /inference-reconcile when ready to update the catalog.
 ```
