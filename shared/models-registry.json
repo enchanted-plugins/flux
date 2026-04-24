@@ -1,6 +1,6 @@
 {
-  "last_updated": "2026-04-09",
-  "model_count": 64,
+  "last_updated": "2026-04-24",
+  "model_count": 85,
   "update_instructions": "When model specs change (new context windows, new models, deprecated models), update this file and bump last_updated. The plugin reads this file as the single source of truth for all model data.",
   "models": {
     "claude-opus-4-6": {
@@ -61,7 +61,7 @@
       "reasoning": "standard",
       "cot_approach": "Improved reasoning but explicit CoT still helps on complex tasks.",
       "few_shot": "Separate # Examples section",
-      "key_constraint": "Check current docs for updated limits"
+      "key_constraint": "Baseline GPT-5 release. Superseded by GPT-5.4 (Mar 2026) and GPT-5.5 (Apr 2026) — prefer the later versions for new work."
     },
     "o1": {
       "family": "o-series",
@@ -524,7 +524,7 @@
       "reasoning": "not-applicable",
       "cot_approach": "Not applicable.",
       "few_shot": "Not applicable",
-      "key_constraint": "5x faster than v7. Native 2K with --hd. Preview/alpha — specs may change."
+      "key_constraint": "First V8 Alpha launched Mar 17, 2026. 4-5x faster than v7. Native 2K with --hd. Preview/alpha — specs may change."
     },
     "niji-7": {
       "family": "Midjourney",
@@ -634,7 +634,7 @@
       "reasoning": "not-applicable",
       "cot_approach": "Not applicable.",
       "few_shot": "Not applicable",
-      "key_constraint": "80B MoE (13B active). Largest open-source image gen. Apache 2.0."
+      "key_constraint": "HunyuanImage-3.0-Instruct released Jan 26, 2026. 80B MoE. Largest open-source image gen. Unified autoregressive multimodal framework. Distilled variant runs in ~8 sampling steps."
     },
     "kling-image-03": {
       "family": "Kuaishou",
@@ -655,6 +655,237 @@
       "cot_approach": "Not applicable.",
       "few_shot": "Not applicable",
       "key_constraint": "Thinking Mode for reasoning-based generation. Long-text rendering. Precise color control."
+    },
+
+    "claude-opus-4-7": {
+      "family": "Claude 4.x",
+      "display_name": "Claude Opus 4.7",
+      "context_window": 1000000,
+      "format": "xml",
+      "reasoning": "extended-thinking",
+      "cot_approach": "Built-in. Use 'think thoroughly' + effort parameter. Do NOT use 'think step by step'.",
+      "few_shot": "3-5 examples in <example> tags",
+      "key_constraint": "Released Apr 16, 2026. SWE-bench Pro 64.3% (up from 53.4% on 4.6). Vision 2576px / ~3.75MP. New tokenizer emits up to 35% more tokens for same input text — budget accordingly. Pricing unchanged from 4.6."
+    },
+
+    "gpt-5.4": {
+      "family": "GPT-5.x",
+      "display_name": "GPT-5.4",
+      "context_window": 1000000,
+      "format": "markdown",
+      "reasoning": "standard",
+      "cot_approach": "Thinking and Pro variants have built-in reasoning; base variant benefits from explicit CoT.",
+      "few_shot": "Separate # Examples section with input/output pairs",
+      "key_constraint": "Released Mar 5, 2026. Variants: Thinking, Pro, mini (Mar 17), nano (Mar 17). Built-in computer-use. 33% fewer factual errors vs 5.2. OSWorld-Verified 75% (vs 47.3% on 5.2). Superseded as flagship by 5.5 Apr 23."
+    },
+
+    "gpt-5.5": {
+      "family": "GPT-5.x",
+      "display_name": "GPT-5.5",
+      "context_window": 1000000,
+      "format": "markdown",
+      "reasoning": "standard",
+      "cot_approach": "Thinking variant unlocks deeper reasoning on harder problems. Base variant benefits from explicit CoT.",
+      "few_shot": "Separate # Examples section with input/output pairs",
+      "key_constraint": "Released Apr 23, 2026. First fully retrained base since GPT-4.5. API pricing $5/M input, $30/M output. 1M context. Variants: Thinking, Pro. Strong at agentic coding, research, data analysis, document/spreadsheet creation, multi-tool workflows."
+    },
+
+    "gpt-5.5-pro": {
+      "family": "GPT-5.x",
+      "display_name": "GPT-5.5 Pro",
+      "context_window": 1000000,
+      "format": "markdown",
+      "reasoning": "standard",
+      "cot_approach": "Pro variant has extended reasoning depth — avoid explicit CoT stacking.",
+      "few_shot": "Separate # Examples section with input/output pairs",
+      "key_constraint": "Released Apr 23, 2026. Higher-accuracy tier of GPT-5.5. API pricing $30/M input, $180/M output — 6x the base 5.5 cost. Use only when base 5.5 quality is insufficient; sandwich method still applies."
+    },
+
+    "gpt-image-2": {
+      "family": "OpenAI (Image Gen)",
+      "display_name": "GPT Image 2",
+      "context_window": 4000,
+      "format": "natural-language",
+      "reasoning": "not-applicable",
+      "cot_approach": "Not applicable.",
+      "few_shot": "Not applicable",
+      "key_constraint": "Released Apr 21, 2026. Native reasoning before generation. 2K output, multi-image consistency, context-aware multi-turn editing. Arena score 1512 (+242 over Nano Banana 2 — largest gap on record). Built on GPT-5.4 backbone. Replaces DALL-E 3 and GPT Image 1.5 in ChatGPT."
+    },
+
+    "gemini-3-pro": {
+      "family": "Gemini",
+      "display_name": "Gemini 3 Pro",
+      "context_window": 1000000,
+      "format": "xml-or-markdown",
+      "reasoning": "reasoning-native",
+      "cot_approach": "Extended thinking built-in. Deep Think mode available.",
+      "few_shot": "ALWAYS REQUIRED",
+      "key_constraint": "Reasoning-native flagship. Temperature MUST stay at 1.0. Superseded by 3.1 Pro as of Feb 2026 — prefer 3.1 Pro for new work."
+    },
+
+    "gemini-3.1-pro": {
+      "family": "Gemini",
+      "display_name": "Gemini 3.1 Pro",
+      "context_window": 1000000,
+      "format": "xml-or-markdown",
+      "reasoning": "reasoning-native",
+      "cot_approach": "Extended thinking built-in. Deep Think mode for hardest problems (RE-Bench 1.27 vs 1.04 on 3 Pro). Avoid forcing explicit CoT.",
+      "few_shot": "ALWAYS REQUIRED — Google's guidance applies despite reasoning-native status",
+      "key_constraint": "Released Feb 19, 2026. 1M context, 64K output. Text/image/audio/video input. Pricing $2/M input, $12/M output. Temperature MUST stay at 1.0. Powers Google Deep Research/Deep Research Max (Apr 22, 2026)."
+    },
+
+    "gemini-3.1-flash": {
+      "family": "Gemini",
+      "display_name": "Gemini 3.1 Flash",
+      "context_window": 1000000,
+      "format": "xml-or-markdown",
+      "reasoning": "standard",
+      "cot_approach": "'Plan before responding' for complex tasks. Thinking mode available.",
+      "few_shot": "ALWAYS REQUIRED",
+      "key_constraint": "Fast/cheap tier of the 3.1 family. Temperature MUST stay at 1.0. Powers Nano Banana 2 image gen and 3.1 Flash TTS (30 conversational voices)."
+    },
+
+    "grok-4.20": {
+      "family": "Grok (xAI)",
+      "display_name": "Grok 4.20",
+      "context_window": 2000000,
+      "format": "markdown",
+      "reasoning": "reasoning-native",
+      "cot_approach": "Multi-agent reasoning is built-in via Heavy system. Avoid forcing external CoT on reasoning variant.",
+      "few_shot": "2-3 examples recommended for base chat; unneeded for Heavy",
+      "key_constraint": "Released Mar 3, 2026 (Beta 2). 4-agent Heavy system: Grok (coordinator), Harper (research), Benjamin (logic/math), Lucas (contrarian). 2M context. xAI API."
+    },
+
+    "grok-4.3": {
+      "family": "Grok (xAI)",
+      "display_name": "Grok 4.3 Beta",
+      "context_window": 2000000,
+      "format": "markdown",
+      "reasoning": "reasoning-native",
+      "cot_approach": "16-agent Heavy system handles reasoning internally.",
+      "few_shot": "2-3 examples recommended",
+      "key_constraint": "Released Apr 17, 2026. Native video input/processing. Slide generation in-chat. 16-agent Heavy carries over from 4.20. 2M context. Beta — verify specs before production."
+    },
+
+    "llama-5": {
+      "family": "Llama",
+      "display_name": "Llama 5",
+      "context_window": 5000000,
+      "format": "special-tokens",
+      "reasoning": "standard",
+      "cot_approach": "Explicit CoT helps. 'Let's work through this step by step.'",
+      "few_shot": "2-4 examples with clear delimiters",
+      "key_constraint": "Released Apr 8, 2026. 600B+ params, open-weight. 5M context — longest of any widely available model. Ships with Llama Guard 4 safety layer. Wrong special tokens silently degrade output."
+    },
+
+    "deepseek-v4-pro": {
+      "family": "DeepSeek",
+      "display_name": "DeepSeek V4 Pro",
+      "context_window": 1000000,
+      "format": "markdown",
+      "reasoning": "standard",
+      "cot_approach": "Explicit CoT helpful. 'Think step by step' works well.",
+      "few_shot": "2-3 examples recommended",
+      "key_constraint": "Released Apr 24, 2026. MoE 1.6T params (49B active). 1M context via hybrid Compressed Sparse + Heavily Compressed Attention — 27% of V3.2's inference FLOPs, 10% of KV cache. Pricing $1.74/M input, $3.48/M output. Open-weight on HF."
+    },
+
+    "deepseek-v4-flash": {
+      "family": "DeepSeek",
+      "display_name": "DeepSeek V4 Flash",
+      "context_window": 1000000,
+      "format": "markdown",
+      "reasoning": "standard",
+      "cot_approach": "Explicit CoT helpful.",
+      "few_shot": "2-3 examples recommended",
+      "key_constraint": "Released Apr 24, 2026. MoE 284B params (13B active). 1M context. Pricing $0.14/M input, $0.28/M output — near-commodity cost for frontier-ish quality. Open-weight on HF."
+    },
+
+    "deepseek-r2": {
+      "family": "DeepSeek",
+      "display_name": "DeepSeek R2",
+      "context_window": 128000,
+      "format": "markdown",
+      "reasoning": "reasoning-native",
+      "cot_approach": "BUILT-IN. Do NOT add explicit CoT. Reasoning is internal.",
+      "few_shot": "2-3 examples helpful for format calibration only",
+      "key_constraint": "Released late Feb 2026. Second-generation reasoning model. Treat like o-series for technique selection. Strong at math and scientific analysis."
+    },
+
+    "qwen-3.6-plus": {
+      "family": "Qwen (Alibaba)",
+      "display_name": "Qwen 3.6-Plus",
+      "context_window": 1000000,
+      "format": "markdown",
+      "reasoning": "reasoning-native",
+      "cot_approach": "Reasoning is active by default on EVERY prompt — no switch, no separate mode. Do NOT stack explicit CoT.",
+      "few_shot": "2-3 examples for format calibration",
+      "key_constraint": "Released Apr 2, 2026. Hybrid linear attention + sparse MoE routing. 1M context. Multimodal. Built for agentic coding workflows. Alibaba Cloud API."
+    },
+
+    "qwen-3.6-max": {
+      "family": "Qwen (Alibaba)",
+      "display_name": "Qwen 3.6-Max-Preview",
+      "context_window": 260000,
+      "format": "markdown",
+      "reasoning": "reasoning-native",
+      "cot_approach": "Reasoning built-in; preserve_thinking flag retains state across multi-turn agent loops.",
+      "few_shot": "2-3 examples for format calibration",
+      "key_constraint": "Released Apr 20, 2026. MoE 35B total / 3B active. 260K context. CLOSED-WEIGHTS (first for Qwen flagship). OpenAI + Anthropic API compatible. Claims top rank on SWE-Bench Pro, Terminal-Bench 2.0, SkillsBench, SciCode, plus internal benchmarks."
+    },
+
+    "mistral-large-3": {
+      "family": "Mistral",
+      "display_name": "Mistral Large 3",
+      "context_window": 256000,
+      "format": "markdown",
+      "reasoning": "standard",
+      "cot_approach": "Explicit CoT helpful. Reasoning variant not yet shipped as of Apr 2026.",
+      "few_shot": "2-3 examples recommended",
+      "key_constraint": "Released Dec 2, 2025. Granular MoE: 675B total / 41B active. Apache 2.0 open-weight — largest OSS MoE from a major lab. 256K context. MMLU-Pro 73.11, MATH-500 93.60."
+    },
+
+    "veo-4": {
+      "family": "Google (Veo)",
+      "display_name": "Veo 4",
+      "context_window": 500,
+      "format": "natural-language",
+      "reasoning": "not-applicable",
+      "cot_approach": "Not applicable.",
+      "few_shot": "Not applicable",
+      "key_constraint": "Released Apr 2026. 4K output, clips up to 30s, native audio. Storyboarding with per-scene prompts + camera/action control for unified narrative. Zero-shot avatar creation. Improved character consistency. Google AI Pro/Ultra only."
+    },
+
+    "midjourney-v8.1-alpha": {
+      "family": "Midjourney",
+      "display_name": "Midjourney v8.1 Alpha",
+      "context_window": 60,
+      "format": "descriptors",
+      "reasoning": "not-applicable",
+      "cot_approach": "Not applicable.",
+      "few_shot": "Not applicable",
+      "key_constraint": "Preview launched Apr 14, 2026 on alpha.midjourney.com. Default HD (native 2K without upscale). HD mode 3x faster and 3x cheaper vs v8 alpha. Standard mode 50% faster, 25% cheaper. Alpha — specs may change."
+    },
+
+    "suno-v5.5": {
+      "family": "Suno",
+      "display_name": "Suno v5.5",
+      "context_window": 3000,
+      "format": "natural-language",
+      "reasoning": "not-applicable",
+      "cot_approach": "Not applicable.",
+      "few_shot": "Not applicable",
+      "key_constraint": "Released Mar 25, 2026. Voice cloning, custom models (train Suno on your music), automatic preference learning. Text-to-music with vocals. Prompt = lyrics + genre/style."
+    },
+
+    "kling-3-video": {
+      "family": "Kuaishou",
+      "display_name": "Kling 3.0 Video",
+      "context_window": 500,
+      "format": "natural-language",
+      "reasoning": "not-applicable",
+      "cot_approach": "Not applicable.",
+      "few_shot": "Not applicable",
+      "key_constraint": "Released Feb 5, 2026. Up to 15s video. Native audio generation (multilingual + dialect/accent). Video 3.0 Omni variant for full multimodal in/out. Consistency and photorealism upgrade over 2.x."
     }
   }
 }

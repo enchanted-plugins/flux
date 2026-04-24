@@ -25,6 +25,7 @@ Wixie is skill-invoked, not hook-driven. The single hook is advisory (prompt-sav
 
 | Stage | Skill | Agent tier | Artifact produced |
 |-------|-------|-----------|-------------------|
+| Research | `/deep-research` (also auto-fires inside `/create`) | Opus decomposer/synth + Sonnet triangulator + Haiku fetchers/validator | `state/briefs/<slug>/{brief.md, sources.jsonl}` |
 | Craft | `/create` | Opus orchestrator + Haiku reviewer | `prompt.*`, `metadata.json` |
 | Refine | `/refine` | Opus orchestrator + Haiku reviewer | `prompt.*` (v++), `metadata.json` |
 | Converge | `/converge` | Sonnet optimizer + Haiku reviewer | `learnings.md`, updated scores |
@@ -34,7 +35,9 @@ Wixie is skill-invoked, not hook-driven. The single hook is advisory (prompt-sav
 
 ## Engines
 
-E1 Gauss Convergence · E2 Boolean Satisfiability Overlay · E3 Cross-Domain Adaptation · E4 Adversarial Robustness · E5 Static-Dynamic Dual Verification · E6 Gauss Accumulation (self-learning). Derivations: `docs/science/README.md`.
+E0 Deep Research (factual ground truth) · E1 Gauss Convergence · E2 Boolean Satisfiability Overlay · E3 Cross-Domain Adaptation · E4 Adversarial Robustness · E5 Static-Dynamic Dual Verification · E6 Gauss Accumulation (self-learning). Derivations: `docs/science/README.md`.
+
+E0 auto-fires inside `/create` (and `/refine`) when the topic depends on external or time-sensitive facts, producing a verified cited brief that the crafter folds into the prompt's `<context>`. Standalone entry: `/deep-research <topic>`. Briefs are reused across skills when `freshness < 30 days`.
 
 ## DEPLOY bar
 
@@ -55,6 +58,7 @@ E1 Gauss Convergence · E2 Boolean Satisfiability Overlay · E3 Cross-Domain Ada
 5. **Ask, don't guess.** If a metadata field is unknown, ask the developer or run the engine. Never fabricate scores, costs, or technique lists.
 6. **ESCALATE on image prompts.** DALL-E, Midjourney, SD, Wixie, Nano Banana, etc. are collaborative — wait for the developer's 1–10 rating and visual feedback each round. After 5+ rounds without progress, recommend a different image model.
 7. **ESCALATE on unknown target model.** If the target model ID is not in `shared/models-registry.json`, stop and ask. The registry is the capability source of truth.
+8. **Offer commit + push after registry or shared-artifact edits.** Whenever you edit `shared/models-registry.json`, a `shared/conduct/*.md` module, or anything a downstream plugin reads as source-of-truth, end the turn by asking whether to commit and push — don't wait for the developer to remember. State the change in one line ("registry bumped to N models, last_updated YYYY-MM-DD") and wait for yes before running git.
 
 ## Artifacts per prompt
 
