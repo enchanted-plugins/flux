@@ -1,6 +1,6 @@
 {
   "last_updated": "2026-04-24",
-  "model_count": 85,
+  "model_count": 255,
   "update_instructions": "When model specs change (new context windows, new models, deprecated models), update this file and bump last_updated. The plugin reads this file as the single source of truth for all model data.",
   "models": {
     "claude-opus-4-6": {
@@ -886,6 +886,1730 @@
       "cot_approach": "Not applicable.",
       "few_shot": "Not applicable",
       "key_constraint": "Released Feb 5, 2026. Up to 15s video. Native audio generation (multilingual + dialect/accent). Video 3.0 Omni variant for full multimodal in/out. Consistency and photorealism upgrade over 2.x."
+    },
+
+    "kimi-k1-5": {
+      "family": "Moonshot (Kimi)",
+      "display_name": "Kimi K1.5",
+      "context_window": 128000,
+      "format": "markdown",
+      "reasoning": "reasoning-native",
+      "cot_approach": "Built-in via RL. Do NOT add explicit 'think step by step' — CoT is emitted by the model.",
+      "few_shot": "Avoid — zero-shot or minimal-shot preferred for reasoning tasks",
+      "key_constraint": "Released Jan 20, 2025. Text-only reasoning (no multimodal). Matches o1 on math/coding."
+    },
+    "kimi-k2": {
+      "family": "Moonshot (Kimi)",
+      "display_name": "Kimi K2",
+      "context_window": 128000,
+      "format": "markdown",
+      "reasoning": "standard",
+      "cot_approach": "Explicit CoT helps.",
+      "few_shot": "Helpful — 2-3 examples",
+      "key_constraint": "Jul 2025 release. 1T params / 32B active MoE, open-weight modified-MIT. Base K2 128K context."
+    },
+    "kimi-k2-5": {
+      "family": "Moonshot (Kimi)",
+      "display_name": "Kimi K2.5",
+      "context_window": 256000,
+      "format": "markdown",
+      "reasoning": "standard",
+      "cot_approach": "Explicit CoT helps on complex tasks.",
+      "few_shot": "Helpful — 2-3 examples",
+      "key_constraint": "Jan 2026. 1T/32B MoE. 256K context, agentic-coding focused."
+    },
+    "kimi-k2-6": {
+      "family": "Moonshot (Kimi)",
+      "display_name": "Kimi K2.6",
+      "context_window": 256000,
+      "format": "markdown",
+      "reasoning": "standard",
+      "cot_approach": "Built-in agent-loop reasoning; explicit CoT redundant in Agent Swarm mode.",
+      "few_shot": "Helpful — especially tool-use traces",
+      "key_constraint": "Released Apr 20, 2026. 1T/32B MoE, open-weight. 300-agent Swarm, 4000-step horizons, MoonViT vision encoder."
+    },
+    "kimi-linear": {
+      "family": "Moonshot (Kimi)",
+      "display_name": "Kimi Linear",
+      "context_window": null,
+      "format": "markdown",
+      "reasoning": "standard",
+      "cot_approach": "Explicit CoT helps.",
+      "few_shot": "Helpful",
+      "key_constraint": "Oct 2025. 48B/3B MoE with Kimi Delta Attention — efficient long-context variant, not a frontier replacement for K2."
+    },
+
+    "glm-4-5": {
+      "family": "Zhipu (GLM)",
+      "display_name": "GLM-4.5",
+      "context_window": 128000,
+      "format": "markdown",
+      "reasoning": "extended-thinking",
+      "cot_approach": "Dual-mode: 'thinking' flag toggles extended reasoning; otherwise fast reply.",
+      "few_shot": "Helpful — 1-2 short examples",
+      "key_constraint": "Jul 2025. 355B/32B MoE, MIT-licensed. Use thinking=enabled for reasoning/agent tasks."
+    },
+    "glm-4-6": {
+      "family": "Zhipu (GLM)",
+      "display_name": "GLM-4.6",
+      "context_window": 200000,
+      "format": "markdown",
+      "reasoning": "extended-thinking",
+      "cot_approach": "Use <reasoning_content>...</reasoning_content> wrapper — the <thinking> tag does NOT trigger reasoning.",
+      "few_shot": "Helpful — 1-2 short examples",
+      "key_constraint": "Sep 2025. 355B MoE, MIT. 200K context. Use personas over adjectives; put constraints HIGH."
+    },
+    "glm-5": {
+      "family": "Zhipu (GLM)",
+      "display_name": "GLM-5",
+      "context_window": 200000,
+      "format": "markdown",
+      "reasoning": "extended-thinking",
+      "cot_approach": "Built-in extended thinking with DeepSeek Sparse Attention over long context.",
+      "few_shot": "Helpful",
+      "key_constraint": "Released Feb 11, 2026. 745B/44B MoE (256 experts, 8 active). Trained fully on Huawei Ascend / MindSpore."
+    },
+
+    "minimax-01": {
+      "family": "MiniMax",
+      "display_name": "MiniMax-Text-01",
+      "context_window": 4000000,
+      "format": "markdown",
+      "reasoning": "standard",
+      "cot_approach": "Explicit CoT helps.",
+      "few_shot": "Helpful — exploit 4M context for many-shot",
+      "key_constraint": "Jan 2025. 456B/45.9B MoE with Lightning (linear) Attention. 1M train / 4M inference context — largest open context window."
+    },
+    "minimax-m1": {
+      "family": "MiniMax",
+      "display_name": "MiniMax M1",
+      "context_window": 1000000,
+      "format": "markdown",
+      "reasoning": "reasoning-native",
+      "cot_approach": "Built-in extended thinking.",
+      "few_shot": "Avoid heavy few-shot on reasoning paths",
+      "key_constraint": "Jun 2025. Lightning-attention reasoning model built on MiniMax-01 stack."
+    },
+    "minimax-m2": {
+      "family": "MiniMax",
+      "display_name": "MiniMax M2",
+      "context_window": 204800,
+      "format": "markdown",
+      "reasoning": "reasoning-native",
+      "cot_approach": "Built-in.",
+      "few_shot": "Helpful for agent tool-use",
+      "key_constraint": "Oct 26, 2025. Agent/coding focus; 204.8K official context window."
+    },
+    "minimax-m2-7": {
+      "family": "MiniMax",
+      "display_name": "MiniMax M2.7",
+      "context_window": 200000,
+      "format": "markdown",
+      "reasoning": "reasoning-native",
+      "cot_approach": "Built-in; self-evolution loop handles internal reasoning.",
+      "few_shot": "Helpful",
+      "key_constraint": "Mar 18, 2026. ~230B/10B MoE, self-evolving (handles 30-50% of its own training). $0.30/M tokens."
+    },
+
+    "step-2-16k": {
+      "family": "StepFun",
+      "display_name": "Step-2 16k",
+      "context_window": 16000,
+      "format": "markdown",
+      "reasoning": "standard",
+      "cot_approach": "Explicit CoT helps.",
+      "few_shot": "Helpful",
+      "key_constraint": "Jul 2024. Trillion-parameter MoE; first Chinese startup 1T-param model. Short 16K context limits long-doc use."
+    },
+    "step-r1-v-mini": {
+      "family": "StepFun",
+      "display_name": "Step-R1-V-Mini",
+      "context_window": null,
+      "format": "markdown",
+      "reasoning": "reasoning-native",
+      "cot_approach": "Built-in visual reasoning CoT.",
+      "few_shot": "Avoid on reasoning paths",
+      "key_constraint": "Apr 2025. Multimodal reasoning model for visual/image interpretation."
+    },
+    "step-3": {
+      "family": "StepFun",
+      "display_name": "Step-3",
+      "context_window": null,
+      "format": "markdown",
+      "reasoning": "reasoning-native",
+      "cot_approach": "Built-in multimodal reasoning.",
+      "few_shot": "Helpful for VL tasks",
+      "key_constraint": "Jul 2025. 321B/38B MoE VLM with MFA + AFD co-design for cheap decoding. Open-weight on HF."
+    },
+    "step-3-5-flash": {
+      "family": "StepFun",
+      "display_name": "Step 3.5 Flash",
+      "context_window": null,
+      "format": "markdown",
+      "reasoning": "standard",
+      "cot_approach": "Explicit CoT helps; agent-optimized.",
+      "few_shot": "Helpful — tool-use traces",
+      "key_constraint": "Lightweight open-source MoE 196.81B total / ~11B active. Designed for agents."
+    },
+
+    "ernie-4-5": {
+      "family": "Baidu (ERNIE)",
+      "display_name": "ERNIE 4.5",
+      "context_window": null,
+      "format": "markdown",
+      "reasoning": "standard",
+      "cot_approach": "Explicit CoT helps; a 28B-A3B 'Thinking' variant exists with built-in reasoning.",
+      "few_shot": "Helpful",
+      "key_constraint": "Apache 2.0 open-weight family (incl. ERNIE-4.5-VL-28B-A3B-Thinking). Predecessor to ERNIE 5.0."
+    },
+    "ernie-5": {
+      "family": "Baidu (ERNIE)",
+      "display_name": "ERNIE 5.0",
+      "context_window": null,
+      "format": "markdown",
+      "reasoning": "standard",
+      "cot_approach": "Explicit CoT helps on text tasks.",
+      "few_shot": "Helpful",
+      "key_constraint": "Official launch Jan 22, 2026 (unveiled Nov 13, 2025). 2.4T param native omni-modal (text/image/audio/video). Proprietary, PaddlePaddle-based."
+    },
+
+    "hunyuan-turbo-s": {
+      "family": "Tencent (Hunyuan)",
+      "display_name": "Hunyuan Turbo S",
+      "context_window": 256000,
+      "format": "markdown",
+      "reasoning": "standard",
+      "cot_approach": "Adaptive long/short CoT fusion — model auto-selects depth.",
+      "few_shot": "Helpful",
+      "key_constraint": "Feb 27, 2025. Hybrid Transformer-Mamba MoE; fast-thinking base for T1."
+    },
+    "hunyuan-t1": {
+      "family": "Tencent (Hunyuan)",
+      "display_name": "Hunyuan T1",
+      "context_window": null,
+      "format": "markdown",
+      "reasoning": "reasoning-native",
+      "cot_approach": "Built-in deep reasoning — do NOT add explicit CoT.",
+      "few_shot": "Avoid on reasoning paths",
+      "key_constraint": "Mar 29, 2025 GA. Hybrid-Mamba-Transformer MoE reasoning model. MMLU-PRO 87.2, rivals DeepSeek-R1 at R1-tier pricing."
+    },
+    "hunyuan-2": {
+      "family": "Tencent (Hunyuan)",
+      "display_name": "Hunyuan 2.0",
+      "context_window": null,
+      "format": "markdown",
+      "reasoning": "standard",
+      "cot_approach": "Explicit CoT helps.",
+      "few_shot": "Helpful",
+      "key_constraint": "Dec 8, 2025. 406B-parameter next-gen Hunyuan flagship text model."
+    },
+
+    "skywork-o1": {
+      "family": "Skywork (Kunlun)",
+      "display_name": "Skywork o1",
+      "context_window": null,
+      "format": "markdown",
+      "reasoning": "reasoning-native",
+      "cot_approach": "Built-in deep thought + self-reflection — do NOT add explicit CoT.",
+      "few_shot": "Avoid on reasoning paths",
+      "key_constraint": "Feb 2025. First Chinese logical-reasoning LLM; Open/Lite/Preview variants. Open-weight family on HF."
+    },
+    "skywork-or1-32b": {
+      "family": "Skywork (Kunlun)",
+      "display_name": "Skywork-OR1-32B-Preview",
+      "context_window": null,
+      "format": "markdown",
+      "reasoning": "reasoning-native",
+      "cot_approach": "Built-in reasoning.",
+      "few_shot": "Avoid on reasoning paths",
+      "key_constraint": "Apr 13, 2025. Open-source, approaches DeepSeek-R1-671B on code/math at 32B scale."
+    },
+
+    "command-a-03-2025": {
+      "family": "Cohere",
+      "display_name": "Command A (03-2025)",
+      "context_window": 256000,
+      "format": "markdown",
+      "reasoning": "standard",
+      "cot_approach": "Prompt-driven step-by-step; no native thinking channel.",
+      "few_shot": "Helpful",
+      "key_constraint": "111B, 256K ctx, runs on 2 GPUs; released Mar 2025; tool-use/RAG-optimized, prefers structured JSON tool schemas."
+    },
+    "command-a-reasoning-08-2025": {
+      "family": "Cohere",
+      "display_name": "Command A Reasoning (08-2025)",
+      "context_window": 256000,
+      "format": "markdown",
+      "reasoning": "reasoning-native",
+      "cot_approach": "Built-in reasoning traces; avoid external CoT prompting.",
+      "few_shot": "Avoid",
+      "key_constraint": "Released Aug 2025; 32K max output for extended reasoning — keep prompt lean, let model think."
+    },
+    "command-a-vision-07-2025": {
+      "family": "Cohere",
+      "display_name": "Command A Vision (07-2025)",
+      "context_window": 128000,
+      "format": "markdown",
+      "reasoning": "standard",
+      "cot_approach": "Describe image first, reason second.",
+      "few_shot": "Helpful",
+      "key_constraint": "Released Jul 2025; image+text in, text out; 128K ctx — enterprise doc/chart understanding."
+    },
+    "command-r-08-2024": {
+      "family": "Cohere",
+      "display_name": "Command R (08-2024)",
+      "context_window": 128000,
+      "format": "markdown",
+      "reasoning": "standard",
+      "cot_approach": "Explicit step-by-step required.",
+      "few_shot": "Helpful",
+      "key_constraint": "32B refresh, 50% higher throughput vs prior R; improved tool-use decisioning; Safety Modes beta flag."
+    },
+    "command-r7b-12-2024": {
+      "family": "Cohere",
+      "display_name": "Command R7B (12-2024)",
+      "context_window": 128000,
+      "format": "markdown",
+      "reasoning": "standard",
+      "cot_approach": "Explicit CoT; tight context helps small model.",
+      "few_shot": "Required",
+      "key_constraint": "Final R-series model, 7B; strong RAG/tool-use for size; released Dec 2024."
+    },
+    "aya-expanse-32b": {
+      "family": "Cohere",
+      "display_name": "Aya Expanse 32B",
+      "context_window": 128000,
+      "format": "markdown",
+      "reasoning": "standard",
+      "cot_approach": "Standard prompt-driven reasoning.",
+      "few_shot": "Helpful",
+      "key_constraint": "Released Dec 2024; 23-language frontier model — specify target language explicitly for best results."
+    },
+
+    "phi-4-mini-instruct": {
+      "family": "Phi (Microsoft)",
+      "display_name": "Phi-4-mini",
+      "context_window": 128000,
+      "format": "markdown",
+      "reasoning": "standard",
+      "cot_approach": "Standard; benefits from explicit CoT.",
+      "few_shot": "Required",
+      "key_constraint": "3.8B dense; function calling supported as of Feb 2025; small model — terse prompts and examples essential."
+    },
+    "phi-4-multimodal-instruct": {
+      "family": "Phi (Microsoft)",
+      "display_name": "Phi-4-multimodal",
+      "context_window": 128000,
+      "format": "markdown",
+      "reasoning": "standard",
+      "cot_approach": "Modality-specific LoRA adapters; don't mix prompts across modalities in one turn.",
+      "few_shot": "Required",
+      "key_constraint": "5.6B unified speech+vision+text; released Feb 2025; use modality routers — don't flip mid-prompt."
+    },
+    "phi-4-reasoning": {
+      "family": "Phi (Microsoft)",
+      "display_name": "Phi-4-reasoning",
+      "context_window": 32000,
+      "format": "minimal",
+      "reasoning": "reasoning-native",
+      "cot_approach": "Trained on o3-mini traces; emits <think> blocks natively — no external CoT.",
+      "few_shot": "Avoid",
+      "key_constraint": "14B reasoning model released Apr-May 2025; runs on laptops; STEM/code focus — strip preambles."
+    },
+    "phi-4-mini-reasoning": {
+      "family": "Phi (Microsoft)",
+      "display_name": "Phi-4-mini-reasoning",
+      "context_window": 128000,
+      "format": "minimal",
+      "reasoning": "reasoning-native",
+      "cot_approach": "Distilled from DeepSeek-R1; native thinking.",
+      "few_shot": "Avoid",
+      "key_constraint": "3.8B math-specialist; released Apr 2025 — do NOT add 'think step by step', already doing it."
+    },
+    "phi-4-mini-flash-reasoning": {
+      "family": "Phi (Microsoft)",
+      "display_name": "Phi-4-mini-flash-reasoning",
+      "context_window": 64000,
+      "format": "minimal",
+      "reasoning": "reasoning-native",
+      "cot_approach": "Native reasoning with 10x throughput architecture (SambaY).",
+      "few_shot": "Avoid",
+      "key_constraint": "Released Jul 2025; 64K ctx; latency-optimized math reasoning — terser prompts exploit speed gain."
+    },
+
+    "llama-3.1-nemotron-70b-instruct": {
+      "family": "Nvidia (Nemotron)",
+      "display_name": "Llama 3.1 Nemotron 70B Instruct",
+      "context_window": 131072,
+      "format": "markdown",
+      "reasoning": "standard",
+      "cot_approach": "RLHF'd for helpful verbose answers; explicit CoT still helps.",
+      "few_shot": "Helpful",
+      "key_constraint": "Released Oct 2024; HelpSteer2-tuned — tends to over-explain, ask for concise output if needed."
+    },
+    "llama-3.1-nemotron-ultra-253b-v1": {
+      "family": "Nvidia (Nemotron)",
+      "display_name": "Llama 3.1 Nemotron Ultra 253B",
+      "context_window": 128000,
+      "format": "markdown",
+      "reasoning": "reasoning-native",
+      "cot_approach": "Dynamic reasoning toggle — set system flag to enable/disable thinking.",
+      "few_shot": "Avoid",
+      "key_constraint": "Released 2025; first open model with toggleable reasoning — control via system prompt flag, not prompt engineering."
+    },
+    "nemotron-mini-4b-instruct": {
+      "family": "Nvidia (Nemotron)",
+      "display_name": "Nemotron-Mini-4B-Instruct",
+      "context_window": 4096,
+      "format": "markdown",
+      "reasoning": "standard",
+      "cot_approach": "Keep reasoning compact — tiny ctx.",
+      "few_shot": "Required",
+      "key_constraint": "Released Sep 2024; distilled from Nemotron-4 15B for on-device roleplay/RAG/function-calling — 4K ctx is the hard wall."
+    },
+    "nemotron-4-340b-instruct": {
+      "family": "Nvidia (Nemotron)",
+      "display_name": "Nemotron-4 340B Instruct",
+      "context_window": 4096,
+      "format": "markdown",
+      "reasoning": "standard",
+      "cot_approach": "Standard CoT prompting.",
+      "few_shot": "Helpful",
+      "key_constraint": "Released Jun 2024; intended for synthetic-data generation and instruction tuning, not general chat."
+    },
+
+    "granite-3.1-8b-instruct": {
+      "family": "IBM (Granite)",
+      "display_name": "Granite 3.1 8B Instruct",
+      "context_window": 128000,
+      "format": "markdown",
+      "reasoning": "standard",
+      "cot_approach": "Explicit step-by-step; enterprise-tuned so prefers formal tone.",
+      "few_shot": "Helpful",
+      "key_constraint": "Released Dec 2024; context extended from 4K→128K via RoPE — 12 languages; tool-use supported."
+    },
+    "granite-3.2-8b-instruct": {
+      "family": "IBM (Granite)",
+      "display_name": "Granite 3.2 8B Instruct",
+      "context_window": 128000,
+      "format": "markdown",
+      "reasoning": "reasoning-native",
+      "cot_approach": "Optional thinking toggle; VLM variant for documents.",
+      "few_shot": "Helpful",
+      "key_constraint": "Released Feb 26 2025; adds reasoning + vision variants; enterprise doc-understanding focus."
+    },
+    "granite-4.0-h-small": {
+      "family": "IBM (Granite)",
+      "display_name": "Granite 4.0 H-Small",
+      "context_window": 128000,
+      "format": "markdown",
+      "reasoning": "standard",
+      "cot_approach": "Standard CoT; hybrid arch favors long ctx.",
+      "few_shot": "Helpful",
+      "key_constraint": "Released Oct 2025; hybrid Mamba-2/Transformer MoE 32B-total/9B-active — 70% less memory, 2x faster long-ctx."
+    },
+    "granite-code-34b-instruct": {
+      "family": "IBM (Granite)",
+      "display_name": "Granite Code 34B Instruct",
+      "context_window": 8192,
+      "format": "markdown",
+      "reasoning": "standard",
+      "cot_approach": "Think before coding; show signatures first.",
+      "few_shot": "Helpful",
+      "key_constraint": "Released May 2024; trained on 116 languages — specify language explicitly; 8K ctx limits whole-repo tasks."
+    },
+
+    "falcon3-7b-instruct": {
+      "family": "TII (Falcon)",
+      "display_name": "Falcon3-7B-Instruct",
+      "context_window": 32768,
+      "format": "markdown",
+      "reasoning": "standard",
+      "cot_approach": "Explicit CoT required; dense arch.",
+      "few_shot": "Required",
+      "key_constraint": "Released Dec 2024; 14T-token training; 1.58-bit quant variants available — small-model terseness applies."
+    },
+    "falcon3-mamba-7b-instruct": {
+      "family": "TII (Falcon)",
+      "display_name": "Falcon3-Mamba-7B-Instruct",
+      "context_window": 32768,
+      "format": "markdown",
+      "reasoning": "standard",
+      "cot_approach": "SSM-based; linear-time inference favors long prompts.",
+      "few_shot": "Required",
+      "key_constraint": "Released Dec 2024; pure Mamba SSM (no attention) — different recall profile than transformers, test carefully."
+    },
+    "falcon-h1-34b-instruct": {
+      "family": "TII (Falcon)",
+      "display_name": "Falcon-H1 34B Instruct",
+      "context_window": 262000,
+      "format": "markdown",
+      "reasoning": "standard",
+      "cot_approach": "Hybrid Transformer+Mamba; standard CoT.",
+      "few_shot": "Helpful",
+      "key_constraint": "Released May 2025; 262K ctx; 18 languages native incl. Arabic — specify lang in system prompt."
+    },
+    "falcon-h1r-7b": {
+      "family": "TII (Falcon)",
+      "display_name": "Falcon-H1R-7B",
+      "context_window": 256000,
+      "format": "minimal",
+      "reasoning": "reasoning-native",
+      "cot_approach": "GRPO-trained native reasoning; emits long-form thinking.",
+      "few_shot": "Avoid",
+      "key_constraint": "Released Jan 2026; 7B reasoning matching 14-47B on math/code — budget output tokens generously."
+    },
+
+    "solar-pro-2": {
+      "family": "Upstage (Solar)",
+      "display_name": "Solar Pro 2",
+      "context_window": 64000,
+      "format": "markdown",
+      "reasoning": "reasoning-native",
+      "cot_approach": "Dual-mode: Chat Mode or Reasoning Mode — user selects.",
+      "few_shot": "Helpful",
+      "key_constraint": "Released Jul 2025; 31B agentic; toggle mode via API flag — Korean/English/Japanese strongest."
+    },
+    "inflection-3-pi": {
+      "family": "Inflection",
+      "display_name": "Inflection-3 Pi",
+      "context_window": 8000,
+      "format": "markdown",
+      "reasoning": "standard",
+      "cot_approach": "Conversational-first; avoid heavy structural prompting.",
+      "few_shot": "Avoid",
+      "key_constraint": "Released Oct 2024; EQ/roleplay/support focus — conversational register, 8K ctx limits doc tasks."
+    },
+
+    "jamba-1.6-mini": {
+      "family": "AI21 (Jamba)",
+      "display_name": "Jamba 1.6 Mini",
+      "context_window": 256000,
+      "format": "markdown",
+      "reasoning": "standard",
+      "cot_approach": "SSM-Transformer hybrid; long-ctx RAG strength.",
+      "few_shot": "Helpful",
+      "key_constraint": "Released Mar 6 2025; 52B/12B-active MoE; grounded-generation + JSON output native."
+    },
+    "jamba-1.6-large": {
+      "family": "AI21 (Jamba)",
+      "display_name": "Jamba 1.6 Large",
+      "context_window": 256000,
+      "format": "markdown",
+      "reasoning": "standard",
+      "cot_approach": "Hybrid SSM; explicit CoT still helps.",
+      "few_shot": "Helpful",
+      "key_constraint": "Released Mar 2025; 398B/94B-active; best open model for private enterprise long-ctx deployment."
+    },
+    "jamba-1.7-large": {
+      "family": "AI21 (Jamba)",
+      "display_name": "Jamba 1.7 Large",
+      "context_window": 256000,
+      "format": "markdown",
+      "reasoning": "standard",
+      "cot_approach": "Improved grounding — cite sources inline.",
+      "few_shot": "Helpful",
+      "key_constraint": "Released Jul 7 2025; grounding + instruction-following gains over 1.6."
+    },
+
+    "reka-flash-3": {
+      "family": "Reka",
+      "display_name": "Reka Flash 3",
+      "context_window": 32000,
+      "format": "special-tokens",
+      "reasoning": "reasoning-native",
+      "cot_approach": "Budget-forcing: specify max reasoning steps via special tags.",
+      "few_shot": "Helpful",
+      "key_constraint": "Released Mar 11 2025; 21B; unique 'budget forcing' — cap thinking tokens via tag, don't prompt-engineer it."
+    },
+
+    "snowflake-arctic-instruct": {
+      "family": "Snowflake",
+      "display_name": "Snowflake Arctic Instruct",
+      "context_window": 4096,
+      "format": "markdown",
+      "reasoning": "standard",
+      "cot_approach": "SQL/code-biased; state schema first.",
+      "few_shot": "Helpful",
+      "key_constraint": "Released Apr 2024; 480B/17B-active MoE; SQL+code specialist — 4K ctx is the bottleneck."
+    },
+
+    "palmyra-x5": {
+      "family": "Writer (Palmyra)",
+      "display_name": "Palmyra X5",
+      "context_window": 1000000,
+      "format": "markdown",
+      "reasoning": "extended-thinking",
+      "cot_approach": "Adaptive reasoning — model decides depth; sub-second tool calling.",
+      "few_shot": "Helpful",
+      "key_constraint": "Released Apr 28 2025; 1M ctx, 8K max output; use full-doc grounding, not excerpts."
+    },
+
+    "sonar-reasoning": {
+      "family": "Perplexity",
+      "display_name": "Perplexity Sonar Reasoning",
+      "context_window": 128000,
+      "format": "markdown",
+      "reasoning": "reasoning-native",
+      "cot_approach": "Powered by DeepSeek-R1 1776 variant — native step reasoning.",
+      "few_shot": "Avoid",
+      "key_constraint": "Released Feb 2025; search-grounded reasoning — queries trigger web retrieval, don't paste sources."
+    },
+    "sonar-deep-research": {
+      "family": "Perplexity",
+      "display_name": "Perplexity Sonar Deep Research",
+      "context_window": 128000,
+      "format": "markdown",
+      "reasoning": "reasoning-native",
+      "cot_approach": "Autonomous multi-step retrieval + synthesis; 20-50 queries per run.",
+      "few_shot": "Avoid",
+      "key_constraint": "Released 2025; autonomous research agent — expect 200+ sources per report, specify scope tightly."
+    },
+
+    "apple-foundation-on-device": {
+      "family": "Apple",
+      "display_name": "Apple On-Device Foundation Model",
+      "context_window": 4096,
+      "format": "special-tokens",
+      "reasoning": "standard",
+      "cot_approach": "Guided generation via Swift framework constrains output shape.",
+      "few_shot": "Helpful",
+      "key_constraint": "Released Jun 2025 (WWDC25); ~3B on-device, 16 langs; use Swift Foundation Models API + LoRA adapters, not raw prompts."
+    },
+    "apple-foundation-server": {
+      "family": "Apple",
+      "display_name": "Apple Server Foundation Model",
+      "context_window": null,
+      "format": "special-tokens",
+      "reasoning": "standard",
+      "cot_approach": "PT-MoE routing; tool-calling native.",
+      "few_shot": "Helpful",
+      "key_constraint": "Released Jun 2025; Parallel-Track MoE; accessible only via Apple Intelligence — not a public API."
+    },
+
+    "gemma-2-27b-it": {
+      "family": "Gemma (Google)",
+      "display_name": "Gemma 2 27B Instruct",
+      "context_window": 8192,
+      "format": "markdown",
+      "reasoning": "standard",
+      "cot_approach": "Explicit CoT required; no native thinking.",
+      "few_shot": "Required",
+      "key_constraint": "Released Jun 2024; interleaved local/global attn; 8K ctx is the hard wall — chunk long inputs."
+    },
+    "gemma-2-9b-it": {
+      "family": "Gemma (Google)",
+      "display_name": "Gemma 2 9B Instruct",
+      "context_window": 8192,
+      "format": "markdown",
+      "reasoning": "standard",
+      "cot_approach": "Explicit CoT required.",
+      "few_shot": "Required",
+      "key_constraint": "Released Jun 2024; outperforms Llama 3 8B; 8K ctx — few-shot always."
+    },
+    "gemma-3-27b-it": {
+      "family": "Gemma (Google)",
+      "display_name": "Gemma 3 27B Instruct",
+      "context_window": 128000,
+      "format": "markdown",
+      "reasoning": "standard",
+      "cot_approach": "Explicit CoT; multimodal image+text input.",
+      "few_shot": "Required",
+      "key_constraint": "Released Mar 12 2025; 140+ langs, vision via SigLIP; 1B variant is 32K ctx only."
+    },
+    "gemma-3-12b-it": {
+      "family": "Gemma (Google)",
+      "display_name": "Gemma 3 12B Instruct",
+      "context_window": 128000,
+      "format": "markdown",
+      "reasoning": "standard",
+      "cot_approach": "Explicit CoT; vision-capable.",
+      "few_shot": "Required",
+      "key_constraint": "Released Mar 2025; multimodal + function calling + structured outputs; always few-shot."
+    },
+    "gemma-3-4b-it": {
+      "family": "Gemma (Google)",
+      "display_name": "Gemma 3 4B Instruct",
+      "context_window": 128000,
+      "format": "markdown",
+      "reasoning": "standard",
+      "cot_approach": "Explicit CoT; terse prompts for small model.",
+      "few_shot": "Required",
+      "key_constraint": "Released Mar 2025; laptop-deployable multimodal; few-shot examples mandatory."
+    },
+    "codegemma-7b-it": {
+      "family": "Gemma (Google)",
+      "display_name": "CodeGemma 7B Instruct",
+      "context_window": 8192,
+      "format": "markdown",
+      "reasoning": "standard",
+      "cot_approach": "Show function signature, then implementation.",
+      "few_shot": "Helpful",
+      "key_constraint": "Released Apr 9 2024; fill-in-middle supported via special tokens; specify language."
+    },
+    "paligemma-3b": {
+      "family": "Gemma (Google)",
+      "display_name": "PaliGemma 3B",
+      "context_window": 8192,
+      "format": "markdown",
+      "reasoning": "standard",
+      "cot_approach": "Caption/VQA style — short task prefix + image.",
+      "few_shot": "Avoid",
+      "key_constraint": "Released May 14 2024; SigLIP+Gemma VLM; task prefix format (caption/detect/segment) drives behavior, not CoT."
+    },
+    "shieldgemma-2-4b": {
+      "family": "Gemma (Google)",
+      "display_name": "ShieldGemma 2 (4B)",
+      "context_window": 8192,
+      "format": "markdown",
+      "reasoning": "standard",
+      "cot_approach": "Classifier-style — binary/multi-class safety verdicts.",
+      "few_shot": "Avoid",
+      "key_constraint": "Released 2025 on Gemma-3 base; safety classifier for images — use official policy templates, not free-form."
+    },
+    "recurrentgemma-9b": {
+      "family": "Gemma (Google)",
+      "display_name": "RecurrentGemma 9B",
+      "context_window": 8192,
+      "format": "markdown",
+      "reasoning": "standard",
+      "cot_approach": "Griffin arch; finite-state — memory doesn't grow past 2K local window.",
+      "few_shot": "Required",
+      "key_constraint": "Released Apr 11 2024; recurrent+local-attn hybrid — long-range recall weaker than transformer peers."
+    },
+
+    "gemini-3.1-flash-lite-preview": {
+      "family": "Gemini",
+      "display_name": "Gemini 3.1 Flash-Lite Preview",
+      "context_window": 1000000,
+      "format": "markdown",
+      "reasoning": "extended-thinking",
+      "cot_approach": "Configurable thinking_level (LOW/MEDIUM/HIGH); defaults to low dynamic thinking for latency-critical workloads.",
+      "few_shot": "ALWAYS REQUIRED (Gemini default)",
+      "key_constraint": "Released Mar 2026. Temperature MUST stay at 1.0. Built for cost/latency — keep prompts tight; set thinking_level=LOW unless task demands deeper reasoning."
+    },
+    "gemini-embedding-2-preview": {
+      "family": "Gemini",
+      "display_name": "Gemini Embedding 2 (multimodal)",
+      "context_window": 8192,
+      "format": "minimal",
+      "reasoning": "standard",
+      "cot_approach": "None — embedding-only model; no generative reasoning.",
+      "few_shot": "contextual",
+      "key_constraint": "Released 2026. First natively multimodal Gemini embedding (text+image+video+audio+docs in one space). Pass task_type — skipping it degrades retrieval quality."
+    },
+    "gemini-embedding-001": {
+      "family": "Gemini",
+      "display_name": "Gemini Embedding 001 (text)",
+      "context_window": 2048,
+      "format": "minimal",
+      "reasoning": "standard",
+      "cot_approach": "None — embedding-only.",
+      "few_shot": "contextual",
+      "key_constraint": "Text-only GA embedding. task_type required for best recall; 3072-dim default with Matryoshka truncation to 768/1536."
+    },
+    "gemini-robotics-er-1.6-preview": {
+      "family": "Gemini",
+      "display_name": "Gemini Robotics-ER 1.6",
+      "context_window": null,
+      "format": "markdown",
+      "reasoning": "reasoning-native",
+      "cot_approach": "Embodied spatial reasoning over camera frames; returns structured action/grounding plans rather than free prose.",
+      "few_shot": "ALWAYS REQUIRED (Gemini default)",
+      "key_constraint": "Released Apr 14 2026. Temperature MUST stay at 1.0. Specialised for physical/robot scenes — prompt with image+task+constraints schema; prior ER-1.5 shuts down Apr 30 2026."
+    },
+    "gemini-3.1-flash-live-preview": {
+      "family": "Gemini",
+      "display_name": "Gemini 3.1 Flash Live",
+      "context_window": 1000000,
+      "format": "markdown",
+      "reasoning": "standard",
+      "cot_approach": "Real-time dialogue tuned; minimise internal reasoning to preserve <500ms voice latency.",
+      "few_shot": "ALWAYS REQUIRED (Gemini default)",
+      "key_constraint": "Released 2026 via Live API (WebSocket). Temperature MUST stay at 1.0. System prompt is the ONLY place to set persona — per-turn instructions often lost in streaming context."
+    },
+    "gemini-nano-chrome": {
+      "family": "Google (on-device)",
+      "display_name": "Gemini Nano (Chrome Prompt API)",
+      "context_window": 4096,
+      "format": "minimal",
+      "reasoning": "standard",
+      "cot_approach": "Single-turn only; no chain-of-thought — short instruction + input performs best.",
+      "few_shot": "contextual",
+      "key_constraint": "Chrome 138+ behind flags. English/Spanish/Japanese (from Chrome 140), text-only, no images. Suits summarise / reformulate / classify; quality degrades on multi-step tasks — decompose server-side."
+    },
+    "gemini-nano-mlkit": {
+      "family": "Google (on-device)",
+      "display_name": "Gemini Nano (Android ML Kit GenAI)",
+      "context_window": null,
+      "format": "minimal",
+      "reasoning": "standard",
+      "cot_approach": "No CoT — designed for short focused prompts; keep under a few hundred tokens.",
+      "few_shot": "contextual",
+      "key_constraint": "Android on-device via AICore on Pixel 8+/9/compatible devices. Safety filters non-configurable; output truncated silently when device thermals throttle — handle partial responses."
+    },
+
+    "playground-v3": {
+      "family": "Playground",
+      "display_name": "Playground v3",
+      "context_window": 500,
+      "format": "natural-language",
+      "reasoning": "not-applicable",
+      "cot_approach": "Not applicable.",
+      "few_shot": "Not applicable",
+      "key_constraint": "Deep-integrated Llama3-8B LLM as text encoder, not CLIP — write full descriptive sentences, not keyword lists. Strong at logos/typography. Commercial API via Playground platform."
+    },
+    "leonardo-phoenix-1-0": {
+      "family": "Leonardo",
+      "display_name": "Leonardo Phoenix 1.0",
+      "context_window": 500,
+      "format": "natural-language",
+      "reasoning": "not-applicable",
+      "cot_approach": "Not applicable.",
+      "few_shot": "Not applicable",
+      "key_constraint": "Leonardo's first in-house foundation model (not SDXL fine-tune). Up to 5MP. Supports negative prompts and alchemy/contrast toggles. Iterative Edit-with-AI via API."
+    },
+    "leonardo-lucid-origin": {
+      "family": "Leonardo",
+      "display_name": "Lucid Origin",
+      "context_window": 500,
+      "format": "natural-language",
+      "reasoning": "not-applicable",
+      "cot_approach": "Not applicable.",
+      "few_shot": "Not applicable",
+      "key_constraint": "Full HD, strong prompt adherence on multi-element scenes; vivid saturation. Available on Cloudflare Workers AI and Leonardo API. Relaxed-tier unlimited."
+    },
+    "leonardo-anime-xl": {
+      "family": "Leonardo",
+      "display_name": "Leonardo Anime XL",
+      "context_window": 77,
+      "format": "descriptors",
+      "reasoning": "not-applicable",
+      "cot_approach": "Not applicable.",
+      "few_shot": "Not applicable",
+      "key_constraint": "SDXL-derived; CLIP 77-token cap. Use Danbooru-style tags and character descriptors. Negative prompts required to avoid realism drift."
+    },
+    "krea-1": {
+      "family": "Krea",
+      "display_name": "Krea 1",
+      "context_window": 500,
+      "format": "natural-language",
+      "reasoning": "not-applicable",
+      "cot_approach": "Not applicable.",
+      "few_shot": "Not applicable",
+      "key_constraint": "Photorealism-tuned to avoid 'AI look'. Up to 4K/16MP. Open-weights variant FLUX.1-Krea-dev available under FLUX.1-dev non-commercial license."
+    },
+    "flux-krea-dev": {
+      "family": "Krea/BFL",
+      "display_name": "FLUX.1 Krea [dev]",
+      "context_window": 500,
+      "format": "natural-language",
+      "reasoning": "not-applicable",
+      "cot_approach": "Not applicable.",
+      "few_shot": "Not applicable",
+      "key_constraint": "Open-weights version of Krea 1, 12B rectified-flow transformer. Non-commercial FLUX.1-dev license; compatible with FLUX LoRAs. Opinionated aesthetic bias."
+    },
+    "bria-2-3": {
+      "family": "Bria",
+      "display_name": "BRIA 2.3",
+      "context_window": 77,
+      "format": "natural-language",
+      "reasoning": "not-applicable",
+      "cot_approach": "Not applicable.",
+      "few_shot": "Not applicable",
+      "key_constraint": "Fully licensed training data, full IP indemnity. Do not request trademarked/fictional characters, public figures, or logos — the model refuses and the license voids."
+    },
+    "bria-3-2": {
+      "family": "Bria",
+      "display_name": "BRIA 3.2",
+      "context_window": 500,
+      "format": "natural-language",
+      "reasoning": "not-applicable",
+      "cot_approach": "Not applicable.",
+      "few_shot": "Not applicable",
+      "key_constraint": "Latest Bria pipeline. Commercial-only licensing with full legal liability coverage. Same IP-safe content constraints as 2.3; upgraded illustration/human rendering."
+    },
+    "higgsfield-soul-2": {
+      "family": "Higgsfield",
+      "display_name": "Higgsfield Soul 2.0",
+      "context_window": 500,
+      "format": "natural-language",
+      "reasoning": "not-applicable",
+      "cot_approach": "Not applicable.",
+      "few_shot": "Not applicable",
+      "key_constraint": "Released 2026-02-17. Fashion/editorial aesthetic foundation model with 20+ curated presets — name a preset for consistent look. Soul-ID for character consistency."
+    },
+    "stable-image-ultra": {
+      "family": "Stability AI",
+      "display_name": "Stable Image Ultra",
+      "context_window": 500,
+      "format": "natural-language",
+      "reasoning": "not-applicable",
+      "cot_approach": "Not applicable.",
+      "few_shot": "Not applicable",
+      "key_constraint": "SD3.5-Large-backed hosted service via REST v2beta. $0.08/image. Supports negative_prompt, aspect_ratio, seed. Distinct API endpoint from SD3.5-Large weights."
+    },
+    "stable-image-core": {
+      "family": "Stability AI",
+      "display_name": "Stable Image Core",
+      "context_window": 500,
+      "format": "natural-language",
+      "reasoning": "not-applicable",
+      "cot_approach": "Not applicable.",
+      "few_shot": "Not applicable",
+      "key_constraint": "1.5MP output, style-preset parameter (cinematic, anime, photographic, etc.). 'No prompt engineering needed' — short natural prompts preferred over long flux-style."
+    },
+    "sd-3-5-large-turbo": {
+      "family": "Stability AI",
+      "display_name": "Stable Diffusion 3.5 Large Turbo",
+      "context_window": 256,
+      "format": "natural-language",
+      "reasoning": "not-applicable",
+      "cot_approach": "Not applicable.",
+      "few_shot": "Not applicable",
+      "key_constraint": "Distilled 4-step variant of SD3.5-Large. Do not set cfg>1 or steps>8 — both degrade output. Same MMDiT prompt style as SD3.5 base."
+    },
+    "sd-3-5-medium": {
+      "family": "Stability AI",
+      "display_name": "Stable Diffusion 3.5 Medium",
+      "context_window": 256,
+      "format": "natural-language",
+      "reasoning": "not-applicable",
+      "cot_approach": "Not applicable.",
+      "few_shot": "Not applicable",
+      "key_constraint": "2.5B MMDiT-X, runs on consumer GPU. 0.25–2MP resolution range. Community license: free under $1M revenue. Separate from SD3.5-Large endpoints."
+    },
+    "stable-cascade": {
+      "family": "Stability AI",
+      "display_name": "Stable Cascade",
+      "context_window": 77,
+      "format": "natural-language",
+      "reasoning": "not-applicable",
+      "cot_approach": "Not applicable.",
+      "few_shot": "Not applicable",
+      "key_constraint": "3-stage Würstchen pipeline (A/B/C); 42x compression. Non-commercial research license only. Tune Stage C prompt separately from Stage B refinement for best control."
+    },
+    "dall-e-3-hd": {
+      "family": "OpenAI (Image Gen)",
+      "display_name": "DALL-E 3 (HD quality)",
+      "context_window": 4000,
+      "format": "natural-language",
+      "reasoning": "not-applicable",
+      "cot_approach": "Not applicable.",
+      "few_shot": "Not applicable",
+      "key_constraint": "Quality='hd' on dall-e-3 — a knob, not a separate model. Triggers silent prompt rewrite by OpenAI; prepend 'I NEED to test...' to bypass rewrite."
+    },
+    "seedream-5-lite": {
+      "family": "ByteDance (Seed)",
+      "display_name": "Seedream 5.0 Lite",
+      "context_window": 1000,
+      "format": "natural-language",
+      "reasoning": "not-applicable",
+      "cot_approach": "Not applicable.",
+      "few_shot": "Not applicable",
+      "key_constraint": "Released 2026-02. Deep-thinking + web-search-integrated generation; up to 14 reference images per request. $0.035/image (~22% cheaper than 4.5). Native edit support."
+    },
+    "grok-imagine": {
+      "family": "xAI",
+      "display_name": "Grok Imagine (Aurora)",
+      "context_window": 500,
+      "format": "natural-language",
+      "reasoning": "not-applicable",
+      "cot_approach": "Not applicable.",
+      "few_shot": "Not applicable",
+      "key_constraint": "Aurora MoE autoregressive backbone; hybrid with Flux.1 Pro text rendering. $0.02/image API. 'Spicy' mode unlocks NSFW. SuperGrok $30/mo minimum for web."
+    },
+    "luma-photon-flash": {
+      "family": "Luma Labs",
+      "display_name": "Luma Photon Flash",
+      "context_window": 500,
+      "format": "natural-language",
+      "reasoning": "not-applicable",
+      "cot_approach": "Not applicable.",
+      "few_shot": "Not applicable",
+      "key_constraint": "Speed-optimized Photon at $0.002/image. Same prompt grammar as Photon 1 but trades fine detail for latency. Same ref-image slots retained."
+    },
+    "amazon-titan-image-g1-v2": {
+      "family": "Amazon",
+      "display_name": "Titan Image Generator G1 v2",
+      "context_window": 512,
+      "format": "natural-language",
+      "reasoning": "not-applicable",
+      "cot_approach": "Not applicable.",
+      "few_shot": "Not applicable",
+      "key_constraint": "Bedrock-only (us-east-1, us-west-2). v2 adds image-conditioning, background removal, color-palette hex control, subject-consistency fine-tune. Console lacks v2 features — API only."
+    },
+    "nvidia-sana": {
+      "family": "Nvidia",
+      "display_name": "Sana 1.6B",
+      "context_window": 500,
+      "format": "natural-language",
+      "reasoning": "not-applicable",
+      "cot_approach": "Not applicable.",
+      "few_shot": "Not applicable",
+      "key_constraint": "Linear-attention DiT, 4096x4096 native, uses Gemma-style decoder-only LLM as text encoder (not T5). Non-commercial research license. 23x faster than FLUX-dev."
+    },
+    "hart-0-7b": {
+      "family": "MIT Han Lab",
+      "display_name": "HART 0.7B 1024px",
+      "context_window": 300,
+      "format": "natural-language",
+      "reasoning": "not-applicable",
+      "cot_approach": "Not applicable.",
+      "few_shot": "Not applicable",
+      "key_constraint": "Hybrid autoregressive (discrete AR + 37M residual diffusion). 1024x1024 only. Apache 2.0 code; weights MIT. Throughput 4.5–7.7x diffusion peers."
+    },
+    "lumina-image-2": {
+      "family": "Alpha-VLLM",
+      "display_name": "Lumina-Image 2.0",
+      "context_window": 500,
+      "format": "natural-language",
+      "reasoning": "not-applicable",
+      "cot_approach": "Not applicable.",
+      "few_shot": "Not applicable",
+      "key_constraint": "Main weights Apache 2.0 BUT bundled VAE is from FLUX.1-dev (non-commercial). Swap to FLUX-schnell VAE for commercial use. Unified text+image framework."
+    },
+    "pixart-sigma": {
+      "family": "PixArt",
+      "display_name": "PixArt-Sigma",
+      "context_window": 300,
+      "format": "natural-language",
+      "reasoning": "not-applicable",
+      "cot_approach": "Not applicable.",
+      "few_shot": "Not applicable",
+      "key_constraint": "Pure-transformer latent diffusion, native 4K in single pass. CreativeML Open RAIL++-M license. 1024-MS and 512-MS checkpoints."
+    },
+    "hunyuan-image-2-1": {
+      "family": "Tencent",
+      "display_name": "HunyuanImage 2.1",
+      "context_window": 1000,
+      "format": "natural-language",
+      "reasoning": "not-applicable",
+      "cot_approach": "Not applicable.",
+      "few_shot": "Not applicable",
+      "key_constraint": "17B params, native 2K. Open weights (Tencent Hunyuan license). 1000-token ultra-long prompt budget. Strong bilingual CN/EN text rendering for posters."
+    },
+    "qwen-image-2-0": {
+      "family": "Alibaba (Tongyi Lab)",
+      "display_name": "Qwen-Image 2.0",
+      "context_window": 1000,
+      "format": "natural-language",
+      "reasoning": "not-applicable",
+      "cot_approach": "Not applicable.",
+      "few_shot": "Not applicable",
+      "key_constraint": "Released 2026-02-10. 7B unified gen+edit (down from 20B in v1). Apache 2.0. Commercial-grade Chinese and English text-in-image rendering — its headline strength."
+    },
+    "illustrious-xl-1-0": {
+      "family": "Illustrious",
+      "display_name": "Illustrious XL 1.0",
+      "context_window": 77,
+      "format": "descriptors",
+      "reasoning": "not-applicable",
+      "cot_approach": "Not applicable.",
+      "few_shot": "Not applicable",
+      "key_constraint": "SDXL-base anime model. CLIP 77-token cap, Danbooru tags preferred over sentences. Use `1girl, 1boy` count tags. Fair-AI license restricts pure commercial resale."
+    },
+    "noobai-xl": {
+      "family": "NoobAI",
+      "display_name": "NoobAI XL (v-prediction)",
+      "context_window": 77,
+      "format": "descriptors",
+      "reasoning": "not-applicable",
+      "cot_approach": "Not applicable.",
+      "few_shot": "Not applicable",
+      "key_constraint": "Illustrious-XL fine-tune; ships in epsilon and v-prediction forms — v-pred requires ZSNR scheduler + rescale_cfg≈0.7 or outputs go grey. Danbooru tags."
+    },
+    "animagine-xl-4": {
+      "family": "Animagine",
+      "display_name": "Animagine XL 4.0",
+      "context_window": 77,
+      "format": "descriptors",
+      "reasoning": "not-applicable",
+      "cot_approach": "Not applicable.",
+      "few_shot": "Not applicable",
+      "key_constraint": "SDXL-retrained on 8.4M anime images. Quality tags `masterpiece, best quality, newest` required; year tags affect style era. Fair-AI license."
+    },
+    "meta-imagine-emu": {
+      "family": "Meta",
+      "display_name": "Imagine with Meta (Emu)",
+      "context_window": 300,
+      "format": "natural-language",
+      "reasoning": "not-applicable",
+      "cot_approach": "Not applicable.",
+      "few_shot": "Not applicable",
+      "key_constraint": "No public API — consumer-only via Imagine.meta.com, WhatsApp/Messenger/IG chat. Region-gated. Skip if API access is required; there is no commercial endpoint."
+    },
+
+    "sora-1": {
+      "family": "OpenAI (Sora)",
+      "display_name": "OpenAI Sora 1",
+      "context_window": 500,
+      "format": "natural-language",
+      "reasoning": "not-applicable",
+      "cot_approach": "Not applicable.",
+      "few_shot": "Not applicable",
+      "key_constraint": "Up to 20s, 1080p, text-to-video and image-to-video via ChatGPT Plus/Pro. No native audio. Released Dec 2024. Commercial use per OpenAI ToS. Multi-shot via storyboard."
+    },
+    "sora-1-turbo": {
+      "family": "OpenAI (Sora)",
+      "display_name": "OpenAI Sora 1 Turbo",
+      "context_window": 500,
+      "format": "natural-language",
+      "reasoning": "not-applicable",
+      "cot_approach": "Not applicable.",
+      "few_shot": "Not applicable",
+      "key_constraint": "Faster Sora 1 variant for ChatGPT Plus, 5-20s clips, 480p/720p/1080p tiers. No native audio. Image-to-video and remix supported."
+    },
+    "sora-2": {
+      "family": "OpenAI (Sora)",
+      "display_name": "OpenAI Sora 2",
+      "context_window": 500,
+      "format": "natural-language",
+      "reasoning": "not-applicable",
+      "cot_approach": "Not applicable.",
+      "few_shot": "Not applicable",
+      "key_constraint": "Native synchronized audio (speech+SFX), improved physics, up to 25s, 1080p. Cameo feature for identity insertion. Released Sept 2025. API via sora-2 endpoint."
+    },
+    "sora-2-pro": {
+      "family": "OpenAI (Sora)",
+      "display_name": "OpenAI Sora 2 Pro",
+      "context_window": 500,
+      "format": "natural-language",
+      "reasoning": "not-applicable",
+      "cot_approach": "Not applicable.",
+      "few_shot": "Not applicable",
+      "key_constraint": "Higher-fidelity Sora 2 tier; longer clips, better prompt adherence, native audio. ChatGPT Pro tier. Released Oct 2025."
+    },
+    "veo-2": {
+      "family": "Google (Veo)",
+      "display_name": "Google Veo 2",
+      "context_window": 1000,
+      "format": "natural-language",
+      "reasoning": "not-applicable",
+      "cot_approach": "Not applicable.",
+      "few_shot": "Not applicable",
+      "key_constraint": "Up to 4K, 8s clips via Vertex AI / Gemini API. Text- and image-to-video. No native audio. Cinematic camera controls in prompt grammar."
+    },
+    "veo-3": {
+      "family": "Google (Veo)",
+      "display_name": "Google Veo 3",
+      "context_window": 1000,
+      "format": "natural-language",
+      "reasoning": "not-applicable",
+      "cot_approach": "Not applicable.",
+      "few_shot": "Not applicable",
+      "key_constraint": "Native synchronized audio (dialogue, SFX, music), 1080p, 8s. I2V supported. Released May 2025 via Vertex/Gemini API. Commercial use permitted."
+    },
+    "veo-3-1": {
+      "family": "Google (Veo)",
+      "display_name": "Google Veo 3.1",
+      "context_window": 1000,
+      "format": "natural-language",
+      "reasoning": "not-applicable",
+      "cot_approach": "Not applicable.",
+      "few_shot": "Not applicable",
+      "key_constraint": "Veo 3 successor: richer audio, stronger character consistency, ingredients-to-video (multi-reference). Released Oct 2025 via Vertex AI."
+    },
+    "runway-gen-4": {
+      "family": "Runway",
+      "display_name": "Runway Gen-4",
+      "context_window": 500,
+      "format": "natural-language",
+      "reasoning": "not-applicable",
+      "cot_approach": "Not applicable.",
+      "few_shot": "Not applicable",
+      "key_constraint": "Character/object consistency across shots via reference images, 5-10s, 720p/1080p. Released Mar 2025. API available. Act-One and Aleph are features, not separate models."
+    },
+    "runway-gen-4-turbo": {
+      "family": "Runway",
+      "display_name": "Runway Gen-4 Turbo",
+      "context_window": 500,
+      "format": "natural-language",
+      "reasoning": "not-applicable",
+      "cot_approach": "Not applicable.",
+      "few_shot": "Not applicable",
+      "key_constraint": "Speed-optimized Gen-4, ~5x faster, lower cost per clip. 5-10s. API id gen4_turbo. No native audio."
+    },
+    "runway-aleph": {
+      "family": "Runway",
+      "display_name": "Runway Aleph",
+      "context_window": 500,
+      "format": "natural-language",
+      "reasoning": "not-applicable",
+      "cot_approach": "Not applicable.",
+      "few_shot": "Not applicable",
+      "key_constraint": "In-context video editing model: remove/add objects, change style, camera angle from existing video. Distinct API. Released July 2025."
+    },
+    "pika-2-2": {
+      "family": "Pika",
+      "display_name": "Pika 2.2",
+      "context_window": 500,
+      "format": "natural-language",
+      "reasoning": "not-applicable",
+      "cot_approach": "Not applicable.",
+      "few_shot": "Not applicable",
+      "key_constraint": "10s clips at 1080p, Pikaframes (keyframe transitions) and Pikaffects (VFX presets) modes. I2V supported. No native audio. Released Feb 2025."
+    },
+    "luma-ray-2": {
+      "family": "Luma Labs",
+      "display_name": "Luma Ray 2",
+      "context_window": 500,
+      "format": "natural-language",
+      "reasoning": "not-applicable",
+      "cot_approach": "Not applicable.",
+      "few_shot": "Not applicable",
+      "key_constraint": "10s clips, 4K, strong physics and motion. T2V, I2V, keyframes, extend. API via Dream Machine. Released Jan 2025. No native audio."
+    },
+    "luma-ray-2-flash": {
+      "family": "Luma Labs",
+      "display_name": "Luma Ray 2 Flash",
+      "context_window": 500,
+      "format": "natural-language",
+      "reasoning": "not-applicable",
+      "cot_approach": "Not applicable.",
+      "few_shot": "Not applicable",
+      "key_constraint": "Faster, cheaper Ray 2 tier. 5s default, 720p/1080p. T2V and I2V. Commercial use per Luma ToS."
+    },
+    "kling-2-1-master": {
+      "family": "Kuaishou",
+      "display_name": "Kling 2.1 Master",
+      "context_window": 500,
+      "format": "natural-language",
+      "reasoning": "not-applicable",
+      "cot_approach": "Not applicable.",
+      "few_shot": "Not applicable",
+      "key_constraint": "1080p, 5-10s, improved motion and prompt adherence. T2V/I2V, start+end frame. API via Kuaishou/Klingai. Released mid-2025."
+    },
+    "kling-2-5-turbo": {
+      "family": "Kuaishou",
+      "display_name": "Kling 2.5 Turbo",
+      "context_window": 500,
+      "format": "natural-language",
+      "reasoning": "not-applicable",
+      "cot_approach": "Not applicable.",
+      "few_shot": "Not applicable",
+      "key_constraint": "Speed-optimized 2.5 tier, 1080p, 5-10s, cheaper than Master. API id kling-v2.5-turbo. Lip-sync and motion-brush features."
+    },
+    "hailuo-02": {
+      "family": "MiniMax",
+      "display_name": "MiniMax Hailuo 02",
+      "context_window": 500,
+      "format": "natural-language",
+      "reasoning": "not-applicable",
+      "cot_approach": "Not applicable.",
+      "few_shot": "Not applicable",
+      "key_constraint": "1080p, 6s/10s, improved physics. T2V and I2V. API via MiniMax. Released June 2025. No native audio (separate S2V-01 model for speech-to-video)."
+    },
+    "minimax-s2v-01": {
+      "family": "MiniMax",
+      "display_name": "MiniMax S2V-01",
+      "context_window": 500,
+      "format": "natural-language",
+      "reasoning": "not-applicable",
+      "cot_approach": "Not applicable.",
+      "few_shot": "Not applicable",
+      "key_constraint": "Subject-reference video: character identity from single image. 6s, 720p. API id S2V-01. Commercial use per MiniMax ToS."
+    },
+    "hunyuan-video": {
+      "family": "Tencent (Hunyuan)",
+      "display_name": "Tencent HunyuanVideo",
+      "context_window": 500,
+      "format": "natural-language",
+      "reasoning": "not-applicable",
+      "cot_approach": "Not applicable.",
+      "few_shot": "Not applicable",
+      "key_constraint": "13B open-weights T2V, up to 129 frames at 720p. Apache-style license for commercial use in most jurisdictions. Downloadable. Released Dec 2024."
+    },
+    "hunyuan-video-i2v": {
+      "family": "Tencent (Hunyuan)",
+      "display_name": "Tencent HunyuanVideo-I2V",
+      "context_window": 500,
+      "format": "natural-language",
+      "reasoning": "not-applicable",
+      "cot_approach": "Not applicable.",
+      "few_shot": "Not applicable",
+      "key_constraint": "Image-to-video variant of HunyuanVideo, open weights. 720p, ~5s. Released Mar 2025."
+    },
+    "wan-2-2": {
+      "family": "Alibaba (Tongyi Lab)",
+      "display_name": "Alibaba Wan 2.2",
+      "context_window": 500,
+      "format": "natural-language",
+      "reasoning": "not-applicable",
+      "cot_approach": "Not applicable.",
+      "few_shot": "Not applicable",
+      "key_constraint": "Open-weights T2V/I2V, MoE architecture, 720p-1080p, ~5s. Apache 2.0. Released July 2025."
+    },
+    "wan-2-5": {
+      "family": "Alibaba (Tongyi Lab)",
+      "display_name": "Alibaba Wan 2.5",
+      "context_window": 500,
+      "format": "natural-language",
+      "reasoning": "not-applicable",
+      "cot_approach": "Not applicable.",
+      "few_shot": "Not applicable",
+      "key_constraint": "Native audio-video generation, 1080p, up to 10s. API via Dashscope. Released Sept 2025."
+    },
+    "seedance-1-pro": {
+      "family": "ByteDance (Seed)",
+      "display_name": "ByteDance Seedance 1.0 Pro",
+      "context_window": 500,
+      "format": "natural-language",
+      "reasoning": "not-applicable",
+      "cot_approach": "Not applicable.",
+      "few_shot": "Not applicable",
+      "key_constraint": "1080p, 5-10s, multi-shot narrative. T2V and I2V. API via Volcano/Doubao. Released June 2025."
+    },
+    "seedance-1-lite": {
+      "family": "ByteDance (Seed)",
+      "display_name": "ByteDance Seedance 1.0 Lite",
+      "context_window": 500,
+      "format": "natural-language",
+      "reasoning": "not-applicable",
+      "cot_approach": "Not applicable.",
+      "few_shot": "Not applicable",
+      "key_constraint": "Speed/cost-optimized Seedance 1 tier. 720p, 5s. Distinct API id."
+    },
+    "mochi-1": {
+      "family": "Genmo",
+      "display_name": "Genmo Mochi 1",
+      "context_window": 500,
+      "format": "natural-language",
+      "reasoning": "not-applicable",
+      "cot_approach": "Not applicable.",
+      "few_shot": "Not applicable",
+      "key_constraint": "10B open-weights T2V, Apache 2.0, 480p HD preview. Downloadable. Released Oct 2024."
+    },
+    "ltxv-2": {
+      "family": "Lightricks",
+      "display_name": "Lightricks LTXV 2",
+      "context_window": 500,
+      "format": "natural-language",
+      "reasoning": "not-applicable",
+      "cot_approach": "Not applicable.",
+      "few_shot": "Not applicable",
+      "key_constraint": "Open-weights real-time video gen, 4K, up to 60s with keyframes, native audio. Released Oct 2025. Open license for commercial use under tiered revenue cap."
+    },
+    "haiper-2-5": {
+      "family": "Haiper",
+      "display_name": "Haiper 2.5",
+      "context_window": 500,
+      "format": "natural-language",
+      "reasoning": "not-applicable",
+      "cot_approach": "Not applicable.",
+      "few_shot": "Not applicable",
+      "key_constraint": "8s clips, 1080p, T2V/I2V. API via haiper.ai. No native audio."
+    },
+    "stable-video-diffusion": {
+      "family": "Stability AI",
+      "display_name": "Stable Video Diffusion",
+      "context_window": 500,
+      "format": "natural-language",
+      "reasoning": "not-applicable",
+      "cot_approach": "Not applicable.",
+      "few_shot": "Not applicable",
+      "key_constraint": "Open-weights I2V, 14/25 frames, 576x1024. Stability Community License (non-commercial free; commercial tier). Image-to-video only."
+    },
+    "stable-video-4d": {
+      "family": "Stability AI",
+      "display_name": "Stable Video 4D",
+      "context_window": 500,
+      "format": "natural-language",
+      "reasoning": "not-applicable",
+      "cot_approach": "Not applicable.",
+      "few_shot": "Not applicable",
+      "key_constraint": "Novel-view video synthesis from single video input, 8 views x 5 frames. Research license. Released July 2024."
+    },
+    "higgsfield-dof": {
+      "family": "Higgsfield",
+      "display_name": "Higgsfield DoP",
+      "context_window": 500,
+      "format": "natural-language",
+      "reasoning": "not-applicable",
+      "cot_approach": "Not applicable.",
+      "few_shot": "Not applicable",
+      "key_constraint": "Cinematic camera-control DSL (dolly, orbit, crane presets). 1080p, 5-10s. Product UI and API."
+    },
+    "higgsfield-soul": {
+      "family": "Higgsfield",
+      "display_name": "Higgsfield Soul (video)",
+      "context_window": 500,
+      "format": "natural-language",
+      "reasoning": "not-applicable",
+      "cot_approach": "Not applicable.",
+      "few_shot": "Not applicable",
+      "key_constraint": "Photoreal aesthetic preset pipeline, 5-10s, 1080p. I2V and T2V via higgsfield.ai. Released 2025."
+    },
+
+    "udio-v1-5": {
+      "family": "Udio",
+      "display_name": "Udio v1.5 (Allegro)",
+      "context_window": 2000,
+      "format": "natural-language",
+      "reasoning": "not-applicable",
+      "cot_approach": "Not applicable.",
+      "few_shot": "Not applicable",
+      "key_constraint": "Text+lyrics music gen via 3rd-party APIs (musicapi.ai). Max ~2:10 tracks, MP3/WAV. Params: prompt, lyrics_type, prompt_strength, clarity_strength, lyrics_strength. Commercial license via paid tier only. No official public API."
+    },
+    "suno-v5": {
+      "family": "Suno",
+      "display_name": "Suno v5",
+      "context_window": 2500,
+      "format": "natural-language",
+      "reasoning": "not-applicable",
+      "cot_approach": "Not applicable.",
+      "few_shot": "Not applicable",
+      "key_constraint": "No official Suno public API; access via third-party wrappers. Prompt = genre+mood+lyrics. Max ~4min. Superseded by v5.5 on 2026-03-26."
+    },
+    "lyria-2": {
+      "family": "Google (Lyria)",
+      "display_name": "Google Lyria 2 (lyria-002)",
+      "context_window": 1000,
+      "format": "natural-language",
+      "reasoning": "not-applicable",
+      "cot_approach": "Not applicable.",
+      "few_shot": "Not applicable",
+      "key_constraint": "Vertex AI model id lyria-002. 30s WAV clips at 48kHz. Text prompt only, no reference audio. Instrumental focus. Commercial use on GCP terms."
+    },
+    "lyria-3": {
+      "family": "Google (Lyria)",
+      "display_name": "Google Lyria 3 / Lyria 3 Pro",
+      "context_window": 1500,
+      "format": "natural-language",
+      "reasoning": "not-applicable",
+      "cot_approach": "Not applicable.",
+      "few_shot": "Not applicable",
+      "key_constraint": "Released 2026-04-07 on Vertex AI public preview. Lyria 3 Pro generates up to 3-minute compositions with structural control (intro/verse/chorus/bridge). SynthID watermarked."
+    },
+    "lyria-realtime": {
+      "family": "Google (Lyria)",
+      "display_name": "Lyria RealTime",
+      "context_window": 500,
+      "format": "natural-language",
+      "reasoning": "not-applicable",
+      "cot_approach": "Not applicable.",
+      "few_shot": "Not applicable",
+      "key_constraint": "WebSocket bidirectional streaming music-gen. Max 2s latency between control change and output. Style/tempo prompts updated live. Via Gemini API."
+    },
+    "stable-audio-2-5": {
+      "family": "Stability AI",
+      "display_name": "Stable Audio 2.5",
+      "context_window": 1000,
+      "format": "natural-language",
+      "reasoning": "not-applicable",
+      "cot_approach": "Not applicable.",
+      "few_shot": "Not applicable",
+      "key_constraint": "Up to 3-min tracks, stereo 44.1kHz. Supports audio-to-audio conditioning. Platform.stability.ai v2beta. Commercial license on paid plan. Duration 1-190s parameter."
+    },
+    "stable-audio-open-1": {
+      "family": "Stability AI",
+      "display_name": "Stable Audio Open 1.0",
+      "context_window": 500,
+      "format": "natural-language",
+      "reasoning": "not-applicable",
+      "cot_approach": "Not applicable.",
+      "few_shot": "Not applicable",
+      "key_constraint": "Open weights on HuggingFace. Max 47s stereo 44.1kHz. SFX and short loops focus. Non-commercial research license unless Stability membership."
+    },
+    "elevenlabs-music": {
+      "family": "ElevenLabs",
+      "display_name": "Eleven Music",
+      "context_window": 3000,
+      "format": "natural-language",
+      "reasoning": "not-applicable",
+      "cot_approach": "Not applicable.",
+      "few_shot": "Not applicable",
+      "key_constraint": "Text-to-music or composition_plan JSON. Duration 3000-600000ms (10min max). Tempo/key cues work. /compose, /compose-detailed, /stream endpoints. Commercial on paid tier."
+    },
+    "elevenlabs-v3": {
+      "family": "ElevenLabs",
+      "display_name": "Eleven v3",
+      "context_window": 1000,
+      "format": "natural-language",
+      "reasoning": "not-applicable",
+      "cot_approach": "Not applicable.",
+      "few_shot": "Not applicable",
+      "key_constraint": "Most advanced TTS. 70+ languages. Audio Tags in brackets: [whispers], [sighs], [shouts]. 68% error reduction on complex text. Model id: eleven_v3."
+    },
+    "elevenlabs-turbo-v2-5": {
+      "family": "ElevenLabs",
+      "display_name": "Eleven Turbo v2.5",
+      "context_window": 1000,
+      "format": "natural-language",
+      "reasoning": "not-applicable",
+      "cot_approach": "Not applicable.",
+      "few_shot": "Not applicable",
+      "key_constraint": "Balanced quality/latency. 32 languages. Model id: eleven_turbo_v2_5. Good default for production voice agents."
+    },
+    "elevenlabs-flash-v2-5": {
+      "family": "ElevenLabs",
+      "display_name": "Eleven Flash v2.5",
+      "context_window": 1000,
+      "format": "natural-language",
+      "reasoning": "not-applicable",
+      "cot_approach": "Not applicable.",
+      "few_shot": "Not applicable",
+      "key_constraint": "~75ms latency for realtime agents. 32 languages. Model id: eleven_flash_v2_5. Use with Agents Platform."
+    },
+    "elevenlabs-multilingual-v2": {
+      "family": "ElevenLabs",
+      "display_name": "Eleven Multilingual v2",
+      "context_window": 1000,
+      "format": "natural-language",
+      "reasoning": "not-applicable",
+      "cot_approach": "Not applicable.",
+      "few_shot": "Not applicable",
+      "key_constraint": "Emotionally rich, best for voiceovers/audiobooks. Model id: eleven_multilingual_v2. 29 languages."
+    },
+    "openai-tts-1": {
+      "family": "OpenAI (Audio)",
+      "display_name": "OpenAI tts-1",
+      "context_window": 500,
+      "format": "natural-language",
+      "reasoning": "not-applicable",
+      "cot_approach": "Not applicable.",
+      "few_shot": "Not applicable",
+      "key_constraint": "Standard TTS. $15/1M chars. 4096 char limit per request. Voices: alloy, echo, fable, onyx, nova, shimmer. Output mp3/opus/aac/flac/wav/pcm."
+    },
+    "openai-tts-1-hd": {
+      "family": "OpenAI (Audio)",
+      "display_name": "OpenAI tts-1-hd",
+      "context_window": 500,
+      "format": "natural-language",
+      "reasoning": "not-applicable",
+      "cot_approach": "Not applicable.",
+      "few_shot": "Not applicable",
+      "key_constraint": "HD quality TTS. $30/1M chars. 4096 char limit. Same voices as tts-1, better fidelity."
+    },
+    "openai-gpt-4o-mini-tts": {
+      "family": "OpenAI (Audio)",
+      "display_name": "GPT-4o mini TTS",
+      "context_window": 2000,
+      "format": "natural-language",
+      "reasoning": "not-applicable",
+      "cot_approach": "Not applicable.",
+      "few_shot": "Not applicable",
+      "key_constraint": "Steerable TTS with instructions parameter (tone/delivery). $0.60/M input tokens + $12/M audio output (~$0.015/min). Supports voice persona prompts."
+    },
+    "openai-whisper-large-v3": {
+      "family": "OpenAI (Audio)",
+      "display_name": "Whisper Large v3",
+      "context_window": 200,
+      "format": "plain-text",
+      "reasoning": "not-applicable",
+      "cot_approach": "Not applicable.",
+      "few_shot": "Not applicable",
+      "key_constraint": "ASR + translation. 99 languages. Max 25MB file per request. Prompt param (~224 tokens) biases vocabulary. Open weights available."
+    },
+    "openai-whisper-large-v3-turbo": {
+      "family": "OpenAI (Audio)",
+      "display_name": "Whisper Large v3 Turbo",
+      "context_window": 200,
+      "format": "plain-text",
+      "reasoning": "not-applicable",
+      "cot_approach": "Not applicable.",
+      "few_shot": "Not applicable",
+      "key_constraint": "Pruned v3 (4 decoder layers). 216x realtime. No translation mode — transcribe only. Available via Groq, Cloudflare Workers AI, HF."
+    },
+    "gemini-3-1-flash-tts": {
+      "family": "Gemini",
+      "display_name": "Gemini 3.1 Flash TTS",
+      "context_window": 2000,
+      "format": "natural-language",
+      "reasoning": "not-applicable",
+      "cot_approach": "Not applicable.",
+      "few_shot": "Not applicable",
+      "key_constraint": "Released 2026-04-15. 30 prebuilt voices, 70+ languages. 200+ audio tags, natural-lang style control (no SSML). Multi-speaker mode. SynthID watermarked."
+    },
+    "azure-neural-tts": {
+      "family": "Azure (Microsoft)",
+      "display_name": "Azure Neural TTS / Dragon HD",
+      "context_window": 1000,
+      "format": "natural-language",
+      "reasoning": "not-applicable",
+      "cot_approach": "Not applicable.",
+      "few_shot": "Not applicable",
+      "key_constraint": "SSML-driven. 140+ locales, 700+ voices. $16/1M chars neural, $24/1M custom. Dragon HD Omni = newer HD tier. Custom Neural Voice needs 300+ training samples."
+    },
+    "amazon-polly-generative": {
+      "family": "Amazon",
+      "display_name": "Amazon Polly Generative",
+      "context_window": 500,
+      "format": "natural-language",
+      "reasoning": "not-applicable",
+      "cot_approach": "Not applicable.",
+      "few_shot": "Not applicable",
+      "key_constraint": "Billion-param transformer. $30/1M chars. Supports SSML subset. Most human-like Polly engine. Limited language set vs Neural."
+    },
+    "amazon-polly-neural": {
+      "family": "Amazon",
+      "display_name": "Amazon Polly Neural",
+      "context_window": 500,
+      "format": "natural-language",
+      "reasoning": "not-applicable",
+      "cot_approach": "Not applicable.",
+      "few_shot": "Not applicable",
+      "key_constraint": "$16/1M chars. 36 languages/variants. Full SSML support. IVR/telephony-optimized. Predictable latency."
+    },
+    "deepgram-aura-2": {
+      "family": "Deepgram",
+      "display_name": "Deepgram Aura-2",
+      "context_window": 500,
+      "format": "natural-language",
+      "reasoning": "not-applicable",
+      "cot_approach": "Not applicable.",
+      "few_shot": "Not applicable",
+      "key_constraint": "TTS for voice agents. ~90-200ms TTFB. Plain text input, no SSML. WebSocket streaming. Pairs with Nova-3 ASR for full-duplex agents."
+    },
+    "deepgram-nova-3": {
+      "family": "Deepgram",
+      "display_name": "Deepgram Nova-3",
+      "context_window": 200,
+      "format": "plain-text",
+      "reasoning": "not-applicable",
+      "cot_approach": "Not applicable.",
+      "few_shot": "Not applicable",
+      "key_constraint": "ASR. $0.46/hr. Keyterm prompting biases vocabulary. Real-time multilingual mid-utterance. Nova-3 Medical variant available. 5.26% WER English."
+    },
+    "cartesia-sonic-3": {
+      "family": "Cartesia",
+      "display_name": "Cartesia Sonic-3",
+      "context_window": 500,
+      "format": "natural-language",
+      "reasoning": "not-applicable",
+      "cot_approach": "Not applicable.",
+      "few_shot": "Not applicable",
+      "key_constraint": "90ms TTFA (Sonic-2 at 40ms TTFB). AI laughter + emotion tags. WebSocket streaming. Plain text + inline emotion markers. Fast voice-clone support."
+    },
+    "play-3-0": {
+      "family": "Play.ht",
+      "display_name": "Play 3.0 Mini",
+      "context_window": 500,
+      "format": "natural-language",
+      "reasoning": "not-applicable",
+      "cot_approach": "Not applicable.",
+      "few_shot": "Not applicable",
+      "key_constraint": "Multilingual conversational TTS, ~143ms latency. 30+ languages. Plain text + voice_id. Play.ht 600+ voice library + instant cloning."
+    },
+    "playai-dialog": {
+      "family": "PlayAI",
+      "display_name": "PlayAI Dialog / Play 2.0",
+      "context_window": 1000,
+      "format": "natural-language",
+      "reasoning": "not-applicable",
+      "cot_approach": "Not applicable.",
+      "few_shot": "Not applicable",
+      "key_constraint": "Multi-speaker dialog TTS. Speakers tagged inline. Used for podcast-style output. Available via PlayAI/Groq."
+    },
+    "hume-evi-2": {
+      "family": "Hume",
+      "display_name": "Hume EVI 2",
+      "context_window": 1500,
+      "format": "natural-language",
+      "reasoning": "not-applicable",
+      "cot_approach": "Not applicable.",
+      "few_shot": "Not applicable",
+      "key_constraint": "Speech-to-speech foundation model. 500-800ms response. Continuous voice modulation (gender/nasality/pitch). 10-15s clone samples. 11 languages. WebSocket only."
+    },
+    "minimax-speech-02": {
+      "family": "MiniMax",
+      "display_name": "MiniMax Speech-02 (hd/turbo)",
+      "context_window": 1000,
+      "format": "natural-language",
+      "reasoning": "not-applicable",
+      "cot_approach": "Not applicable.",
+      "few_shot": "Not applicable",
+      "key_constraint": "AR Transformer TTS. 32+ languages. 5 emotion modes. Superseded by 2.6/2.8 (40+ langs, 7 emotions). HTTP T2A endpoint. Voice clone built-in."
+    },
+    "minimax-speech-2-8": {
+      "family": "MiniMax",
+      "display_name": "MiniMax Speech 2.8 (hd/turbo)",
+      "context_window": 1000,
+      "format": "natural-language",
+      "reasoning": "not-applicable",
+      "cot_approach": "Not applicable.",
+      "few_shot": "Not applicable",
+      "key_constraint": "2026 flagship TTS. 40+ languages, 7 emotion modes, interjection tags. Improved clone timbre. HD = quality, Turbo = latency. MCP server available."
+    },
+    "cosyvoice-2": {
+      "family": "Alibaba (FunAudio)",
+      "display_name": "CosyVoice 2",
+      "context_window": 500,
+      "format": "natural-language",
+      "reasoning": "not-applicable",
+      "cot_approach": "Not applicable.",
+      "few_shot": "Not applicable",
+      "key_constraint": "Open-source (Apache 2.0). Zero-shot + one-shot voice clone via 3-10s reference. Instruction-controllable (emotion, accent). Streaming. Chinese-focused multilingual."
+    },
+    "f5-tts": {
+      "family": "Open Source (TTS)",
+      "display_name": "F5-TTS",
+      "context_window": 500,
+      "format": "natural-language",
+      "reasoning": "not-applicable",
+      "cot_approach": "Not applicable.",
+      "few_shot": "Not applicable",
+      "key_constraint": "Flow-matching non-autoregressive TTS. Open weights. Reference audio + text for zero-shot clone. EN/ZH. Self-host; no managed API."
+    },
+    "sesame-csm-1b": {
+      "family": "Sesame",
+      "display_name": "Sesame CSM-1B (Maya/Miles base)",
+      "context_window": 1000,
+      "format": "natural-language",
+      "reasoning": "not-applicable",
+      "cot_approach": "Not applicable.",
+      "few_shot": "Not applicable",
+      "key_constraint": "Open-weight conversational speech model (Mar 2025). Maya/Miles personas via app.sesame.com. Community Python client exists; no formal public API."
+    },
+    "meta-musicgen": {
+      "family": "Meta (AudioCraft)",
+      "display_name": "Meta MusicGen",
+      "context_window": 500,
+      "format": "natural-language",
+      "reasoning": "not-applicable",
+      "cot_approach": "Not applicable.",
+      "few_shot": "Not applicable",
+      "key_constraint": "Open-weights text-to-music. Small/Medium/Large/Melody variants. Max 30s default, extendable. Melody conditioning via reference audio. CC-BY-NC-4.0 weights."
+    },
+    "meta-audiogen": {
+      "family": "Meta (AudioCraft)",
+      "display_name": "Meta AudioGen",
+      "context_window": 500,
+      "format": "natural-language",
+      "reasoning": "not-applicable",
+      "cot_approach": "Not applicable.",
+      "few_shot": "Not applicable",
+      "key_constraint": "Open-weights text-to-SFX (environmental sounds). Not music. Short clips (~10s). Via AudioCraft repo, Replicate. Research license."
+    },
+    "riffusion": {
+      "family": "Riffusion",
+      "display_name": "Riffusion",
+      "context_window": 500,
+      "format": "natural-language",
+      "reasoning": "not-applicable",
+      "cot_approach": "Not applicable.",
+      "few_shot": "Not applicable",
+      "key_constraint": "Spectrogram-via-Stable-Diffusion music gen. Now managed product at riffusion.com with lyrics-to-song, AI covers, extension, section replacement. MIT weights for v1."
+    },
+    "mubert-api": {
+      "family": "Mubert",
+      "display_name": "Mubert API",
+      "context_window": 500,
+      "format": "natural-language",
+      "reasoning": "not-applicable",
+      "cot_approach": "Not applicable.",
+      "few_shot": "Not applicable",
+      "key_constraint": "Royalty-free generative music API. Prompt = tag list (genre/mood/activity). Streaming or file output. Commercial license included in paid tiers."
+    },
+    "aiva": {
+      "family": "AIVA",
+      "display_name": "AIVA",
+      "context_window": 500,
+      "format": "natural-language",
+      "reasoning": "not-applicable",
+      "cot_approach": "Not applicable.",
+      "few_shot": "Not applicable",
+      "key_constraint": "Symbolic + audio classical/cinematic music gen. Style reference or preset-driven (not free-text). MIDI export. Pro plan = full copyright ownership."
     }
   }
 }
