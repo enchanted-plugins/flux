@@ -931,7 +931,7 @@
     "kimi-linear": {
       "family": "Moonshot (Kimi)",
       "display_name": "Kimi Linear",
-      "context_window": null,
+      "context_window": 1048576,
       "format": "markdown",
       "reasoning": "standard",
       "cot_approach": "Explicit CoT helps.",
@@ -1034,7 +1034,7 @@
     "step-3": {
       "family": "StepFun",
       "display_name": "Step-3",
-      "context_window": null,
+      "context_window": 65536,
       "format": "markdown",
       "reasoning": "reasoning-native",
       "cot_approach": "Built-in multimodal reasoning.",
@@ -1044,7 +1044,7 @@
     "step-3-5-flash": {
       "family": "StepFun",
       "display_name": "Step 3.5 Flash",
-      "context_window": null,
+      "context_window": 262144,
       "format": "markdown",
       "reasoning": "standard",
       "cot_approach": "Explicit CoT helps; agent-optimized.",
@@ -1055,7 +1055,7 @@
     "ernie-4-5": {
       "family": "Baidu (ERNIE)",
       "display_name": "ERNIE 4.5",
-      "context_window": null,
+      "context_window": 131072,
       "format": "markdown",
       "reasoning": "standard",
       "cot_approach": "Explicit CoT helps; a 28B-A3B 'Thinking' variant exists with built-in reasoning.",
@@ -1065,7 +1065,7 @@
     "ernie-5": {
       "family": "Baidu (ERNIE)",
       "display_name": "ERNIE 5.0",
-      "context_window": null,
+      "context_window": 131072,
       "format": "markdown",
       "reasoning": "standard",
       "cot_approach": "Explicit CoT helps on text tasks.",
@@ -1096,7 +1096,7 @@
     "hunyuan-2": {
       "family": "Tencent (Hunyuan)",
       "display_name": "Hunyuan 2.0",
-      "context_window": null,
+      "context_window": 262144,
       "format": "markdown",
       "reasoning": "standard",
       "cot_approach": "Explicit CoT helps.",
@@ -1107,7 +1107,7 @@
     "skywork-o1": {
       "family": "Skywork (Kunlun)",
       "display_name": "Skywork o1",
-      "context_window": null,
+      "context_window": 131072,
       "format": "markdown",
       "reasoning": "reasoning-native",
       "cot_approach": "Built-in deep thought + self-reflection — do NOT add explicit CoT.",
@@ -1117,7 +1117,7 @@
     "skywork-or1-32b": {
       "family": "Skywork (Kunlun)",
       "display_name": "Skywork-OR1-32B-Preview",
-      "context_window": null,
+      "context_window": 131072,
       "format": "markdown",
       "reasoning": "reasoning-native",
       "cot_approach": "Built-in reasoning.",
@@ -1611,7 +1611,7 @@
     "gemini-robotics-er-1.6-preview": {
       "family": "Gemini",
       "display_name": "Gemini Robotics-ER 1.6",
-      "context_window": null,
+      "context_window": 1048576,
       "format": "markdown",
       "reasoning": "reasoning-native",
       "cot_approach": "Embodied spatial reasoning over camera frames; returns structured action/grounding plans rather than free prose.",
