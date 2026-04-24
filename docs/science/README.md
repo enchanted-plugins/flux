@@ -8,6 +8,42 @@ These aren't abstractions. Every formula maps to running code.
 
 ## Wixie: Prompt Engineering
 
+### F0. Deep Research
+
+**Problem:** Given a query Q, produce a brief B such that every load-bearing claim is supported by independent, verifiable sources — before any prompt is engineered against Q.
+
+Decompose Q into sub-questions:
+
+<p align="center"><code>D(Q) = { q_1, q_2, ..., q_n }</code></p>
+
+Cast parallel fetchers per sub-question to produce findings:
+
+<p align="center"><code>F_i = Fetch(q_i) = { (url, date, source_type, {claim, quote}*) }</code></p>
+
+**Triangulation score** — fraction of claims supported by at least two independent sources (same-vendor repeats and transitive cites count as one):
+
+<p align="center"><code>τ(B) = | { c ∈ B : independent_sources(c) ≥ 2 } | / | claims(B) |</code></p>
+
+**Saturation criterion (gap-fill loop):**
+
+<p align="center"><code>stop when |F_{n+1} \ F_n| / |F_n| < 0.1  OR  τ ≥ 0.85  OR  round ≥ 3</code></p>
+
+**Verify** — every cite in B must trace to a quote in `sources.jsonl`:
+
+<p align="center"><code>VERIFY(B) = ∀ c ∈ B : ∃ s ∈ sources : cite(c) = s ∧ supports(quote(s), c)</code></p>
+
+**Verdict:**
+
+| Verdict | Condition |
+|---------|-----------|
+| READY   | VERIFY(B) = 1 ∧ τ ≥ 0.85 ∧ contradictions = ∅ |
+| PARTIAL | VERIFY(B) = 1 ∧ (τ < 0.85 ∨ contradictions ≠ ∅) |
+| FAIL    | VERIFY(B) = 0 |
+
+**Implementation:** `plugins/deep-research/skills/deep-research/SKILL.md`
+
+---
+
 ### F1. Gauss Convergence Method
 
 **Problem:** Given a prompt P, minimize its deviation from ideal quality across 5 dimensions.

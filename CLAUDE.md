@@ -25,7 +25,7 @@ Wixie is skill-invoked, not hook-driven. The single hook is advisory (prompt-sav
 
 | Stage | Skill | Agent tier | Artifact produced |
 |-------|-------|-----------|-------------------|
-| Research | `/deep-research` (also auto-fires inside `/create`) | Opus decomposer/synth + Sonnet triangulator + Haiku fetchers/validator | `state/briefs/<slug>/{brief.md, sources.jsonl}` |
+| Research | `/deep-research` (also auto-fires inside `/create`) | Opus decomposer/synth + Sonnet triangulator + Haiku fetchers/validator | `state/briefs/<slug>/{claims.json, sources.jsonl, trace.json}` |
 | Craft | `/create` | Opus orchestrator + Haiku reviewer | `prompt.*`, `metadata.json` |
 | Refine | `/refine` | Opus orchestrator + Haiku reviewer | `prompt.*` (v++), `metadata.json` |
 | Converge | `/converge` | Sonnet optimizer + Haiku reviewer | `learnings.md`, updated scores |
