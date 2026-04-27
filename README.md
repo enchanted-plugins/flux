@@ -24,6 +24,12 @@ The first prompt engineering platform that learns from itself.
 >
 > Time: under 2 minutes. Manual effort: zero.
 
+## TL;DR
+
+**In plain English:** Writing a production prompt for a specific AI model is trial and error — you iterate in the playground until it feels right, with no objective score, no way to know if it'll hold up at the edges, and no record of what you tried.
+
+**Technically:** E1 Gauss Convergence runs hypothesis-driven iteration — each round measures σ across 5 axis scores, forms a fix hypothesis for the weakest axis, applies it, and auto-reverts on regression; E2 Boolean Satisfiability Overlay checks 8 SAT assertions (`has_role`, `has_task`, `has_format`, `has_constraints`, `has_edge_cases`, `no_hedges`, `no_filler`, `has_structure`) that must all pass for a DEPLOY verdict. E6 Gauss Accumulation persists the hypothesis/outcome log to `learnings.md` across sessions — every failed iteration is tagged with the 14-code failure taxonomy so the same dead-end is never re-explored.
+
 ## Origin
 
 **Wixie** takes its name from **Ars Nouveau** — a cauldron-summoned familiar that autocrafts potions by iterating ingredients through the cauldron until the brew carries the exact properties the recipe demands. Every prompt starts raw; the convergence engine brews it, round after round, until it carries the right properties for the target model.
