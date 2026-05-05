@@ -1,6 +1,6 @@
 # The Science Behind Enchanted Plugins
 
-Formal mathematical models powering every engine in the @enchanted-plugins ecosystem.
+Formal mathematical models powering every engine in the @enchanter-ai ecosystem.
 
 These aren't abstractions. Every formula maps to running code.
 
@@ -226,4 +226,4 @@ Locking: `acquire = mkdir(lock)` (atomic on all filesystems)
 
 ---
 
-*Every formula maps to executable code in the enchanted-plugins ecosystem. The math runs.*
+*Every formula maps to executable code in the enchanter-ai ecosystem. The math runs.*

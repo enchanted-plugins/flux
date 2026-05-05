@@ -5,7 +5,7 @@
 This plugin has no hooks, skills, or agents of its own. It exists so you can install the whole 6-plugin pipeline with one command:
 
 ```
-/plugin marketplace add enchanted-plugins/wixie
+/plugin marketplace add enchanter-ai/wixie
 /plugin install full@wixie
 ```
 

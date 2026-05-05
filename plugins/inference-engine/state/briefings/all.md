@@ -15,7 +15,7 @@ _Truncated to top 10 by weight. Full catalog at `state/catalog.json`; use `/infe
 
 - **Weight:** 1.000   **Posterior:** 0.917 (95% CI [0.7151, 0.9977])   **LLR:** 10.00
 - **Observations:** 10 across 1 session(s)   **Last seen:** 2026-04-22 (0d ago)
-- **Tags:** `wixie, agent-hygiene, scratch-residue, convergence-engine, enchanted-plugins, brand-standard, file-hygiene, operational-discipline`
+- **Tags:** `wixie, agent-hygiene, scratch-residue, convergence-engine, enchanter-ai, brand-standard, file-hygiene, operational-discipline`
 
 **Signal:** Untracked .py or .sh file appears at repo root or in wixie/state/ after an agent run and contains an open() call with a hardcoded <repo-root>/ absolute path.
 

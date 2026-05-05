@@ -9,7 +9,7 @@
   <a href="https://www.repostatus.org/#wip"><img alt="Project Status: WIP" src="https://www.repostatus.org/badges/latest/wip.svg"></a>
 </p>
 
-> **An @enchanted-plugins product — algorithm-driven, agent-managed, self-learning.**
+> **An @enchanter-ai product — algorithm-driven, agent-managed, self-learning.**
 
 The cross-session evidence substrate for AI-assisted development. Turns every self-caught failure into a compounding asset the whole ecosystem reads at session start.
 
@@ -29,7 +29,7 @@ The cross-session evidence substrate for AI-assisted development. Turns every se
 
 Inference Engine is internally codenamed **Ufopedia** after the research archive in *X-COM: UFO Defense* (MicroProse / Mythos, 1994) — every autopsied alien, recovered craft, and interrogated officer contributed to a growing knowledge base that shaped the next mission. Miss a lesson and the squad dies on a repeat encounter. Read the Ufopedia before dropoff and the outcome is different.
 
-The plugin's *file-system* name is **`inference-engine`** because inside any @enchanted-plugins repo the naming convention is clear-names for commands, hooks, state, and scripts — game names live only at the product/repo level (like `hydra`, `wixie`, `sylph`). So the codename and the filesystem name diverge deliberately.
+The plugin's *file-system* name is **`inference-engine`** because inside any @enchanter-ai repo the naming convention is clear-names for commands, hooks, state, and scripts — game names live only at the product/repo level (like `hydra`, `wixie`, `sylph`). So the codename and the filesystem name diverge deliberately.
 
 The question this plugin answers: *When the same mistake happens in a fourth independent session, how does every enchanted-plugin see it before the fifth attempt?*
 
@@ -72,7 +72,7 @@ AI-assisted development sessions catch the same mistakes again and again. The pl
 
 The literature on AI-era failure modes — Anthropic's Claude Code retrospectives, Shinn et al.'s Reflexion, Park et al.'s Generative Agents, MemGPT, Voyager — converges on one insight: **agents that remember** compound, **agents that rediscover** don't. Reflexion's mechanism (verbal reinforcement from failed trajectories) and Voyager's skill library (new skills build on old) both rely on a single shared memory surface.
 
-The enchanted-plugins ecosystem had six per-plugin *memories* and no *substrate*. Every session started from the same level of naïveté. That is the problem.
+The enchanter-ai ecosystem had six per-plugin *memories* and no *substrate*. Every session started from the same level of naïveté. That is the problem.
 
 ## How It Works
 
@@ -148,7 +148,7 @@ Five stages from failure to countermeasure:
 Part of the Wixie bundle. The simplest install is the `full` meta-plugin:
 
 ```
-/plugin marketplace add enchanted-plugins/wixie
+/plugin marketplace add enchanter-ai/wixie
 /plugin install full@wixie
 ```
 

@@ -9,7 +9,7 @@ Load a saved prompt or paste one in. It diagnoses weaknesses, checks model fit, 
 Part of the [Wixie](../..) bundle. The simplest install is the `full` meta-plugin, which pulls in all 6 Wixie plugins via dependency resolution:
 
 ```
-/plugin marketplace add enchanted-plugins/wixie
+/plugin marketplace add enchanter-ai/wixie
 /plugin install full@wixie
 ```
 

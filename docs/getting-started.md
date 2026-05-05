@@ -5,7 +5,7 @@ Wixie is prompt engineering for engineers who would rather ship than iterate by 
 ## 1. Install (60 seconds)
 
 ```
-/plugin marketplace add enchanted-plugins/wixie
+/plugin marketplace add enchanter-ai/wixie
 /plugin install full@wixie
 /plugin list
 ```

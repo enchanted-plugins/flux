@@ -157,7 +157,7 @@ Rendered: 2026-04-27T09:42:58Z   ·   Catalog reconciled: 2026-04-27T09:42:57Z
 
 - **Weight:** 0.892   **Posterior:** 0.917 (95% CI [0.7151, 0.9977])   **LLR:** 10.00
 - **Observations:** 10 across 1 session(s)   **Last seen:** 2026-04-22 (5d ago)
-- **Tags:** `wixie, agent-hygiene, scratch-residue, convergence-engine, enchanted-plugins, brand-standard, file-hygiene, operational-discipline`
+- **Tags:** `wixie, agent-hygiene, scratch-residue, convergence-engine, enchanter-ai, brand-standard, file-hygiene, operational-discipline`
 
 **Signal:** Untracked .py or .sh file appears at repo root or in wixie/state/ after an agent run and contains an open() call with a hardcoded <repo-root>/ absolute path.
 
@@ -253,7 +253,7 @@ Rendered: 2026-04-27T09:42:58Z   ·   Catalog reconciled: 2026-04-27T09:42:57Z
 
 - **Weight:** 0.892   **Posterior:** 0.750 (95% CI [0.2924, 0.9916])   **LLR:** 3.58
 - **Observations:** 2 across 1 session(s)   **Last seen:** 2026-04-22 (5d ago)
-- **Tags:** `meta, branding-drift, naming-discipline, enchanted-plugins`
+- **Tags:** `meta, branding-drift, naming-discipline, enchanter-ai`
 
 **Signal:** A component carries a name like Bayesian, Gauss, or Thompson and grepping its source reveals only a single-line learning-rate update.
 

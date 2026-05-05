@@ -4,16 +4,16 @@ message: "If you use this software, please cite it as below."
 type: software
 authors:
   - alias: klaiderman
-    affiliation: "enchanted-plugins"
-repository-code: "https://github.com/enchanted-plugins/wixie"
-url: "https://github.com/enchanted-plugins/wixie"
+    affiliation: "enchanter-ai"
+repository-code: "https://github.com/enchanter-ai/wixie"
+url: "https://github.com/enchanter-ai/wixie"
 license: MIT
 version: "3.0.0"
 date-released: "2026-04-20"
 abstract: "The first prompt engineering platform that learns from itself — convergence-driven crafting, testing, hardening, and translation across 64 target models."
 keywords:
   - claude-code
-  - enchanted-plugins
+  - enchanter-ai
   - prompt-engineering
   - llm
   - convergence

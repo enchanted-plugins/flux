@@ -3133,7 +3133,7 @@
         "agent-hygiene",
         "scratch-residue",
         "convergence-engine",
-        "enchanted-plugins",
+        "enchanter-ai",
         "brand-standard",
         "file-hygiene",
         "operational-discipline"
@@ -3784,7 +3784,7 @@
       ],
       "signal": "Cross-repo rule: applies to wixie, emu, crow, hydra, sylph, lich, pech, schematic, and every future sibling.",
       "tags": [
-        "enchanted-plugins",
+        "enchanter-ai",
         "git-hygiene",
         "cross-repo",
         "scaffolding"
@@ -5099,7 +5099,7 @@
       "beta": 1.0,
       "category": "branding-drift",
       "code": "OP05",
-      "counter": "Honest naming contract: every algorithm name must match what the code does, not what the roadmap aspires to. When declaring an engine 'Bayesian / Gauss / Thompson / Beta-Binomial,' verify prior and posterior update steps exist in code. If only a decay rule exists, call it EMA / exponential smoothing / posture decay. Taxonomy across enchanted-plugins: EMA-class (Hydra R8, Pech L1, Emu A2), Beta-Binomial-class (Lich M6), Prose-log-class (Wixie F6 learnings.json, precedent.jsonl).",
+      "counter": "Honest naming contract: every algorithm name must match what the code does, not what the roadmap aspires to. When declaring an engine 'Bayesian / Gauss / Thompson / Beta-Binomial,' verify prior and posterior update steps exist in code. If only a decay rule exists, call it EMA / exponential smoothing / posture decay. Taxonomy across enchanter-ai: EMA-class (Hydra R8, Pech L1, Emu A2), Beta-Binomial-class (Lich M6), Prose-log-class (Wixie F6 learnings.json, precedent.jsonl).",
       "days_since_last_seen": 5.405,
       "first_seen": "2026-04-22",
       "last_seen": "2026-04-22",
@@ -5127,7 +5127,7 @@
         "naming-discipline",
         "casting-doubt",
         "branding-drift",
-        "enchanted-plugins",
+        "enchanter-ai",
         "gauss-accumulation-taxonomy"
       ],
       "title": "R8 labeled 'Bayesian Threat Convergence' but implementation is pure EMA",
@@ -6389,7 +6389,7 @@
         "meta",
         "branding-drift",
         "naming-discipline",
-        "enchanted-plugins"
+        "enchanter-ai"
       ],
       "title": "Branding drift — declared algorithm name diverges from implemented behavior",
       "verdict": "elevated",

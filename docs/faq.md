@@ -14,13 +14,13 @@ No. Wixie is self-contained — install `full@wixie` and every command works sta
 
 - **Security vulnerability** — private advisory, never a public issue. See [SECURITY.md](../SECURITY.md).
 - **Reproducible bug** — a bug report issue with repro steps + exact versions.
-- **Usage question or half-formed idea** — [Discussions](https://github.com/enchanted-plugins/wixie/discussions).
+- **Usage question or half-formed idea** — [Discussions](https://github.com/enchanter-ai/wixie/discussions).
 
 The [SUPPORT.md](../SUPPORT.md) page has the exact links for each.
 
 ## Is Wixie an official Anthropic product?
 
-No. Wixie is an independent open-source plugin for [Claude Code](https://github.com/anthropics/claude-code) (Anthropic's CLI). It's published by [enchanted-plugins](https://github.com/enchanted-plugins) under the MIT license and is not affiliated with, endorsed by, or supported by Anthropic.
+No. Wixie is an independent open-source plugin for [Claude Code](https://github.com/anthropics/claude-code) (Anthropic's CLI). It's published by [enchanter-ai](https://github.com/enchanter-ai) under the MIT license and is not affiliated with, endorsed by, or supported by Anthropic.
 
 ## Can I use Wixie with models outside the 64-model registry?
 
