@@ -61,6 +61,40 @@ def artifacts_path(ts: datetime | None = None) -> Path:
     return STATE_DIR / "artifacts.jsonl"
 
 
+def append_jsonl_locked(path: Path, line: str) -> None:
+    """Append one JSON line, locked + flushed. Cross-platform.
+
+    Closes F-015: parallel races and partial-line writes on artifacts.jsonl
+    that biased the SPRT walk. Per spec section G.
+    """
+    path.parent.mkdir(parents=True, exist_ok=True)
+    if not line.endswith("\n"):
+        line += "\n"
+    with path.open("a", encoding="utf-8") as f:
+        if sys.platform == "win32":
+            import msvcrt
+            try:
+                msvcrt.locking(f.fileno(), msvcrt.LK_LOCK, 1)
+                f.write(line)
+                f.flush()
+                os.fsync(f.fileno())
+            finally:
+                try:
+                    f.seek(0)
+                    msvcrt.locking(f.fileno(), msvcrt.LK_UNLCK, 1)
+                except OSError:
+                    pass
+        else:
+            import fcntl
+            try:
+                fcntl.flock(f.fileno(), fcntl.LOCK_EX)
+                f.write(line)
+                f.flush()
+                os.fsync(f.fileno())
+            finally:
+                fcntl.flock(f.fileno(), fcntl.LOCK_UN)
+
+
 # ─── U1: Pattern fingerprint ──────────────────────────────────────────────────
 
 
@@ -269,9 +303,7 @@ def cmd_emit(args: list[str]) -> int:
     record.setdefault("plugin", os.environ.get("ENCHANTED_ATTRIBUTION_PLUGIN", "unknown"))
 
     path = artifacts_path(parse_ts(record["ts"]) or datetime.now(timezone.utc))
-    path.parent.mkdir(parents=True, exist_ok=True)
-    with path.open("a", encoding="utf-8") as f:
-        f.write(json.dumps(record, ensure_ascii=False) + "\n")
+    append_jsonl_locked(path, json.dumps(record, ensure_ascii=False))
     print(f"emitted {record.get('code', '?')} -> {path.name}")
     return 0
 
@@ -300,9 +332,7 @@ def cmd_backfill(args: list[str]) -> int:
         record.setdefault("session_id", record.get("source_session", "backfill"))
         record.setdefault("plugin", record.get("scope", "unknown"))
         path = artifacts_path(parse_ts(record["ts"]) or datetime.now(timezone.utc))
-        path.parent.mkdir(parents=True, exist_ok=True)
-        with path.open("a", encoding="utf-8") as f:
-            f.write(json.dumps(record, ensure_ascii=False) + "\n")
+        append_jsonl_locked(path, json.dumps(record, ensure_ascii=False))
         count += 1
     print(f"backfilled {count} records from {src.name}")
     return 0

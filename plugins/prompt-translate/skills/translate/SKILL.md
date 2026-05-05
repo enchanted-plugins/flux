@@ -6,7 +6,7 @@ description: >
   Auto-triggers on: "/translate-prompt", "convert this prompt to GPT",
   "adapt for Claude", "port this prompt to Gemini",
   "make this work on o3", "translate prompt".
-allowed-tools: Bash(python *) Read Write Edit
+allowed-tools: Bash(python ${CLAUDE_PLUGIN_ROOT}/../../shared/scripts/self-eval.py *) Read Write Edit
 ---
 
 # Prompt Translator

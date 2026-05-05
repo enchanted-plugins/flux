@@ -27,5 +27,5 @@ The current shipped release. See [README.md](README.md) for the complete feature
 - Self-learning across sessions via `learnings.md` (E6).
 - Dark-themed single-page PDF audit report per prompt.
 
-[Unreleased]: https://github.com/enchanted-plugins/wixie/compare/v3.0.0...HEAD
-[3.0.0]: https://github.com/enchanted-plugins/wixie/releases/tag/v3.0.0
+[Unreleased]: https://github.com/enchanter-ai/wixie/compare/v3.0.0...HEAD
+[3.0.0]: https://github.com/enchanter-ai/wixie/releases/tag/v3.0.0

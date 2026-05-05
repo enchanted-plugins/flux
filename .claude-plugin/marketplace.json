@@ -1,7 +1,7 @@
 {
   "name": "wixie",
   "owner": {
-    "name": "enchanted-plugins"
+    "name": "enchanter-ai"
   },
   "metadata": {
     "description": "End-to-end prompt engineering platform. Create, optimize, test, harden, and translate prompts across 64 models with multi-agent pipelines.",

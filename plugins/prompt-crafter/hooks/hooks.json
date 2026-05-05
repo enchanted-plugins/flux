@@ -7,7 +7,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": "bash -c 'FILE=\"$CLAUDE_TOOL_ARG_FILE_PATH\"; if echo \"$FILE\" | grep -q \"prompts/.*/prompt\\.\"; then echo \"[Wixie] Prompt saved: $FILE — convergence engine will optimize automatically\"; fi'",
+            "command": "bash -c 'FILE=$(jq -r \".tool_input.file_path // empty\"); if [ -n \"$FILE\" ] && echo \"$FILE\" | grep -q \"prompts/.*/prompt\\.\"; then echo \"[Wixie] Prompt saved: $FILE — convergence engine will optimize automatically\" >&2; fi; exit 0'",
             "timeout": 5
           }
         ]

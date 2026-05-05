@@ -6,7 +6,7 @@ description: >
   suggests specific defenses. Use on any user-facing or API-deployed prompt.
   Auto-triggers on: "/harden", "harden this prompt", "test for injection",
   "is this prompt safe", "security check prompt", "red team this prompt".
-allowed-tools: Bash(python *) Read Write
+allowed-tools: Read Write
 ---
 
 # Prompt Hardening

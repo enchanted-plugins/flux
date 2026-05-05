@@ -6,7 +6,7 @@ description: >
   pass/fail results. Use for regression testing after refinements.
   Auto-triggers on: "/test-prompt", "test this prompt", "run prompt tests",
   "check if the prompt works", "regression test".
-allowed-tools: Bash(python *) Read Write
+allowed-tools: Read Write
 ---
 
 # Prompt Test Runner

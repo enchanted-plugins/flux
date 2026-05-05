@@ -13,7 +13,7 @@
   <a href="https://www.repostatus.org/#active"><img alt="Project Status: Active" src="https://www.repostatus.org/badges/latest/active.svg"></a>
 </p>
 
-> **An @enchanted-plugins product — algorithm-driven, agent-managed, self-learning.**
+> **An @enchanter-ai product — algorithm-driven, agent-managed, self-learning.**
 
 The first prompt engineering platform that learns from itself.
 
@@ -182,7 +182,7 @@ Wixie ships as a 6-plugin pipeline. One meta-plugin — `full` — lists all six
 **In Claude Code** (recommended):
 
 ```
-/plugin marketplace add enchanted-plugins/wixie
+/plugin marketplace add enchanter-ai/wixie
 /plugin install full@wixie
 ```
 
@@ -193,7 +193,7 @@ Claude Code resolves the dependency list and installs all 6 plugins. Verify with
 **Via shell** (also installs `shared/scripts/*.py` locally for `output-test` / `output-eval`):
 
 ```bash
-bash <(curl -s https://raw.githubusercontent.com/enchanted-plugins/wixie/main/install.sh)
+bash <(curl -s https://raw.githubusercontent.com/enchanter-ai/wixie/main/install.sh)
 ```
 
 ## Quickstart
@@ -254,7 +254,7 @@ In addition to the per-prompt artifacts above, Wixie writes plugin-level state t
 
 ## Roadmap
 
-Tracked in [docs/ROADMAP.md](docs/ROADMAP.md) and the shared [ecosystem map](https://github.com/enchanted-plugins/wixie/blob/main/docs/ecosystem.md). For upcoming work specific to Wixie, see issues tagged [roadmap](https://github.com/enchanted-plugins/wixie/labels/roadmap).
+Tracked in [docs/ROADMAP.md](docs/ROADMAP.md) and the shared [ecosystem map](https://github.com/enchanter-ai/wixie/blob/main/docs/ecosystem.md). For upcoming work specific to Wixie, see issues tagged [roadmap](https://github.com/enchanter-ai/wixie/labels/roadmap).
 
 ## The Science Behind Wixie
 
@@ -415,7 +415,7 @@ If you use this project in research or derivative work, please cite it:
   title = {Wixie},
   author = {{Klaiderman}},
   year = {2026},
-  url = {https://github.com/enchanted-plugins/wixie}
+  url = {https://github.com/enchanter-ai/wixie}
 }
 ```
 
@@ -429,7 +429,7 @@ MIT
 
 ## Role in the ecosystem
 
-Wixie is the **prompt-engineering layer** of the @enchanted-plugins stack — it crafts what gets said to a model. Its upstream dependency is Hydra's `config-shield`, which scans the repo at SessionStart so Wixie operates on a trusted config surface. Its downstream neighbors observe what Wixie produces: Emu measures the tokens Wixie's dispatches consume, Crow scores the changes Wixie's prompts induce, and Pech attributes the dollar cost per engine (E1–E6).
+Wixie is the **prompt-engineering layer** of the @enchanter-ai stack — it crafts what gets said to a model. Its upstream dependency is Hydra's `config-shield`, which scans the repo at SessionStart so Wixie operates on a trusted config surface. Its downstream neighbors observe what Wixie produces: Emu measures the tokens Wixie's dispatches consume, Crow scores the changes Wixie's prompts induce, and Pech attributes the dollar cost per engine (E1–E6).
 
 Wixie does not track tokens (Emu's lane), score change trust (Crow's lane), review code correctness (Lich's lane), orchestrate git (Sylph's lane), scan security surfaces (Hydra's lane), or price dispatches (Pech's lane). It engineers the prompt — nothing more.
 

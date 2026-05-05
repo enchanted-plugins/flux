@@ -4,7 +4,7 @@
   "description": "Executes tests.json regression cases against prompts. Runs each test case through the prompt, checks output against expected_contains assertions, and reports pass/fail with failure reasons.",
   "version": "0.1.0",
   "author": {
-    "name": "enchanted-plugins"
+    "name": "enchanter-ai"
   },
   "license": "MIT",
   "keywords": [

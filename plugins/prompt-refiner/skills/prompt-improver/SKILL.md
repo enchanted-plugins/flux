@@ -7,7 +7,7 @@ description: >
   Auto-triggers on: "make this prompt better", "improve this prompt",
   "refine this prompt", "fix this prompt", "optimize this prompt",
   "what's wrong with this prompt", "/refine".
-allowed-tools: Bash(python *) Bash(mkdir *) Read Write Edit Agent
+allowed-tools: Bash(python ${CLAUDE_PLUGIN_ROOT}/../../shared/scripts/token-count.py *) Bash(python ${CLAUDE_PLUGIN_ROOT}/../../shared/scripts/self-eval.py *) Bash(python ${CLAUDE_PLUGIN_ROOT}/../../shared/scripts/report-gen.py *) Bash(python ${CLAUDE_PLUGIN_ROOT}/../../shared/scripts/convergence.py *) Bash(mkdir *) Read Write Edit Agent
 ---
 
 # Wixie — Prompt Refiner

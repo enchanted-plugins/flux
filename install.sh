@@ -3,7 +3,7 @@
 # meta-plugin pulls them all in via one dependency-resolution pass.
 set -euo pipefail
 
-REPO="https://github.com/enchanted-plugins/wixie"
+REPO="https://github.com/enchanter-ai/wixie"
 WIXIE_DIR="${HOME}/.claude/plugins/wixie"
 
 step() { printf "\n\033[1;36m▸ %s\033[0m\n" "$*"; }
@@ -41,7 +41,7 @@ cat <<'EOF'
 
   Finish in Claude Code with TWO commands:
 
-    /plugin marketplace add enchanted-plugins/wixie
+    /plugin marketplace add enchanter-ai/wixie
     /plugin install full@wixie
 
   That installs all 6 plugins via dependency resolution. To cherry-pick

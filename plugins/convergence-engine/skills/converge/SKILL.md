@@ -6,7 +6,7 @@ description: >
   failure resilience until the prompt reaches DEPLOY quality.
   Auto-triggers on: "/converge", "converge this prompt", "optimize until perfect",
   "iterate until deploy", "run convergence".
-allowed-tools: Bash(python *) Read Write Edit Agent
+allowed-tools: Bash(python ${CLAUDE_PLUGIN_ROOT}/../../shared/scripts/convergence.py *) Bash(python ${CLAUDE_PLUGIN_ROOT}/../../shared/scripts/token-count.py *) Bash(python ${CLAUDE_PLUGIN_ROOT}/../../shared/scripts/self-eval.py *) Bash(python ${CLAUDE_PLUGIN_ROOT}/../../shared/scripts/report-gen.py *) Read Write Edit Agent
 ---
 
 # Convergence Engine
